@@ -1,0 +1,6 @@
+{
+  "name": "مُجاز | Mujeaz",
+  "description": "AI-Powered Healthcare Revenue Assurance & Authorization Command Center - منصة الذكاء الاصطناعي لضمان الإيرادات والموافقات الطبية",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
