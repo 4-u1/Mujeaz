@@ -1,0 +1,210 @@
+{
+ "resourceType": "Bundle",
+ "id": "SYN-MRI-048",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-SYN-P-1048",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "SYN-P-1048",
+    "identifier": [
+     {
+      "system": "urn:mujeaz:synthetic:patient",
+      "value": "SYN-P-1048"
+     }
+    ],
+    "name": [
+     {
+      "text": "Haya Al-Test (synthetic)",
+      "given": [
+       "Haya"
+      ],
+      "family": "Al-Test"
+     },
+     {
+      "text": "هيا الافتراضي (اصطناعي)"
+     }
+    ],
+    "gender": "female",
+    "birthDate": "1979-01-01"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-048-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-048-E1",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "orthopedic"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1048"
+    },
+    "period": {
+     "start": "2026-08-06",
+     "end": "2026-08-06"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-048-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-048-D1",
+    "status": "current",
+    "type": {
+     "text": "orthopedic-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1048"
+    },
+    "date": "2026-08-06T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-048-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2YXZhNin2K3YuNipINi52YrYp9iv2Kkg2KfZhNi52LjYp9mFLiDZhdix2YrYttipINi52YXYsSA0NyDYs9mG2KkuINij2YTZhSDYo9iz2YHZhCDYp9mE2LjZh9ixINmF2YXYqtivINil2YTZiSDYp9mE2LPYp9mCINin2YTZitiz2LHZiSDZhdmG2LAgMTQg2KPYs9in2KjZiti52Iwg2LTYr9ipINin2YTYo9mE2YUgOC8xMC4g2KfYrtiq2KjYp9ixINix2YHYuSDYp9mE2LPYp9mCINin2YTZhdiz2KrZgtmK2YXYqSDYpdmK2KzYp9io2Yog2YHZiiDYp9mE2KzZh9ipINin2YTZitiz2LHZiSDYudmG2K8gNDAg2K/Ysdis2KkuINmK2LDZg9ixINin2YTZhdix2YrYtiDYo9mG2Ycg2KPZg9mF2YQg2KfZhNi52YTYp9isINin2YTYt9io2YrYudmKLiDYp9mE2K7Yt9ipOiDYsdmG2YrZhiDZhdi62YbYp9i32YrYs9mKINmE2YTZgdmC2LHYp9iqINin2YTZgti32YbZitipINio2K/ZiNmGINi12KjYutipINmE2KrZgtmK2YrZhSDYp9mG2LLZhNin2YIg2LrYttix2YjZgdmKINmB2YogTDUtUzEu",
+       "hash": "CD0vcU1GP0ucF2dmKrjh7S6j+B4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-048-E2",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-048-E2",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "physiotherapy"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1048"
+    },
+    "period": {
+     "start": "2026-07-30",
+     "end": "2026-07-30"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-048-D2",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-048-D2",
+    "status": "current",
+    "type": {
+     "text": "physiotherapy-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1048"
+    },
+    "date": "2026-07-30T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-048-E2"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "UGh5c2lvdGhlcmFweSByZWZlcnJhbDogcGF0aWVudCBkaWQgbm90IGF0dGVuZCBhbnkgb2YgdGhlIDYgYm9va2VkIHNlc3Npb25zLiA=",
+       "hash": "6beQx7IVXZ64PcpFEtR7fdEqSpk="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-SYN-MRI-048-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "SYN-MRI-048-C1",
+    "clinicalStatus": {
+     "text": "active"
+    },
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M51.26",
+       "display": "Other intervertebral disc displacement, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1048"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-048-E1"
+    },
+    "onsetDateTime": "2026-04-30"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-SYN-MRI-048-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "SYN-MRI-048-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148",
+       "display": "MRI lumbar spine without contrast (reference code — map to SBS)"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1048"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-048-E1"
+    },
+    "authoredOn": "2026-08-06",
+    "reasonReference": [
+     {
+      "reference": "Condition/SYN-MRI-048-C1"
+     }
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,9357 @@
+{
+ "generator": "shared/generate-scoring-vectors.ts",
+ "count": 250,
+ "vectors": [
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 36,
+     "policyMatch": 51.5,
+     "documentation": 18,
+     "codingIntegrity": 69.4,
+     "requiredAttachments": 89,
+     "administrativeCompleteness": 25.9
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 47,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 53,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 53,
+     "revenueAtRisk": 76320,
+     "recoverableValue": 38160,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 72,
+     "policyMatch": 77.3,
+     "documentation": 27,
+     "codingIntegrity": 25.8,
+     "requiredAttachments": 50,
+     "administrativeCompleteness": 55.4
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1190,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60.5,
+     "policyMatch": 65,
+     "documentation": 16.2,
+     "codingIntegrity": 89.5,
+     "requiredAttachments": 18.7,
+     "administrativeCompleteness": 34
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 54,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 69,
+     "documentation": 31.2,
+     "codingIntegrity": 69.4,
+     "requiredAttachments": 44,
+     "administrativeCompleteness": 1
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 36414,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 34.1,
+     "documentation": 11.3,
+     "codingIntegrity": 77.3,
+     "requiredAttachments": 94,
+     "administrativeCompleteness": 44.3
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 48501.52
+   },
+   "output": {
+    "ruleScore": 38,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 48,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 48502,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 41227,
+     "recoverableValue": 30920,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 59.5,
+     "policyMatch": 68,
+     "documentation": 81,
+     "codingIntegrity": 69,
+     "requiredAttachments": 16,
+     "administrativeCompleteness": 83
+    },
+    "rules": [
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1190,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 55,
+     "policyMatch": 3,
+     "documentation": 49.1,
+     "codingIntegrity": 81,
+     "requiredAttachments": 72.6,
+     "administrativeCompleteness": 85.6
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 48,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 52,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 52,
+     "revenueAtRisk": 74880,
+     "recoverableValue": 74880,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 59.5,
+     "policyMatch": 69.4,
+     "documentation": 89.5,
+     "codingIntegrity": 59,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 33
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 73,
+     "policyMatch": 89.5,
+     "documentation": 49.5,
+     "codingIntegrity": 34,
+     "requiredAttachments": 40,
+     "administrativeCompleteness": 90
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 25,
+     "documentation": 18,
+     "codingIntegrity": 70.9,
+     "requiredAttachments": 0,
+     "administrativeCompleteness": 92
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 39,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 61,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 61,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 42,
+     "policyMatch": 63,
+     "documentation": 70,
+     "codingIntegrity": 61.6,
+     "requiredAttachments": 0,
+     "administrativeCompleteness": 70
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 12240.27
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 12240,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 6120,
+     "recoverableValue": 3060,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 72,
+     "policyMatch": 62,
+     "documentation": 76.1,
+     "codingIntegrity": 68.3,
+     "requiredAttachments": 30.3,
+     "administrativeCompleteness": 97.7
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 43.3,
+     "policyMatch": 69,
+     "documentation": 82,
+     "codingIntegrity": 62,
+     "requiredAttachments": 42.3,
+     "administrativeCompleteness": 23.7
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 54.9,
+     "policyMatch": 54.5,
+     "documentation": 13.9,
+     "codingIntegrity": 69,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 50
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 47429.07
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 47429,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 40315,
+     "recoverableValue": 10079,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 40,
+     "policyMatch": 26,
+     "documentation": 46.4,
+     "codingIntegrity": 84,
+     "requiredAttachments": 0,
+     "administrativeCompleteness": 68.1
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 41,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 59,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 59,
+     "revenueAtRisk": 40120,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 99.5,
+     "policyMatch": 79.3,
+     "documentation": 64,
+     "codingIntegrity": 46.2,
+     "requiredAttachments": 42.1,
+     "administrativeCompleteness": 84.9
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 25894.42
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 25894,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 22010,
+     "recoverableValue": 5503,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 73,
+     "policyMatch": 92,
+     "documentation": 21,
+     "codingIntegrity": 49,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 79
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 21420,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50.5,
+     "policyMatch": 47,
+     "documentation": 69.5,
+     "codingIntegrity": 84,
+     "requiredAttachments": 78.3,
+     "administrativeCompleteness": 64
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 61,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 39,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 39,
+     "revenueAtRisk": 56160,
+     "recoverableValue": 14040,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 31.2,
+     "policyMatch": 79,
+     "documentation": 76.3,
+     "codingIntegrity": 64,
+     "requiredAttachments": 39.9,
+     "administrativeCompleteness": 67
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 950,
+     "recoverableValue": 314,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 21,
+     "policyMatch": 94,
+     "documentation": 35.9,
+     "codingIntegrity": 35.4,
+     "requiredAttachments": 53.8,
+     "administrativeCompleteness": 73.2
+    },
+    "rules": [
+     "PASSED",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 83,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 11,
+     "policyMatch": 29,
+     "documentation": 60.5,
+     "codingIntegrity": 69,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 17.5
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 38,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 62,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 62,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 0,
+     "policyMatch": 50.5,
+     "documentation": 97,
+     "codingIntegrity": 4,
+     "requiredAttachments": 35.5,
+     "administrativeCompleteness": 49.5
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 63,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 34,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 61200,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 38.4,
+     "policyMatch": 52.8,
+     "documentation": 67.2,
+     "codingIntegrity": 50,
+     "requiredAttachments": 22,
+     "administrativeCompleteness": 59.5
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 47,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 53,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 53,
+     "revenueAtRisk": 36040,
+     "recoverableValue": 18020,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 69.5,
+     "policyMatch": 86.7,
+     "documentation": 11,
+     "codingIntegrity": 23,
+     "requiredAttachments": 49.5,
+     "administrativeCompleteness": 50
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 32262.89
+   },
+   "output": {
+    "ruleScore": 17,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 32263,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 27424,
+     "recoverableValue": 13712,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 82,
+     "policyMatch": 50.1,
+     "documentation": 3.2,
+     "codingIntegrity": 99.5,
+     "requiredAttachments": 74,
+     "administrativeCompleteness": 41
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 48.3,
+     "policyMatch": 58,
+     "documentation": 11,
+     "codingIntegrity": 49.5,
+     "requiredAttachments": 58,
+     "administrativeCompleteness": 74.2
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 88,
+    "overall": {
+     "overallScore": 48,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 52,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 52,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60,
+     "policyMatch": 52.4,
+     "documentation": 55,
+     "codingIntegrity": 87.4,
+     "requiredAttachments": 9.9,
+     "administrativeCompleteness": 18.9
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 38,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 54,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 40392,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 67.9,
+     "policyMatch": 35,
+     "documentation": 14,
+     "codingIntegrity": 3,
+     "requiredAttachments": 90,
+     "administrativeCompleteness": 80.5
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50.5,
+     "policyMatch": 58,
+     "documentation": 89.4,
+     "codingIntegrity": 17,
+     "requiredAttachments": 24,
+     "administrativeCompleteness": 65
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 61200,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 44,
+     "policyMatch": 50,
+     "documentation": 60.5,
+     "codingIntegrity": 40,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 23.3
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 28213.96
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 28214,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 14107,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 70,
+     "policyMatch": 78,
+     "documentation": 60.5,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 4.9,
+     "administrativeCompleteness": 24
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 59.5,
+     "policyMatch": 60.5,
+     "documentation": 70,
+     "codingIntegrity": 59.5,
+     "requiredAttachments": 67,
+     "administrativeCompleteness": 80
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 100,
+     "policyMatch": 36,
+     "documentation": 66.6,
+     "codingIntegrity": 63.4,
+     "requiredAttachments": 91,
+     "administrativeCompleteness": 66.9
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 54000,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 20.6,
+     "policyMatch": 16.7,
+     "documentation": 91,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 99.5,
+     "administrativeCompleteness": 90
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 2380,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 100,
+     "policyMatch": 54,
+     "documentation": 6,
+     "codingIntegrity": 50,
+     "requiredAttachments": 53.2,
+     "administrativeCompleteness": 59.5
+    },
+    "rules": [
+     "PASSED",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 49858.23
+   },
+   "output": {
+    "ruleScore": 83,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 49858,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 24929,
+     "recoverableValue": 12465,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 59.5,
+     "policyMatch": 100,
+     "documentation": 28.7,
+     "codingIntegrity": 22.8,
+     "requiredAttachments": 10.8,
+     "administrativeCompleteness": 95
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 950,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89.5,
+     "policyMatch": 69.5,
+     "documentation": 92.4,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 7,
+     "administrativeCompleteness": 48.3
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 1615,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 39,
+     "policyMatch": 4,
+     "documentation": 89.8,
+     "codingIntegrity": 69,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 73
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 47,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 53,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 53,
+     "revenueAtRisk": 1007,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 40,
+     "policyMatch": 90.9,
+     "documentation": 1.8,
+     "codingIntegrity": 92.9,
+     "requiredAttachments": 8,
+     "administrativeCompleteness": 76.2
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 25277.1
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 54,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 25277,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 21485,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 8.6,
+     "policyMatch": 48,
+     "documentation": 25.3,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 6.6,
+     "administrativeCompleteness": 2
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 30,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 28900,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 19,
+     "policyMatch": 91,
+     "documentation": 32.8,
+     "codingIntegrity": 40.9,
+     "requiredAttachments": 27,
+     "administrativeCompleteness": 29.6
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 44,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 2.6,
+     "policyMatch": 68,
+     "documentation": 16.2,
+     "codingIntegrity": 89.5,
+     "requiredAttachments": 65,
+     "administrativeCompleteness": 90
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 55,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 55,
+     "revenueAtRisk": 1540,
+     "recoverableValue": 770,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 2.3,
+     "policyMatch": 20,
+     "documentation": 71.1,
+     "codingIntegrity": 59.1,
+     "requiredAttachments": 11,
+     "administrativeCompleteness": 26
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 28,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 72,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 72,
+     "revenueAtRisk": 103680,
+     "recoverableValue": 51840,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50.5,
+     "policyMatch": 50,
+     "documentation": 14.5,
+     "codingIntegrity": 41.4,
+     "requiredAttachments": 69.4,
+     "administrativeCompleteness": 47
+    },
+    "rules": [
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 57800,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 9.1,
+     "policyMatch": 89.1,
+     "documentation": 12.8,
+     "codingIntegrity": 48.8,
+     "requiredAttachments": 81.9,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 42,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 58,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 58,
+     "revenueAtRisk": 1102,
+     "recoverableValue": 827,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 49.5,
+     "policyMatch": 100,
+     "documentation": 59.5,
+     "codingIntegrity": 75.9,
+     "requiredAttachments": 19.3,
+     "administrativeCompleteness": 71.9
+    },
+    "rules": [
+     "FAILED",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 99,
+     "policyMatch": 68.5,
+     "documentation": 61,
+     "codingIntegrity": 67.7,
+     "requiredAttachments": 50,
+     "administrativeCompleteness": 42
+    },
+    "rules": [
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 51,
+     "policyMatch": 6.9,
+     "documentation": 0.8,
+     "codingIntegrity": 39.5,
+     "requiredAttachments": 80.7,
+     "administrativeCompleteness": 98.7
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 36,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 64,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 64,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60,
+     "policyMatch": 9,
+     "documentation": 24.4,
+     "codingIntegrity": 38,
+     "requiredAttachments": 79,
+     "administrativeCompleteness": 91.9
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 42,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 58,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 58,
+     "revenueAtRisk": 39440,
+     "recoverableValue": 26425,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 23,
+     "policyMatch": 9.9,
+     "documentation": 85,
+     "codingIntegrity": 91.2,
+     "requiredAttachments": 59.9,
+     "administrativeCompleteness": 81
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 46,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 54,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 54,
+     "revenueAtRisk": 36720,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 41,
+     "policyMatch": 100,
+     "documentation": 75,
+     "codingIntegrity": 77.1,
+     "requiredAttachments": 14.1,
+     "administrativeCompleteness": 69.4
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 17,
+    "overall": {
+     "overallScore": 65,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 35,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 35,
+     "revenueAtRisk": 665,
+     "recoverableValue": 113,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 86.8,
+     "policyMatch": 79.4,
+     "documentation": 55,
+     "codingIntegrity": 77,
+     "requiredAttachments": 89,
+     "administrativeCompleteness": 84
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1785,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 8.7,
+     "policyMatch": 5.1,
+     "documentation": 5.5,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 98.3,
+     "administrativeCompleteness": 66
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 28,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 72,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 72,
+     "revenueAtRisk": 1368,
+     "recoverableValue": 1026,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 15.1,
+     "policyMatch": 40,
+     "documentation": 24,
+     "codingIntegrity": 6,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 9
+    },
+    "rules": [
+     "FAILED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 17,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 26,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 24.4,
+     "policyMatch": 59.5,
+     "documentation": 77,
+     "codingIntegrity": 75.7,
+     "requiredAttachments": 17.4,
+     "administrativeCompleteness": 18.6
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 48,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 52,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 52,
+     "revenueAtRisk": 74880,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 15,
+     "policyMatch": 49.5,
+     "documentation": 63,
+     "codingIntegrity": 60,
+     "requiredAttachments": 54,
+     "administrativeCompleteness": 50.5
+    },
+    "rules": [
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 43,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 57,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 57,
+     "revenueAtRisk": 82080,
+     "recoverableValue": 51710,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 84.4,
+     "policyMatch": 47,
+     "documentation": 7.2,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 79,
+     "administrativeCompleteness": 99.5
+    },
+    "rules": [
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 11220,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 58,
+     "policyMatch": 90,
+     "documentation": 49.5,
+     "codingIntegrity": 69,
+     "requiredAttachments": 91.7,
+     "administrativeCompleteness": 14
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 13773.25
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 13773,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 6887,
+     "recoverableValue": 6887,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60.1,
+     "policyMatch": 92,
+     "documentation": 79,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 89,
+     "administrativeCompleteness": 98.6
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 48240,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 99.5,
+     "policyMatch": 25.7,
+     "documentation": 49.5,
+     "codingIntegrity": 96,
+     "requiredAttachments": 26.2,
+     "administrativeCompleteness": 46.3
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 63,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 37,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 37,
+     "revenueAtRisk": 1036,
+     "recoverableValue": 394,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 69.3,
+     "policyMatch": 69.5,
+     "documentation": 10,
+     "codingIntegrity": 89.5,
+     "requiredAttachments": 94.1,
+     "administrativeCompleteness": 45.3
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 65,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 35,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 35,
+     "revenueAtRisk": 50400,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 22,
+     "policyMatch": 64.2,
+     "documentation": 70,
+     "codingIntegrity": 83,
+     "requiredAttachments": 77.1,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 53,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 47,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 47,
+     "revenueAtRisk": 67680,
+     "recoverableValue": 25718,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 55.5,
+     "policyMatch": 0,
+     "documentation": 99.5,
+     "codingIntegrity": 17.6,
+     "requiredAttachments": 50.5,
+     "administrativeCompleteness": 84.5
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 43,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 57,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 57,
+     "revenueAtRisk": 1083,
+     "recoverableValue": 1083,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 73.3,
+     "policyMatch": 89.5,
+     "documentation": 24.9,
+     "codingIntegrity": 11.6,
+     "requiredAttachments": 29,
+     "administrativeCompleteness": 40.3
+    },
+    "rules": [
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 1615,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 80,
+     "policyMatch": 94.8,
+     "documentation": 42,
+     "codingIntegrity": 86,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 46.6
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1595,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 79.3,
+     "policyMatch": 28,
+     "documentation": 38.8,
+     "codingIntegrity": 70.4,
+     "requiredAttachments": 4,
+     "administrativeCompleteness": 33
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 51,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 51,
+     "revenueAtRisk": 969,
+     "recoverableValue": 969,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 86.6,
+     "policyMatch": 95,
+     "documentation": 33.2,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 57,
+     "administrativeCompleteness": 9.8
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 83,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 72000,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 1,
+     "policyMatch": 63.9,
+     "documentation": 0,
+     "codingIntegrity": 31,
+     "requiredAttachments": 0.1,
+     "administrativeCompleteness": 26
+    },
+    "rules": [
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 29066.69
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 22,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 78,
+    "revenueRisk": {
+     "financialValue": 29067,
+     "denialRiskPercentage": 78,
+     "revenueAtRisk": 22672,
+     "recoverableValue": 11336,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 48.2,
+     "policyMatch": 50.5,
+     "documentation": 58.2,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 20,
+     "administrativeCompleteness": 50.5
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 95,
+     "policyMatch": 43.3,
+     "documentation": 64,
+     "codingIntegrity": 54,
+     "requiredAttachments": 33,
+     "administrativeCompleteness": 81.9
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 47073.35
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 47073,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 23537,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89.5,
+     "policyMatch": 97,
+     "documentation": 49.5,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 69.5,
+     "administrativeCompleteness": 70
+    },
+    "rules": [
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 0,
+     "policyMatch": 11,
+     "documentation": 18,
+     "codingIntegrity": 39,
+     "requiredAttachments": 59.5,
+     "administrativeCompleteness": 34.3
+    },
+    "rules": [
+     "FAILED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 17,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 19,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 15,
+     "policyMatch": 79,
+     "documentation": 83,
+     "codingIntegrity": 58,
+     "requiredAttachments": 35,
+     "administrativeCompleteness": 77.8
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 8500,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 13,
+     "policyMatch": 19.7,
+     "documentation": 16,
+     "codingIntegrity": 18,
+     "requiredAttachments": 64.4,
+     "administrativeCompleteness": 86
+    },
+    "rules": [
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 25,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 91,
+     "policyMatch": 84.7,
+     "documentation": 60,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 63,
+     "administrativeCompleteness": 18.8
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 185.24
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 185,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 157,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 48.8,
+     "policyMatch": 93.7,
+     "documentation": 77,
+     "codingIntegrity": 70,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 50
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 73,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 27,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 27,
+     "revenueAtRisk": 756,
+     "recoverableValue": 0,
+     "priority": "LOW"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 41.8,
+     "policyMatch": 70,
+     "documentation": 69.4,
+     "codingIntegrity": 59.1,
+     "requiredAttachments": 49.5,
+     "administrativeCompleteness": 78
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 85,
+     "policyMatch": 50,
+     "documentation": 42.5,
+     "codingIntegrity": 37,
+     "requiredAttachments": 58,
+     "administrativeCompleteness": 54.2
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 950,
+     "recoverableValue": 950,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 97,
+     "policyMatch": 74,
+     "documentation": 1.7,
+     "codingIntegrity": 44,
+     "requiredAttachments": 64.1,
+     "administrativeCompleteness": 39
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 36000,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 0,
+     "policyMatch": 30,
+     "documentation": 72,
+     "codingIntegrity": 39.1,
+     "requiredAttachments": 86.5,
+     "administrativeCompleteness": 52
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 35,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 785,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 96.1,
+     "policyMatch": 67,
+     "documentation": 90,
+     "codingIntegrity": 94,
+     "requiredAttachments": 49.2,
+     "administrativeCompleteness": 10.7
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 91800,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 72,
+     "policyMatch": 50,
+     "documentation": 90,
+     "codingIntegrity": 67,
+     "requiredAttachments": 87.9,
+     "administrativeCompleteness": 31
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 61200,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 70,
+     "documentation": 59.5,
+     "codingIntegrity": 89.4,
+     "requiredAttachments": 22,
+     "administrativeCompleteness": 36.2
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 17939.83
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 59,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 41,
+    "revenueRisk": {
+     "financialValue": 17940,
+     "denialRiskPercentage": 41,
+     "revenueAtRisk": 7355,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 44,
+     "policyMatch": 43,
+     "documentation": 47.4,
+     "codingIntegrity": 82.3,
+     "requiredAttachments": 89.5,
+     "administrativeCompleteness": 76
+    },
+    "rules": [
+     "FAILED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 17,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 56,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 24.8,
+     "policyMatch": 51,
+     "documentation": 50.3,
+     "codingIntegrity": 89.5,
+     "requiredAttachments": 0,
+     "administrativeCompleteness": 6
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 41,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 59,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 59,
+     "revenueAtRisk": 1652,
+     "recoverableValue": 1041,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 77,
+     "documentation": 29.5,
+     "codingIntegrity": 43.1,
+     "requiredAttachments": 14,
+     "administrativeCompleteness": 47
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 51,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 51,
+     "revenueAtRisk": 34680,
+     "recoverableValue": 17340,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 26.9,
+     "policyMatch": 1.5,
+     "documentation": 63.2,
+     "codingIntegrity": 15,
+     "requiredAttachments": 37,
+     "administrativeCompleteness": 82
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 28,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 72,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 72,
+     "revenueAtRisk": 1368,
+     "recoverableValue": 1026,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 48,
+     "policyMatch": 69.4,
+     "documentation": 70,
+     "codingIntegrity": 4,
+     "requiredAttachments": 69.4,
+     "administrativeCompleteness": 18
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 8241.71
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 8242,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 7006,
+     "recoverableValue": 7006,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 13,
+     "policyMatch": 99.5,
+     "documentation": 69.4,
+     "codingIntegrity": 69,
+     "requiredAttachments": 44.3,
+     "administrativeCompleteness": 99.5
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 49,
+     "policyMatch": 84,
+     "documentation": 69.5,
+     "codingIntegrity": 87.7,
+     "requiredAttachments": 0,
+     "administrativeCompleteness": 76.2
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 15890.5
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 63,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 15891,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 7946,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 7,
+     "policyMatch": 49.5,
+     "documentation": 9.4,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 39,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 30,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 47,
+     "policyMatch": 34.8,
+     "documentation": 59.5,
+     "codingIntegrity": 50.5,
+     "requiredAttachments": 73.7,
+     "administrativeCompleteness": 53.6
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 51,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 51,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 19,
+     "policyMatch": 21,
+     "documentation": 99.2,
+     "codingIntegrity": 100,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 1.7
+    },
+    "rules": [
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 48,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 0,
+     "policyMatch": 65.3,
+     "documentation": 49.7,
+     "codingIntegrity": 7.9,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 70
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 38,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 62,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 62,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 0,
+     "policyMatch": 23.4,
+     "documentation": 69.5,
+     "codingIntegrity": 38.3,
+     "requiredAttachments": 68.5,
+     "administrativeCompleteness": 57.9
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 32,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 96.5,
+     "policyMatch": 38.9,
+     "documentation": 69.4,
+     "codingIntegrity": 90,
+     "requiredAttachments": 19.2,
+     "administrativeCompleteness": 71
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 46512,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 46,
+     "policyMatch": 41.3,
+     "documentation": 27.7,
+     "codingIntegrity": 62,
+     "requiredAttachments": 76.7,
+     "administrativeCompleteness": 69.5
+    },
+    "rules": [
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 3407.45
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 17,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 3407,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2896,
+     "recoverableValue": 492,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 69,
+     "policyMatch": 50.5,
+     "documentation": 62.5,
+     "codingIntegrity": 18.5,
+     "requiredAttachments": 23,
+     "administrativeCompleteness": 22
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 51,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 51,
+     "revenueAtRisk": 73440,
+     "recoverableValue": 36720,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 54,
+     "policyMatch": 56.4,
+     "documentation": 9,
+     "codingIntegrity": 43.5,
+     "requiredAttachments": 59.5,
+     "administrativeCompleteness": 47
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 15193.3
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 46,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 54,
+    "revenueRisk": {
+     "financialValue": 15193,
+     "denialRiskPercentage": 54,
+     "revenueAtRisk": 8204,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 68.8,
+     "policyMatch": 22,
+     "documentation": 83.1,
+     "codingIntegrity": 77.7,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 43
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 19871.75
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 19872,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 16891,
+     "recoverableValue": 8446,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 49.5,
+     "policyMatch": 95,
+     "documentation": 67.2,
+     "codingIntegrity": 50,
+     "requiredAttachments": 61.2,
+     "administrativeCompleteness": 31.7
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 61200,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 39.3,
+     "policyMatch": 0,
+     "documentation": 60.5,
+     "codingIntegrity": 70,
+     "requiredAttachments": 17,
+     "administrativeCompleteness": 88
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 37,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 77112,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 7.3,
+     "policyMatch": 57.7,
+     "documentation": 71,
+     "codingIntegrity": 29.1,
+     "requiredAttachments": 69.4,
+     "administrativeCompleteness": 55.5
+    },
+    "rules": [
+     "PASSED",
+     "PASSED",
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 41,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 59,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 59,
+     "revenueAtRisk": 1121,
+     "recoverableValue": 1121,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 100,
+     "policyMatch": 10,
+     "documentation": 100,
+     "codingIntegrity": 97.6,
+     "requiredAttachments": 71,
+     "administrativeCompleteness": 18.4
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 70,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 25500,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 88,
+     "policyMatch": 56.5,
+     "documentation": 50,
+     "codingIntegrity": 69,
+     "requiredAttachments": 16.5,
+     "administrativeCompleteness": 86
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 17000,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 90,
+     "policyMatch": 67.9,
+     "documentation": 57,
+     "codingIntegrity": 68.2,
+     "requiredAttachments": 38.1,
+     "administrativeCompleteness": 38.5
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 10663.13
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 10663,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 5332,
+     "recoverableValue": 2666,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 14.6,
+     "policyMatch": 5,
+     "documentation": 65,
+     "codingIntegrity": 69,
+     "requiredAttachments": 20,
+     "administrativeCompleteness": 88
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 32,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 28900,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 19,
+     "policyMatch": 70,
+     "documentation": 79,
+     "codingIntegrity": 93.6,
+     "requiredAttachments": 38.6,
+     "administrativeCompleteness": 96
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 58,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 42,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 42,
+     "revenueAtRisk": 28560,
+     "recoverableValue": 19135,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 55.3,
+     "policyMatch": 51.2,
+     "documentation": 56.8,
+     "codingIntegrity": 31,
+     "requiredAttachments": 67.3,
+     "administrativeCompleteness": 21
+    },
+    "rules": [
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 19074,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 48,
+     "policyMatch": 71,
+     "documentation": 47,
+     "codingIntegrity": 86,
+     "requiredAttachments": 57.8,
+     "administrativeCompleteness": 9
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 88,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 58,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 700,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 44,
+     "policyMatch": 90.8,
+     "documentation": 12.3,
+     "codingIntegrity": 88,
+     "requiredAttachments": 88,
+     "administrativeCompleteness": 86
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 18172.46
+   },
+   "output": {
+    "ruleScore": 83,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 64,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 18172,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 9086,
+     "recoverableValue": 6815,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 80,
+     "policyMatch": 59.5,
+     "documentation": 0,
+     "codingIntegrity": 10.7,
+     "requiredAttachments": 48,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 728.49
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 17,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 55,
+    "revenueRisk": {
+     "financialValue": 728,
+     "denialRiskPercentage": 55,
+     "revenueAtRisk": 400,
+     "recoverableValue": 68,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 45.5,
+     "policyMatch": 60,
+     "documentation": 41.5,
+     "codingIntegrity": 90.5,
+     "requiredAttachments": 21,
+     "administrativeCompleteness": 48
+    },
+    "rules": [
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 53,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 53,
+     "policyMatch": 4.2,
+     "documentation": 60.5,
+     "codingIntegrity": 72,
+     "requiredAttachments": 54.4,
+     "administrativeCompleteness": 100
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 47,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89,
+     "policyMatch": 33,
+     "documentation": 43.1,
+     "codingIntegrity": 75,
+     "requiredAttachments": 59.5,
+     "administrativeCompleteness": 70
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 62,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 25500,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 24.8,
+     "policyMatch": 50.5,
+     "documentation": 71.3,
+     "codingIntegrity": 69,
+     "requiredAttachments": 83,
+     "administrativeCompleteness": 73.9
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60.5,
+     "policyMatch": 19,
+     "documentation": 40,
+     "codingIntegrity": 49.5,
+     "requiredAttachments": 64,
+     "administrativeCompleteness": 77
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 38,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 47,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 1615,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 96,
+     "policyMatch": 10,
+     "documentation": 9,
+     "codingIntegrity": 19,
+     "requiredAttachments": 41,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 40,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 94,
+     "policyMatch": 14,
+     "documentation": 26,
+     "codingIntegrity": 11,
+     "requiredAttachments": 55,
+     "administrativeCompleteness": 69.4
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 46,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 2380,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60,
+     "policyMatch": 60,
+     "documentation": 50.5,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 22,
+     "administrativeCompleteness": 45.6
+    },
+    "rules": [
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 77112,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 96,
+     "policyMatch": 46.8,
+     "documentation": 69.5,
+     "codingIntegrity": 40,
+     "requiredAttachments": 3,
+     "administrativeCompleteness": 78.2
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 700,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 100,
+     "policyMatch": 82.6,
+     "documentation": 70.1,
+     "codingIntegrity": 100,
+     "requiredAttachments": 94.8,
+     "administrativeCompleteness": 60
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 89,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 56,
+     "policyMatch": 100,
+     "documentation": 0,
+     "codingIntegrity": 54,
+     "requiredAttachments": 89.5,
+     "administrativeCompleteness": 50
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 13,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 182,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 30,
+     "policyMatch": 90.9,
+     "documentation": 31.2,
+     "codingIntegrity": 69,
+     "requiredAttachments": 67,
+     "administrativeCompleteness": 42
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 47,
+     "policyMatch": 37,
+     "documentation": 74,
+     "codingIntegrity": 24,
+     "requiredAttachments": 5,
+     "administrativeCompleteness": 7.2
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 39,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 61,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 61,
+     "revenueAtRisk": 41480,
+     "recoverableValue": 15762,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 15.5,
+     "policyMatch": 19.6,
+     "documentation": 61,
+     "codingIntegrity": 98,
+     "requiredAttachments": 11.8,
+     "administrativeCompleteness": 69.5
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 17718.65
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 38,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 17719,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 15061,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 72,
+     "policyMatch": 51.6,
+     "documentation": 69.5,
+     "codingIntegrity": 95.2,
+     "requiredAttachments": 50.5,
+     "administrativeCompleteness": 56.4
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 595,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 49.5,
+     "policyMatch": 90,
+     "documentation": 81,
+     "codingIntegrity": 100,
+     "requiredAttachments": 57,
+     "administrativeCompleteness": 59.5
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 73,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 27,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 27,
+     "revenueAtRisk": 18360,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 69,
+     "policyMatch": 99.5,
+     "documentation": 88,
+     "codingIntegrity": 73.4,
+     "requiredAttachments": 14,
+     "administrativeCompleteness": 70
+    },
+    "rules": [
+     "PASSED",
+     "PASSED",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 6589.7
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 6590,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 5602,
+     "recoverableValue": 5602,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 72.4,
+     "policyMatch": 80.2,
+     "documentation": 37.5,
+     "codingIntegrity": 70,
+     "requiredAttachments": 34,
+     "administrativeCompleteness": 67.2
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 65,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 22780,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 90,
+     "policyMatch": 26.2,
+     "documentation": 82.1,
+     "codingIntegrity": 60,
+     "requiredAttachments": 21,
+     "administrativeCompleteness": 89
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60,
+     "policyMatch": 63,
+     "documentation": 23.7,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 84.1,
+     "administrativeCompleteness": 70
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 49095.96
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 49096,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 41732,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 49.1,
+     "policyMatch": 97,
+     "documentation": 95,
+     "codingIntegrity": 24.5,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 43
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 7110.1
+   },
+   "output": {
+    "ruleScore": 63,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 7110,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 6044,
+     "recoverableValue": 1511,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 51,
+     "policyMatch": 25.8,
+     "documentation": 60.5,
+     "codingIntegrity": 33.8,
+     "requiredAttachments": 55.5,
+     "administrativeCompleteness": 37
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 43,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 30600,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 92.6,
+     "policyMatch": 67.5,
+     "documentation": 12,
+     "codingIntegrity": 90,
+     "requiredAttachments": 97.5,
+     "administrativeCompleteness": 9.8
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 46512,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 54,
+     "policyMatch": 59.5,
+     "documentation": 47,
+     "codingIntegrity": 61.8,
+     "requiredAttachments": 46.1,
+     "administrativeCompleteness": 54.3
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 76,
+     "policyMatch": 45.8,
+     "documentation": 72,
+     "codingIntegrity": 25,
+     "requiredAttachments": 78,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 950,
+     "recoverableValue": 950,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 30.2,
+     "policyMatch": 33,
+     "documentation": 90,
+     "codingIntegrity": 22.6,
+     "requiredAttachments": 14,
+     "administrativeCompleteness": 36
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 37,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 32,
+     "policyMatch": 12.7,
+     "documentation": 7,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 51,
+     "administrativeCompleteness": 18
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 30,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 70,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 70,
+     "revenueAtRisk": 100800,
+     "recoverableValue": 100800,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 54.5,
+     "documentation": 10,
+     "codingIntegrity": 79,
+     "requiredAttachments": 82,
+     "administrativeCompleteness": 72.9
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 54,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 808,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 68.5,
+     "policyMatch": 55,
+     "documentation": 81,
+     "codingIntegrity": 66,
+     "requiredAttachments": 25.9,
+     "administrativeCompleteness": 82
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 91800,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 38,
+     "policyMatch": 30,
+     "documentation": 79,
+     "codingIntegrity": 12,
+     "requiredAttachments": 11,
+     "administrativeCompleteness": 51
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 17,
+    "overall": {
+     "overallScore": 36,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 64,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 64,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 81,
+     "policyMatch": 89.5,
+     "documentation": 13,
+     "codingIntegrity": 60,
+     "requiredAttachments": 37.9,
+     "administrativeCompleteness": 33
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 532,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 8,
+     "policyMatch": 46,
+     "documentation": 89.5,
+     "codingIntegrity": 32.3,
+     "requiredAttachments": 73.5,
+     "administrativeCompleteness": 55
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 49819.52
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 42,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 58,
+    "revenueRisk": {
+     "financialValue": 49820,
+     "denialRiskPercentage": 58,
+     "revenueAtRisk": 28896,
+     "recoverableValue": 7224,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 100,
+     "policyMatch": 20.9,
+     "documentation": 69.3,
+     "codingIntegrity": 40,
+     "requiredAttachments": 81,
+     "administrativeCompleteness": 6.5
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 1050,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 69.5,
+     "policyMatch": 90,
+     "documentation": 33.1,
+     "codingIntegrity": 10.3,
+     "requiredAttachments": 50.5,
+     "administrativeCompleteness": 79.8
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 28.9,
+     "policyMatch": 48,
+     "documentation": 50.5,
+     "codingIntegrity": 100,
+     "requiredAttachments": 22,
+     "administrativeCompleteness": 70
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 51,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 51,
+     "revenueAtRisk": 73440,
+     "recoverableValue": 27907,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 51,
+     "policyMatch": 3.8,
+     "documentation": 16,
+     "codingIntegrity": 42.5,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 83.3
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 39,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 61,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 61,
+     "revenueAtRisk": 41480,
+     "recoverableValue": 20740,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 66,
+     "policyMatch": 35.4,
+     "documentation": 37,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 40,
+     "administrativeCompleteness": 16.8
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 51,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 51,
+     "revenueAtRisk": 73440,
+     "recoverableValue": 73440,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 17.1,
+     "policyMatch": 38,
+     "documentation": 69,
+     "codingIntegrity": 36.3,
+     "requiredAttachments": 30,
+     "administrativeCompleteness": 44
+    },
+    "rules": [
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 36,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 61200,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89.5,
+     "policyMatch": 36.7,
+     "documentation": 1.8,
+     "codingIntegrity": 23.6,
+     "requiredAttachments": 1,
+     "administrativeCompleteness": 50.5
+    },
+    "rules": [
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 42,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 58,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 58,
+     "revenueAtRisk": 39440,
+     "recoverableValue": 24847,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 88.9,
+     "policyMatch": 26,
+     "documentation": 99,
+     "codingIntegrity": 0,
+     "requiredAttachments": 28,
+     "administrativeCompleteness": 82.8
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 100,
+     "policyMatch": 67,
+     "documentation": 0,
+     "codingIntegrity": 75.4,
+     "requiredAttachments": 18,
+     "administrativeCompleteness": 78
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 37637.13
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 64,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 36,
+    "revenueRisk": {
+     "financialValue": 37637,
+     "denialRiskPercentage": 36,
+     "revenueAtRisk": 13549,
+     "recoverableValue": 4471,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 75.2,
+     "policyMatch": 91,
+     "documentation": 50,
+     "codingIntegrity": 5.1,
+     "requiredAttachments": 18,
+     "administrativeCompleteness": 16.3
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 51,
+     "policyMatch": 68.6,
+     "documentation": 49.5,
+     "codingIntegrity": 99,
+     "requiredAttachments": 81,
+     "administrativeCompleteness": 10.5
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 63,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 37,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 37,
+     "revenueAtRisk": 703,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 80,
+     "policyMatch": 0,
+     "documentation": 60,
+     "codingIntegrity": 63.5,
+     "requiredAttachments": 27.2,
+     "administrativeCompleteness": 90
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 97,
+     "policyMatch": 15,
+     "documentation": 9.5,
+     "codingIntegrity": 79.3,
+     "requiredAttachments": 39,
+     "administrativeCompleteness": 36
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 52,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 78,
+     "policyMatch": 23,
+     "documentation": 94.4,
+     "codingIntegrity": 100,
+     "requiredAttachments": 59.8,
+     "administrativeCompleteness": 90
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1190,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 1.3,
+     "policyMatch": 53,
+     "documentation": 49.5,
+     "codingIntegrity": 59.5,
+     "requiredAttachments": 60.5,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 36,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1190,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89.5,
+     "policyMatch": 7,
+     "documentation": 36.9,
+     "codingIntegrity": 2,
+     "requiredAttachments": 63,
+     "administrativeCompleteness": 72.2
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": 83,
+    "overall": {
+     "overallScore": 44,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 47974,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 76.7,
+     "policyMatch": 83.9,
+     "documentation": 13,
+     "codingIntegrity": 95,
+     "requiredAttachments": 60.5,
+     "administrativeCompleteness": 69.9
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 70,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 30,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 30,
+     "revenueAtRisk": 840,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89.5,
+     "policyMatch": 12,
+     "documentation": 0,
+     "codingIntegrity": 75.7,
+     "requiredAttachments": 4,
+     "administrativeCompleteness": 50
+    },
+    "rules": [
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 44,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 80.4,
+     "policyMatch": 18.1,
+     "documentation": 14,
+     "codingIntegrity": 29,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 3
+    },
+    "rules": [
+     "FAILED",
+     "WARNING",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 28900,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 70,
+     "policyMatch": 24.3,
+     "documentation": 100,
+     "codingIntegrity": 95,
+     "requiredAttachments": 71.7,
+     "administrativeCompleteness": 82.2
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 38,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 28900,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 9,
+     "policyMatch": 92,
+     "documentation": 62,
+     "codingIntegrity": 28,
+     "requiredAttachments": 10,
+     "administrativeCompleteness": 0
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 40,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 60,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 60,
+     "revenueAtRisk": 86400,
+     "recoverableValue": 43200,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 34,
+     "policyMatch": 0,
+     "documentation": 19,
+     "codingIntegrity": 30,
+     "requiredAttachments": 88,
+     "administrativeCompleteness": 11.6
+    },
+    "rules": [
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 27,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 1211,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 64.8,
+     "policyMatch": 9,
+     "documentation": 99.5,
+     "codingIntegrity": 59.5,
+     "requiredAttachments": 88,
+     "administrativeCompleteness": 92.7
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 48240,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 77,
+     "policyMatch": 55.6,
+     "documentation": 16.9,
+     "codingIntegrity": 89.5,
+     "requiredAttachments": 93,
+     "administrativeCompleteness": 64.5
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 31627.56
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 65,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 31628,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 15814,
+     "recoverableValue": 15814,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 0,
+     "policyMatch": 70,
+     "documentation": 69.4,
+     "codingIntegrity": 100,
+     "requiredAttachments": 55.8,
+     "administrativeCompleteness": 61
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 52,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 17000,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89.5,
+     "policyMatch": 15.4,
+     "documentation": 38.9,
+     "codingIntegrity": 70,
+     "requiredAttachments": 85.6,
+     "administrativeCompleteness": 80.9
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 40,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 40,
+     "revenueAtRisk": 1120,
+     "recoverableValue": 1120,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89.5,
+     "policyMatch": 10,
+     "documentation": 5,
+     "codingIntegrity": 93.2,
+     "requiredAttachments": 17,
+     "administrativeCompleteness": 94
+    },
+    "rules": [
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 808,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 51,
+     "policyMatch": 60,
+     "documentation": 5.3,
+     "codingIntegrity": 40,
+     "requiredAttachments": 12,
+     "administrativeCompleteness": 60
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 9683.93
+   },
+   "output": {
+    "ruleScore": 38,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 41,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 9684,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 8231,
+     "recoverableValue": 6173,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 38.8,
+     "policyMatch": 21,
+     "documentation": 90,
+     "codingIntegrity": 40.9,
+     "requiredAttachments": 3,
+     "administrativeCompleteness": 28
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 38,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 62,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 62,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 87,
+     "policyMatch": 54,
+     "documentation": 89.5,
+     "codingIntegrity": 40,
+     "requiredAttachments": 64,
+     "administrativeCompleteness": 52
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 8100.84
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 88,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 8101,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 4051,
+     "recoverableValue": 3565,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 79,
+     "policyMatch": 79.4,
+     "documentation": 56,
+     "codingIntegrity": 1,
+     "requiredAttachments": 47,
+     "administrativeCompleteness": 78
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 17,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 405,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 9.6,
+     "policyMatch": 70,
+     "documentation": 74.6,
+     "codingIntegrity": 40,
+     "requiredAttachments": 66,
+     "administrativeCompleteness": 86
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 83,
+    "overall": {
+     "overallScore": 48,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 52,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 52,
+     "revenueAtRisk": 35360,
+     "recoverableValue": 29349,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 100,
+     "policyMatch": 22,
+     "documentation": 88,
+     "codingIntegrity": 95,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 43
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 72,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 34,
+     "policyMatch": 20,
+     "documentation": 97.4,
+     "codingIntegrity": 24,
+     "requiredAttachments": 10,
+     "administrativeCompleteness": 20.3
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 35,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 808,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 70,
+     "policyMatch": 89.5,
+     "documentation": 40,
+     "codingIntegrity": 60.7,
+     "requiredAttachments": 89.5,
+     "administrativeCompleteness": 30
+    },
+    "rules": [
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 37,
+     "policyMatch": 67.1,
+     "documentation": 87.8,
+     "codingIntegrity": 62,
+     "requiredAttachments": 0,
+     "administrativeCompleteness": 59.7
+    },
+    "rules": [
+     "FAILED",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 78.8,
+     "policyMatch": 40,
+     "documentation": 94.8,
+     "codingIntegrity": 73,
+     "requiredAttachments": 25,
+     "administrativeCompleteness": 23.8
+    },
+    "rules": [
+     "FAILED",
+     "FAILED",
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 19483.55
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 19484,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 16561,
+     "recoverableValue": 11096,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 1,
+     "policyMatch": 70,
+     "documentation": 12,
+     "codingIntegrity": 43,
+     "requiredAttachments": 59.5,
+     "administrativeCompleteness": 60.5
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 11710.35
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 35,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 11710,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 9954,
+     "recoverableValue": 4977,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 27,
+     "policyMatch": 43,
+     "documentation": 73.5,
+     "codingIntegrity": 6.9,
+     "requiredAttachments": 10.3,
+     "administrativeCompleteness": 13
+    },
+    "rules": [
+     "PASSED",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 33,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 99.5,
+     "policyMatch": 46,
+     "documentation": 92,
+     "codingIntegrity": 9.3,
+     "requiredAttachments": 50.5,
+     "administrativeCompleteness": 12
+    },
+    "rules": [
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 45797.65
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 45798,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 38928,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 90,
+     "policyMatch": 63,
+     "documentation": 1.3,
+     "codingIntegrity": 2,
+     "requiredAttachments": 100,
+     "administrativeCompleteness": 48.9
+    },
+    "rules": [
+     "FAILED",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 17,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 20808,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 55,
+     "policyMatch": 78,
+     "documentation": 41,
+     "codingIntegrity": 100,
+     "requiredAttachments": 84.5,
+     "administrativeCompleteness": 66.2
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 77.7,
+     "policyMatch": 68,
+     "documentation": 58.6,
+     "codingIntegrity": 69,
+     "requiredAttachments": 94,
+     "administrativeCompleteness": 53
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 36833.58
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 36834,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 18417,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60.5,
+     "policyMatch": 86.1,
+     "documentation": 77,
+     "codingIntegrity": 74,
+     "requiredAttachments": 69,
+     "administrativeCompleteness": 98
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 74,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 26,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 26,
+     "revenueAtRisk": 728,
+     "recoverableValue": 728,
+     "priority": "LOW"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 71,
+     "policyMatch": 56.3,
+     "documentation": 11.6,
+     "codingIntegrity": 21.9,
+     "requiredAttachments": 19.5,
+     "administrativeCompleteness": 89.5
+    },
+    "rules": [],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 63,
+    "overall": {
+     "overallScore": 47,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 53,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 53,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 36,
+     "policyMatch": 27.3,
+     "documentation": 46.3,
+     "codingIntegrity": 69.5,
+     "requiredAttachments": 34.4,
+     "administrativeCompleteness": 83.4
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 43,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 57,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 57,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60.5,
+     "policyMatch": 11.3,
+     "documentation": 26.8,
+     "codingIntegrity": 43.7,
+     "requiredAttachments": 22,
+     "administrativeCompleteness": 59.5
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 19404.31
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 37,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 63,
+    "revenueRisk": {
+     "financialValue": 19404,
+     "denialRiskPercentage": 63,
+     "revenueAtRisk": 12225,
+     "recoverableValue": 6113,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 26.9,
+     "policyMatch": 97,
+     "documentation": 100,
+     "codingIntegrity": 89.5,
+     "requiredAttachments": 18,
+     "administrativeCompleteness": 83
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 38,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 14450,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 12.9,
+     "policyMatch": 58,
+     "documentation": 74,
+     "codingIntegrity": 53.8,
+     "requiredAttachments": 42,
+     "administrativeCompleteness": 97
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 47,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 53,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 53,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 60,
+     "policyMatch": 29.4,
+     "documentation": 70,
+     "codingIntegrity": 59.5,
+     "requiredAttachments": 89,
+     "administrativeCompleteness": 50.5
+    },
+    "rules": [
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 61200,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 59.5,
+     "policyMatch": 100,
+     "documentation": 98,
+     "codingIntegrity": 90,
+     "requiredAttachments": 65,
+     "administrativeCompleteness": 45.4
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 83,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 80,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 1400,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 19.8,
+     "policyMatch": 11,
+     "documentation": 23.2,
+     "codingIntegrity": 11,
+     "requiredAttachments": 91.1,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 38,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 23,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 68.9,
+     "policyMatch": 20.1,
+     "documentation": 5,
+     "codingIntegrity": 66.7,
+     "requiredAttachments": 49.5,
+     "administrativeCompleteness": 50
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 63,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 44,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 61200,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 49.2,
+     "policyMatch": 64.5,
+     "documentation": 11,
+     "codingIntegrity": 28.4,
+     "requiredAttachments": 22,
+     "administrativeCompleteness": 69
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 42,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 71,
+     "policyMatch": 55.3,
+     "documentation": 93,
+     "codingIntegrity": 89.5,
+     "requiredAttachments": 63,
+     "administrativeCompleteness": 60.2
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 59.5,
+     "policyMatch": 26,
+     "documentation": 69.4,
+     "codingIntegrity": 4,
+     "requiredAttachments": 52.2,
+     "administrativeCompleteness": 83
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 83,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 55,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 55,
+     "revenueAtRisk": 79200,
+     "recoverableValue": 39600,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 6.3,
+     "policyMatch": 60.9,
+     "documentation": 47.7,
+     "codingIntegrity": 40,
+     "requiredAttachments": 81,
+     "administrativeCompleteness": 34.3
+    },
+    "rules": [
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 40,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 60,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 60,
+     "revenueAtRisk": 1680,
+     "recoverableValue": 840,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 31,
+     "policyMatch": 71,
+     "documentation": 26.9,
+     "codingIntegrity": 87,
+     "requiredAttachments": 73.3,
+     "administrativeCompleteness": 85
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 56,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 44,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 44,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 62.7,
+     "policyMatch": 24.3,
+     "documentation": 38.3,
+     "codingIntegrity": 50,
+     "requiredAttachments": 33,
+     "administrativeCompleteness": 7
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 83,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 42,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 58,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 58,
+     "revenueAtRisk": 39440,
+     "recoverableValue": 19720,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89.5,
+     "policyMatch": 37.6,
+     "documentation": 99,
+     "codingIntegrity": 69,
+     "requiredAttachments": 74.9,
+     "administrativeCompleteness": 0
+    },
+    "rules": [
+     "PASSED",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 57,
+     "policyMatch": 8,
+     "documentation": 46,
+     "codingIntegrity": 53.5,
+     "requiredAttachments": 49.5,
+     "administrativeCompleteness": 85.5
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 43,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 595,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 75,
+     "policyMatch": 86,
+     "documentation": 26,
+     "codingIntegrity": 28.6,
+     "requiredAttachments": 89.5,
+     "administrativeCompleteness": 60.5
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 54000,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 89,
+     "policyMatch": 16.3,
+     "documentation": 44,
+     "codingIntegrity": 94,
+     "requiredAttachments": 75.9,
+     "administrativeCompleteness": 83.5
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "FOUND",
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1190,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 46.9,
+     "policyMatch": 96.5,
+     "documentation": 13.3,
+     "codingIntegrity": 62.4,
+     "requiredAttachments": 41,
+     "administrativeCompleteness": 70
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 46.6,
+     "policyMatch": 55.8,
+     "documentation": 65,
+     "codingIntegrity": 92.6,
+     "requiredAttachments": 69.5,
+     "administrativeCompleteness": 93
+    },
+    "rules": [
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 63,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 950,
+     "recoverableValue": 637,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 38,
+     "policyMatch": 95,
+     "documentation": 76.1,
+     "codingIntegrity": 80,
+     "requiredAttachments": 59.5,
+     "administrativeCompleteness": 42.4
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 63,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 69.5,
+     "policyMatch": 60.5,
+     "documentation": 17,
+     "codingIntegrity": 60.5,
+     "requiredAttachments": 0,
+     "administrativeCompleteness": 20
+    },
+    "rules": [
+     "FAILED",
+     "FAILED",
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 13,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 49,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 41,
+     "policyMatch": 43,
+     "documentation": 38,
+     "codingIntegrity": 60.5,
+     "requiredAttachments": 69.5,
+     "administrativeCompleteness": 1
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 55,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 55,
+     "revenueAtRisk": 1540,
+     "recoverableValue": 1155,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 10,
+     "documentation": 41.8,
+     "codingIntegrity": 8,
+     "requiredAttachments": 0,
+     "administrativeCompleteness": 90
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 29,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 71,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 71,
+     "revenueAtRisk": 1988,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 82,
+     "policyMatch": 94,
+     "documentation": 60,
+     "codingIntegrity": 39,
+     "requiredAttachments": 48,
+     "administrativeCompleteness": 89
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1785,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 19.4,
+     "policyMatch": 81.7,
+     "documentation": 75.1,
+     "codingIntegrity": 32,
+     "requiredAttachments": 44,
+     "administrativeCompleteness": 29
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 48,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 52,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 52,
+     "revenueAtRisk": 74880,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 53.3,
+     "policyMatch": 44.2,
+     "documentation": 83.7,
+     "codingIntegrity": 53,
+     "requiredAttachments": 94.7,
+     "administrativeCompleteness": 100
+    },
+    "rules": [
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING"
+    ],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 1190,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 82.9,
+     "policyMatch": 0,
+     "documentation": 3.7,
+     "codingIntegrity": 23,
+     "requiredAttachments": 61,
+     "administrativeCompleteness": 59
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 38,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 62,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 62,
+     "revenueAtRisk": 1178,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 13,
+     "policyMatch": 25.3,
+     "documentation": 39.7,
+     "codingIntegrity": 93.8,
+     "requiredAttachments": 65,
+     "administrativeCompleteness": 14.4
+    },
+    "rules": [
+     "WARNING",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 37,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 28.3,
+     "policyMatch": 87.2,
+     "documentation": 50.5,
+     "codingIntegrity": 70,
+     "requiredAttachments": 28,
+     "administrativeCompleteness": 31
+    },
+    "rules": [
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": 67,
+    "overall": {
+     "overallScore": 53,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 47,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 47,
+     "revenueAtRisk": 67680,
+     "recoverableValue": 45346,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 94,
+     "policyMatch": 89,
+     "documentation": 26,
+     "codingIntegrity": 74.1,
+     "requiredAttachments": 91,
+     "administrativeCompleteness": 1.6
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": "FAILED_MANDATORY_RULE"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 91800,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 70,
+     "policyMatch": 69.4,
+     "documentation": 100,
+     "codingIntegrity": 94,
+     "requiredAttachments": 24.2,
+     "administrativeCompleteness": 49.5
+    },
+    "rules": [
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 100,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 72,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 28,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 28,
+     "revenueAtRisk": 19040,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 23,
+     "policyMatch": 12,
+     "documentation": 49.5,
+     "codingIntegrity": 40,
+     "requiredAttachments": 84,
+     "administrativeCompleteness": 94
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 25268.74
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 36,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 25269,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 21479,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 2.2,
+     "policyMatch": 2,
+     "documentation": 99.5,
+     "codingIntegrity": 55.9,
+     "requiredAttachments": 80,
+     "administrativeCompleteness": 84
+    },
+    "rules": [],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 37,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 63,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 63,
+     "revenueAtRisk": 42840,
+     "recoverableValue": 21420,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 11,
+     "policyMatch": 69.4,
+     "documentation": 99.5,
+     "codingIntegrity": 48,
+     "requiredAttachments": 1.8,
+     "administrativeCompleteness": 52.3
+    },
+    "rules": [
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 46,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 62.5,
+     "policyMatch": 49,
+     "documentation": 0.2,
+     "codingIntegrity": 69,
+     "requiredAttachments": 70,
+     "administrativeCompleteness": 54.2
+    },
+    "rules": [
+     "PASSED",
+     "WARNING",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 38,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 59.5,
+     "policyMatch": 90,
+     "documentation": 49.5,
+     "codingIntegrity": 26,
+     "requiredAttachments": 32,
+     "administrativeCompleteness": 61.2
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 11.5,
+     "policyMatch": 30,
+     "documentation": 84,
+     "codingIntegrity": 56,
+     "requiredAttachments": 76,
+     "administrativeCompleteness": 100
+    },
+    "rules": [
+     "FAILED",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING",
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 33,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 57800,
+     "recoverableValue": 19074,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 5,
+     "policyMatch": 28.5,
+     "documentation": 40,
+     "codingIntegrity": 49.5,
+     "requiredAttachments": 32.6,
+     "administrativeCompleteness": 8
+    },
+    "rules": [
+     "FAILED",
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 26,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 122400,
+     "recoverableValue": 30600,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 45,
+     "policyMatch": 0,
+     "documentation": 76,
+     "codingIntegrity": 39.9,
+     "requiredAttachments": 81.3,
+     "administrativeCompleteness": 52
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 42,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 58,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 58,
+     "revenueAtRisk": 83520,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 90,
+     "policyMatch": 50,
+     "documentation": 71.2,
+     "codingIntegrity": 91,
+     "requiredAttachments": 20.1,
+     "administrativeCompleteness": 70
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 144000
+   },
+   "output": {
+    "ruleScore": 75,
+    "evidenceScore": 38,
+    "overall": {
+     "overallScore": 69,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 144000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 72000,
+     "recoverableValue": 27360,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 61,
+     "policyMatch": 99,
+     "documentation": 78,
+     "codingIntegrity": 11.2,
+     "requiredAttachments": 6.3,
+     "administrativeCompleteness": 48.2
+    },
+    "rules": [
+     "FAILED",
+     "FAILED",
+     "PASSED",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "MISSING",
+     "MISSING"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 17,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 275,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 69.5,
+     "policyMatch": 69.4,
+     "documentation": 72,
+     "codingIntegrity": 24,
+     "requiredAttachments": 48.1,
+     "administrativeCompleteness": 58
+    },
+    "rules": [
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 75.2,
+     "policyMatch": 100,
+     "documentation": 72,
+     "codingIntegrity": 10.3,
+     "requiredAttachments": 70.2,
+     "administrativeCompleteness": 36.2
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": 83,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 28220,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 2,
+     "policyMatch": 59.5,
+     "documentation": 98,
+     "codingIntegrity": 59.5,
+     "requiredAttachments": 29.7,
+     "administrativeCompleteness": 50.6
+    },
+    "rules": [
+     "WARNING"
+    ],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 55,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 55,
+     "revenueAtRisk": 1540,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 5.4,
+     "policyMatch": 17.4,
+     "documentation": 7,
+     "codingIntegrity": 64,
+     "requiredAttachments": 87,
+     "administrativeCompleteness": 95
+    },
+    "rules": [
+     "WARNING",
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "FOUND"
+    ],
+    "financialValue": 33789.21
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 30,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 33789,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 28721,
+     "recoverableValue": 14361,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 80.4,
+     "policyMatch": 50.2,
+     "documentation": 97.8,
+     "codingIntegrity": 87,
+     "requiredAttachments": 87.4,
+     "administrativeCompleteness": 57
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 76,
+     "gateApplied": null
+    },
+    "label": "Action Recommended",
+    "denialRisk": 24,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 24,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "LOW"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 79.7,
+     "policyMatch": 47,
+     "documentation": 59.5,
+     "codingIntegrity": 50,
+     "requiredAttachments": 37.1,
+     "administrativeCompleteness": 99.5
+    },
+    "rules": [
+     "WARNING",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 67,
+    "evidenceScore": 83,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "MEDIUM"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 70,
+     "policyMatch": 92.1,
+     "documentation": 40,
+     "codingIntegrity": 33.9,
+     "requiredAttachments": 49.6,
+     "administrativeCompleteness": 69.4
+    },
+    "rules": [
+     "FAILED",
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "PARTIAL",
+     "PARTIAL"
+    ],
+    "financialValue": 12507.46
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 12507,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 10631,
+     "recoverableValue": 5316,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 69.5,
+     "policyMatch": 19.4,
+     "documentation": 40,
+     "codingIntegrity": 46,
+     "requiredAttachments": 62,
+     "administrativeCompleteness": 5.9
+    },
+    "rules": [
+     "FAILED",
+     "PASSED",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL"
+    ],
+    "financialValue": 14998.65
+   },
+   "output": {
+    "ruleScore": 25,
+    "evidenceScore": 25,
+    "overall": {
+     "overallScore": 45,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 14999,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 12749,
+     "recoverableValue": 3187,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 24,
+     "documentation": 76.9,
+     "codingIntegrity": 89.5,
+     "requiredAttachments": 90,
+     "administrativeCompleteness": 16
+    },
+    "rules": [
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [],
+    "financialValue": 2800
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 56,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 2800,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 2380,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 23.5,
+     "policyMatch": 40.9,
+     "documentation": 59,
+     "codingIntegrity": 37,
+     "requiredAttachments": 60.5,
+     "administrativeCompleteness": 11
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "MISSING",
+     "PARTIAL",
+     "MISSING"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 17,
+    "overall": {
+     "overallScore": 38,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 275,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 12,
+     "policyMatch": 11,
+     "documentation": 8,
+     "codingIntegrity": 95.6,
+     "requiredAttachments": 50,
+     "administrativeCompleteness": 69.5
+    },
+    "rules": [
+     "WARNING",
+     "FAILED",
+     "WARNING",
+     "PASSED"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND",
+     "PARTIAL"
+    ],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 83,
+    "overall": {
+     "overallScore": 30,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 1340,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 32,
+     "policyMatch": 10.6,
+     "documentation": 98,
+     "codingIntegrity": 35.9,
+     "requiredAttachments": 6,
+     "administrativeCompleteness": 60.5
+    },
+    "rules": [
+     "PASSED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 1900
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 36,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 1900,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 1615,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 24,
+     "policyMatch": 80.2,
+     "documentation": 69.5,
+     "codingIntegrity": 89,
+     "requiredAttachments": 41.6,
+     "administrativeCompleteness": 92
+    },
+    "rules": [
+     "FAILED"
+    ],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 0,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 60,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 34.9,
+     "policyMatch": 60.5,
+     "documentation": 51,
+     "codingIntegrity": 52,
+     "requiredAttachments": 59.5,
+     "administrativeCompleteness": 60
+    },
+    "rules": [
+     "FAILED",
+     "PASSED"
+    ],
+    "evidence": [
+     "MISSING"
+    ],
+    "financialValue": 39873.55
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 0,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 39874,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 33893,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 12.1,
+     "policyMatch": 73,
+     "documentation": 2,
+     "codingIntegrity": 6.3,
+     "requiredAttachments": 69.5,
+     "administrativeCompleteness": 80.3
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "FAILED"
+    ],
+    "evidence": [],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 33,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 34,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 31,
+     "policyMatch": 69,
+     "documentation": 69.5,
+     "codingIntegrity": 29,
+     "requiredAttachments": 95.3,
+     "administrativeCompleteness": 13.7
+    },
+    "rules": [],
+    "evidence": [],
+    "financialValue": 68000
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": null,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 68000,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 34000,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 76.9,
+     "policyMatch": 42.2,
+     "documentation": 90,
+     "codingIntegrity": 0,
+     "requiredAttachments": 14.9,
+     "administrativeCompleteness": 49.3
+    },
+    "rules": [
+     "PASSED",
+     "FAILED",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "PARTIAL",
+     "PARTIAL",
+     "FOUND"
+    ],
+    "financialValue": 0
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 75,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 85,
+    "revenueRisk": {
+     "financialValue": 0,
+     "denialRiskPercentage": 85,
+     "revenueAtRisk": 0,
+     "recoverableValue": 0,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 50,
+     "policyMatch": 69.5,
+     "documentation": 69.4,
+     "codingIntegrity": 69.4,
+     "requiredAttachments": 4,
+     "administrativeCompleteness": 96.5
+    },
+    "rules": [],
+    "evidence": [
+     "PARTIAL"
+    ],
+    "financialValue": 37227.57
+   },
+   "output": {
+    "ruleScore": null,
+    "evidenceScore": 50,
+    "overall": {
+     "overallScore": 50,
+     "gateApplied": "INVALID_CODING"
+    },
+    "label": "Action Required",
+    "denialRisk": 50,
+    "revenueRisk": {
+     "financialValue": 37228,
+     "denialRiskPercentage": 50,
+     "revenueAtRisk": 18614,
+     "recoverableValue": 9307,
+     "priority": "HIGH"
+    }
+   }
+  },
+  {
+   "input": {
+    "components": {
+     "clinicalEvidence": 47.1,
+     "policyMatch": 49.5,
+     "documentation": 50,
+     "codingIntegrity": 38,
+     "requiredAttachments": 4,
+     "administrativeCompleteness": 78
+    },
+    "rules": [
+     "WARNING",
+     "WARNING"
+    ],
+    "evidence": [
+     "FOUND",
+     "FOUND"
+    ],
+    "financialValue": 12576.54
+   },
+   "output": {
+    "ruleScore": 50,
+    "evidenceScore": 100,
+    "overall": {
+     "overallScore": 44,
+     "gateApplied": null
+    },
+    "label": "Action Required",
+    "denialRisk": 56,
+    "revenueRisk": {
+     "financialValue": 12577,
+     "denialRiskPercentage": 56,
+     "revenueAtRisk": 7043,
+     "recoverableValue": 7043,
+     "priority": "MEDIUM"
+    }
+   }
+  }
+ ]
+}
