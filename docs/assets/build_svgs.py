@@ -1,6 +1,10 @@
 """Generates the README illustrations in docs/assets/.
 
 Run:  python3 docs/assets/build_svgs.py [path/to/shield.png]
+      node docs/assets/render_png.cjs        (rasterises each SVG to a 2x PNG used by the README)
+
+The README embeds the PNGs so the text renders identically on every device
+(SVG text depends on the viewer's installed Arabic fonts).
 All SVGs are self-contained (no external fonts or images) so they render on GitHub.
 """
 import base64
@@ -103,14 +107,14 @@ def hero(shield_b64):
   <animate attributeName="y" values="93;277;93" dur="5s" repeatCount="indefinite"/>
 </rect>
 
-<rect x="56" y="58" width="300" height="30" rx="15" fill="{C['cyan']}" fill-opacity="0.1" stroke="{C['cyan']}" stroke-opacity="0.4"/>
+<rect x="56" y="58" width="362" height="30" rx="15" fill="{C['cyan']}" fill-opacity="0.1" stroke="{C['cyan']}" stroke-opacity="0.4"/>
 <text x="72" y="78" font-family="{EN}" font-size="13" font-weight="700" letter-spacing="2" fill="{C['cyan']}">AI · SAUDI HEALTHCARE · NPHIES-READY</text>
 
-<text x="56" y="205" font-family="{AR}" font-size="104" font-weight="800" fill="url(#gold)" filter="url(#glow)">مُجاز</text>
-<text x="60" y="262" font-family="{EN}" font-size="40" font-weight="800" letter-spacing="12" fill="{C['text']}">MUJEAZ</text>
-<text x="60" y="300" font-family="{EN}" font-size="19" fill="{C['muted']}">Revenue Assurance &amp; Prior-Authorization</text>
-<text x="60" y="326" font-family="{EN}" font-size="19" fill="{C['muted']}">Command Center</text>
-<text x="60" y="368" text-anchor="end" direction="rtl" font-family="{AR}" font-size="21" font-weight="700" fill="{C['emerald']}">نمنع الرفض. نحمي الإيراد. نستعيد المفقود.</text>
+<text x="56" y="182" font-family="{AR}" font-size="96" font-weight="800" fill="url(#gold)" filter="url(#glow)">مُجاز</text>
+<text x="60" y="270" font-family="{EN}" font-size="40" font-weight="800" letter-spacing="12" fill="{C['text']}">MUJEAZ</text>
+<text x="60" y="306" font-family="{EN}" font-size="19" fill="{C['muted']}">Revenue Assurance &amp; Prior-Authorization</text>
+<text x="60" y="331" font-family="{EN}" font-size="19" fill="{C['muted']}">Command Center</text>
+<text x="60" y="372" text-anchor="end" direction="rtl" font-family="{AR}" font-size="21" font-weight="700" fill="{C['emerald']}">نمنع الرفض. نحمي الإيراد. نستعيد المفقود.</text>
 {pill_svg}
 """
     return frame(w, h, body, extra)
@@ -286,11 +290,49 @@ def architecture():
     return frame(w, h, body)
 
 
+# --------------------------------------------------------------------------- badges
+def badges():
+    items = [("STATUS", "Prototype", C["amber"]), ("REACT", "19", C["cyan"]), ("TYPESCRIPT", "5.8", C["blue"]),
+             ("GEMINI", "Structured output", C["violet"]), ("HL7 FHIR", "R4", C["rose"]),
+             ("UI", "Arabic RTL first", C["emerald"]), ("LICENSE", "Apache 2.0", C["gold"])]
+    w = 900
+    rows, row, x = [], [], 0
+    widths = []
+    for k, v, col in items:
+        kw = len(k) * 10.5 + 26
+        vw = len(v) * 9.2 + 28
+        widths.append((k, v, col, kw, vw))
+    # greedy wrap into rows that fit inside the canvas
+    for it in widths:
+        need = it[3] + it[4] + (14 if row else 0)
+        if x + need > w - 60 and row:
+            rows.append(row); row, x = [], 0
+            need = it[3] + it[4]
+        row.append(it); x += need
+    rows.append(row)
+    h = 40 + len(rows) * 58
+    body = ""
+    for r, items_r in enumerate(rows):
+        total = sum(k + v for *_, k, v in items_r) + 14 * (len(items_r) - 1)
+        x = (w - total) / 2
+        y = 30 + r * 58
+        for k, v, col, kw, vw in items_r:
+            body += f"""
+<rect x="{x}" y="{y}" width="{kw+vw}" height="40" rx="10" fill="{C['card']}" stroke="{col}" stroke-opacity="0.55"/>
+<path d="M{x+kw} {y} H{x+kw+vw-10} a10 10 0 0 1 10 10 V{y+30} a10 10 0 0 1 -10 10 H{x+kw} Z" fill="{col}" fill-opacity="0.18"/>
+<text x="{x+13}" y="{y+26}" font-family="{EN}" font-size="14" font-weight="800" letter-spacing="1.5" fill="{C['muted']}">{k}</text>
+<text x="{x+kw+13}" y="{y+26}" font-family="{EN}" font-size="15" font-weight="800" fill="{col}">{v}</text>"""
+            x += kw + vw + 14
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}">{body}
+</svg>
+"""
+
+
 def main():
     shield = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else OUT / "shield.png"
     b64 = base64.b64encode(shield.read_bytes()).decode()
     files = {"hero.svg": hero(b64), "agents.svg": agents(), "readiness.svg": readiness(),
-             "evidence-hunter.svg": twin(), "architecture.svg": architecture()}
+             "evidence-hunter.svg": twin(), "architecture.svg": architecture(), "badges.svg": badges()}
     for name, svg in files.items():
         (OUT / name).write_text(svg, encoding="utf-8")
         print(name, len(svg) // 1024, "KB")

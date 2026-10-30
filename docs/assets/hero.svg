@@ -40,14 +40,14 @@
   <animate attributeName="y" values="93;277;93" dur="5s" repeatCount="indefinite"/>
 </rect>
 
-<rect x="56" y="58" width="300" height="30" rx="15" fill="#22D3EE" fill-opacity="0.1" stroke="#22D3EE" stroke-opacity="0.4"/>
+<rect x="56" y="58" width="362" height="30" rx="15" fill="#22D3EE" fill-opacity="0.1" stroke="#22D3EE" stroke-opacity="0.4"/>
 <text x="72" y="78" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="2" fill="#22D3EE">AI · SAUDI HEALTHCARE · NPHIES-READY</text>
 
-<text x="56" y="205" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="104" font-weight="800" fill="url(#gold)" filter="url(#glow)">مُجاز</text>
-<text x="60" y="262" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="800" letter-spacing="12" fill="#E8EEF8">MUJEAZ</text>
-<text x="60" y="300" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#8EA4C2">Revenue Assurance &amp; Prior-Authorization</text>
-<text x="60" y="326" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#8EA4C2">Command Center</text>
-<text x="60" y="368" text-anchor="end" direction="rtl" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="21" font-weight="700" fill="#10B981">نمنع الرفض. نحمي الإيراد. نستعيد المفقود.</text>
+<text x="56" y="182" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="96" font-weight="800" fill="url(#gold)" filter="url(#glow)">مُجاز</text>
+<text x="60" y="270" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="800" letter-spacing="12" fill="#E8EEF8">MUJEAZ</text>
+<text x="60" y="306" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#8EA4C2">Revenue Assurance &amp; Prior-Authorization</text>
+<text x="60" y="331" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#8EA4C2">Command Center</text>
+<text x="60" y="372" text-anchor="end" direction="rtl" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="21" font-weight="700" fill="#10B981">نمنع الرفض. نحمي الإيراد. نستعيد المفقود.</text>
 
   <g>
     <rect x="28.0" y="412" width="148" height="66" rx="16" fill="#0D1E36" stroke="#22D3EE" stroke-opacity="0.55"/>

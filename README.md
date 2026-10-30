@@ -1,16 +1,10 @@
 <div align="center">
 
-<img src="docs/assets/hero.svg" alt="مُجاز Mujeaz — Revenue Assurance & Prior-Authorization Command Center" width="100%"/>
+<img src="docs/assets/hero.png" alt="مُجاز Mujeaz — Revenue Assurance & Prior-Authorization Command Center" width="100%"/>
 
 <br/>
 
-<img src="https://img.shields.io/badge/Status-Prototype-F59E0B?style=for-the-badge" alt="Status: prototype"/>
-<img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19"/>
-<img src="https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
-<img src="https://img.shields.io/badge/Gemini-Structured%20Output-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini"/>
-<img src="https://img.shields.io/badge/HL7%20FHIR-R4-E34F26?style=for-the-badge" alt="HL7 FHIR R4"/>
-<img src="https://img.shields.io/badge/UI-Arabic%20RTL%20First-10B981?style=for-the-badge" alt="Arabic RTL first"/>
-<img src="https://img.shields.io/badge/License-Apache%202.0-0A1D38?style=for-the-badge" alt="Apache 2.0"/>
+<img src="docs/assets/badges.png" alt="Status: prototype · React 19 · TypeScript 5.8 · Gemini structured output · HL7 FHIR R4 · Arabic RTL first · Apache 2.0" width="100%"/>
 
 <br/><br/>
 
@@ -72,7 +66,7 @@ Mujeaz             Understand → Validate → Predict → Complete → Submit �
 ## 🧠 How it works
 
 <p align="center">
-  <img src="docs/assets/agents.svg" alt="Six specialised agents A1 to A6" width="100%"/>
+  <img src="docs/assets/agents.png" alt="Six specialised agents A1 to A6" width="100%"/>
 </p>
 
 Each agent has one job, a typed output, and an audit trail. Language understanding comes from the LLM; **anything that decides a number or a rule outcome is deterministic and testable**.
@@ -96,7 +90,7 @@ Each agent has one job, a typed output, and an audit trail. Language understandi
 ### See it on a real case
 
 <p align="center">
-  <img src="docs/assets/evidence-hunter.svg" alt="Evidence Hunter before and after: readiness 74 to 98, denial risk 78% to 5%" width="100%"/>
+  <img src="docs/assets/evidence-hunter.png" alt="Evidence Hunter before and after: readiness 74 to 98, denial risk 78% to 5%" width="100%"/>
 </p>
 
 The physician already documented six physiotherapy sessions — just not in this request. **A2** finds them in Encounter #1820, attaches them with source and date, and the request moves from *Action Required* to *Decision Ready* before it ever reaches the payer.
@@ -106,7 +100,7 @@ The physician already documented six physiotherapy sessions — just not in this
 ## 🎯 Mujeaz Readiness Score
 
 <p align="center">
-  <img src="docs/assets/readiness.svg" alt="Readiness Score 98 out of 100 with six weighted components" width="100%"/>
+  <img src="docs/assets/readiness.png" alt="Readiness Score 98 out of 100 with six weighted components" width="100%"/>
 </p>
 
 - **Readiness, not a promise.** It measures how complete a request is — never the probability that a payer approves it.
@@ -156,7 +150,7 @@ All screens are bilingual, with Arabic RTL as the default.
 ## 🏗️ Architecture
 
 <p align="center">
-  <img src="docs/assets/architecture.svg" alt="Prototype architecture and production target" width="100%"/>
+  <img src="docs/assets/architecture.png" alt="Prototype architecture and production target" width="100%"/>
 </p>
 
 ---
@@ -287,14 +281,20 @@ Full requirements, formulas, data model, gap analysis and proposed features: **[
 
 <div align="center">
 
-<img src="docs/assets/shield.png" alt="Mujeaz shield" width="110"/>
+<img src="docs/assets/shield.png" alt="Mujeaz shield" width="96"/>
 
-### Yazeed Hamad Alharthi · يزيد حمد الحارثي
+### Yazeed Hamad Alharthi
 
-Designed & built in Saudi Arabia 🇸🇦
+### يزيد حمد الحارثي
 
-[![GitHub](https://img.shields.io/badge/GitHub-4--u1-181717?style=for-the-badge&logo=github)](https://github.com/4-u1)
+Designed &amp; built in Saudi Arabia 🇸🇦
 
-<sub>Apache 2.0 · مُجاز — نمنع الرفض. نحمي الإيراد. نستعيد المفقود.</sub>
+[github.com/4-u1](https://github.com/4-u1)
+
+<br/>
+
+<p dir="rtl"><b>مُجاز — نمنع الرفض. نحمي الإيراد. نستعيد المفقود.</b></p>
+
+<sub>Licensed under Apache 2.0</sub>
 
 </div>
