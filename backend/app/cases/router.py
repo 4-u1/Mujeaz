@@ -12,6 +12,7 @@ from sqlalchemy.sql import bindparam
 
 from app.audit import service as audit
 from app.cases import repository as repo
+from app.cases import workspace
 from app.cases.state_machine import CaseStatus, IllegalTransition, get_transition
 from app.security.deps import CurrentUser, current_user, require, tenant_conn
 from app.security.rbac import Permission, permissions_for
@@ -244,3 +245,25 @@ def audit_verify(
     if conn.execute(text("SELECT 1 FROM authorization_requests WHERE id = :id"), {"id": cid}).first() is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Case not found")
     return audit.verify(conn, cid)
+
+
+@router.get("/queue")
+def work_queue(
+    limit: int = Query(default=100, ge=1, le=500),
+    _: CurrentUser = Depends(require(Permission.CASE_READ)),
+    conn: Connection = Depends(tenant_conn),
+) -> dict[str, Any]:
+    items = workspace.queue(conn, limit=limit)
+    return {"items": items, "total": len(items), "formula": workspace.FORMULA, "formulaAr": workspace.FORMULA_AR}
+
+
+@router.get("/cases/{case_id}/documents")
+def case_documents(
+    case_id: str,
+    _: CurrentUser = Depends(require(Permission.CASE_READ)),
+    conn: Connection = Depends(tenant_conn),
+) -> dict[str, Any]:
+    body = workspace.documents(conn, _uuid(case_id))
+    if body is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, "Case not found")
+    return body

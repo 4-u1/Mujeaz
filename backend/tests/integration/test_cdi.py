@@ -109,6 +109,30 @@ def test_full_loop_to_the_submission_gate(client, login) -> None:  # type: ignor
     assert client.get(f"/api/audit/{cid}/verify", headers=auditor).json()["valid"] is True
 
 
+def test_queue_and_document_viewer(client, login) -> None:  # type: ignore[no-untyped-def]
+    h = login("sara.auth")
+    body = client.get("/api/queue", headers=h).json()
+    items = body["items"]
+    assert body["formula"].startswith("amount")
+    assert [i["priority"] for i in items] == sorted((i["priority"] for i in items), reverse=True)
+    assert all(i["status"] in ("DRAFT", "RISK_DETECTED", "EVIDENCE_SEARCHING", "DECISION_READY") for i in items)
+    unanalyzed = next(i for i in items if not i["analyzed"])
+    assert unanalyzed["amountBasis"] == "full_value" and unanalyzed["nextAction"] == "Analyze"
+
+    case = next(c for c in FIXABLE if ANN[c]["scenario"] == "missing")
+    cid = _ids(client, h)[case]
+    docs = client.get(f"/api/cases/{cid}/documents", headers=h).json()
+    by_ref = {d["docRef"]: d for d in docs["documents"]}
+    addendum = by_ref[f"{case}-ADD1"]
+    assert addendum["postRequestAddendum"] is True and addendum["signedAt"]
+    assert docs["documents"][-1]["docRef"] == f"{case}-ADD1"  # addenda listed after the record
+    for f in docs["facts"]:
+        assert by_ref[f["docRef"]]["content"][f["start"]:f["end"]]
+        assert f["utf16End"] >= f["end"]
+    assert docs["retrieved"][R1]
+    assert client.get("/api/cases/00000000-0000-4000-8000-00000000ffff/documents", headers=h).status_code == 404
+
+
 def test_query_permissions_validation_and_decline(client, login) -> None:  # type: ignore[no-untyped-def]
     run_seed(reset=True)
     login.cache.clear()
