@@ -19,15 +19,19 @@ RULE_CODE = {"R1_conservative_therapy_6w": "DPA-LUMBAR-POL-04", "R2_diagnosis_pr
 
 
 @pytest.fixture(scope="module", autouse=True)
-def fresh_state(database: None) -> Iterator[None]:
-    """Analysis changes case state; reseed afterwards so other modules see the pristine dataset."""
+def fresh_state(database: None, login) -> Iterator[None]:  # type: ignore[no-untyped-def]
+    """Analysis changes case state; reseed afterwards so other modules see the pristine dataset.
+
+    Reseeding recreates users with new ids, so cached tokens are dropped as well.
+    """
     yield
     run_seed(reset=True)
+    login.cache.clear()
 
 
 def _ids(client, headers) -> dict[str, str]:  # type: ignore[no-untyped-def]
     body = client.get("/api/cases", params={"limit": 500}, headers=headers).json()
-    return {c["claimNumber"]: c["id"] for c in body["items"]}
+    return {c["caseNumber"]: c["id"] for c in body["items"]}
 
 
 def _analyze(client, cid: str, headers, **params):  # type: ignore[no-untyped-def]

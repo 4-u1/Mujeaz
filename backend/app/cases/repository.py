@@ -149,8 +149,9 @@ def _load_related(conn: Connection, ids: list[str]) -> _Related:
     rel.facts = _group(conn.execute(text(
         "SELECT f.authorization_request_id AS case_id, f.id, f.fact, f.fact_ar, f.category, f.source_label, "
         "f.fact_date, f.confidence, f.label, f.quote, f.value, f.char_start, f.char_end, d.doc_ref "
-        "FROM clinical_facts f LEFT JOIN clinical_documents d ON d.id = f.document_id WHERE authorization_request_id = ANY(CAST(:ids AS uuid[])) "
-        "ORDER BY authorization_request_id, ord, created_at"), p).mappings())
+        "FROM clinical_facts f LEFT JOIN clinical_documents d ON d.id = f.document_id "
+        "WHERE f.authorization_request_id = ANY(CAST(:ids AS uuid[])) "
+        "ORDER BY f.authorization_request_id, f.ord, f.created_at"), p).mappings())
     rel.reqs = _group(conn.execute(text(
         "SELECT authorization_request_id AS case_id, id, code, title, title_ar, requirement, requirement_ar, "
         "status, evidence_source, reason, reason_ar FROM authorization_requirements WHERE authorization_request_id = ANY(CAST(:ids AS uuid[])) "
