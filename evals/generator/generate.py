@@ -259,7 +259,7 @@ def build_case(i: int, scenario: str, rng: random.Random) -> tuple[dict, dict]:
             "content": [{"attachment": {"contentType": "text/plain; charset=utf-8", "language": dlang,
                                         "data": _b64(text),
                                         # FHIR Attachment.hash is defined as SHA-1; integrity, not security.
-                                        "hash": base64.b64encode(hashlib.sha1(text.encode()).digest()).decode()}}],
+                                        "hash": base64.b64encode(hashlib.sha1(text.encode()).digest()).decode()}}],  # noqa: S324
         })
     resources.append({
         "resourceType": "Condition", "id": f"{cid}-C1", "clinicalStatus": {"text": "active"},

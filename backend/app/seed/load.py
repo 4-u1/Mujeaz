@@ -16,6 +16,7 @@ from sqlalchemy import Connection, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.sql import bindparam
 
+from app.agents.fhir import payer_from_bundle
 from app.audit import service as audit
 from app.audit.service import Actor
 from app.llm.provider import PROMPT_DIR, load_prompt
@@ -37,19 +38,20 @@ from app.seed.constants import (
 log = logging.getLogger("mujeaz.seed")
 SEED_DIR = Path(__file__).resolve().parent
 REPO_ROOT = Path(__file__).resolve().parents[3]
-DEFAULT_SYNTHETIC_DIR = REPO_ROOT / "evals" / "data" / "mri_lumbar"
 SEED_ACTOR = Actor(id="system:seed", role="system")
 
-_POLICY = engine.policy_for("DPA", MRI_LUMBAR_CODE)
-assert _POLICY is not None, "Demo Payer A lumbar MRI policy YAML is missing"
-POLICY_TEXT: str = _POLICY.raw["source_text"]
-POLICY_VERSION: str = _POLICY.version
-RULES = [
-    {"code": r["code"], "title": r["title"], "title_ar": r.get("title_ar"),
-     "requirement": " ".join(r["requirement"].split()), "requirement_ar": " ".join(r.get("requirement_ar", "").split()),
-     "spec": {k: v for k, v in r.items() if k not in ("code", "title", "title_ar", "requirement", "requirement_ar")}}
-    for r in _POLICY.rules
-]
+SYNTHETIC_DIRS = (REPO_ROOT / "evals" / "data" / "mri_lumbar", REPO_ROOT / "evals" / "data" / "mri_lumbar_dpb")
+
+
+def policy_rules(policy: engine.Policy) -> list[dict[str, Any]]:
+    """Rule rows for one YAML policy (title, bilingual requirement text, and the predicate spec)."""
+    return [
+        {"code": r["code"], "title": r["title"], "title_ar": r.get("title_ar"),
+         "requirement": " ".join(r["requirement"].split()),
+         "requirement_ar": " ".join(r.get("requirement_ar", "").split()),
+         "spec": {k: v for k, v in r.items() if k not in ("code", "title", "title_ar", "requirement", "requirement_ar")}}
+        for r in policy.rules
+    ]
 
 
 def _j(sql: str, *names: str) -> Any:
@@ -109,13 +111,13 @@ def seed(conn: Connection, synthetic_dir: Path | None = None, reset: bool = Fals
         _load_legacy_case(conn, ctx, case)
         counts["legacy_cases"] += 1
 
-    folder = synthetic_dir or DEFAULT_SYNTHETIC_DIR
-    if folder.exists():
-        for path in sorted(folder.glob("SYN-*.json")):
+    for folder in ((synthetic_dir,) if synthetic_dir else SYNTHETIC_DIRS):
+        if not folder.exists():
+            log.warning("synthetic dataset not found at %s", folder)
+            continue
+        for path in sorted(folder.glob("*-MRI-*.json")):
             _load_bundle(conn, ctx, json.loads(path.read_text(encoding="utf-8")))
             counts["synthetic_cases"] += 1
-    else:
-        log.warning("synthetic dataset not found at %s", folder)
 
     # One case in the other organisation, used by the isolation tests.
     other = _reference_data(conn, OTHER_ORG_ID)
@@ -151,27 +153,30 @@ def _reference_data(conn: Connection, org: str) -> dict[str, Any]:
     facility = conn.execute(text(
         "INSERT INTO facilities (organization_id, code, name, name_ar) VALUES (:o, 'DEMO-HOSP-01', "
         "'Demo General Hospital, Riyadh', 'مستشفى تجريبي عام - الرياض') RETURNING id"), {"o": org}).scalar_one()
-    policy = conn.execute(text(
-        "INSERT INTO payer_policies (organization_id, payer_id, code, title, title_ar) VALUES "
-        "(:o, :p, 'DPA-LUMBAR-POL', 'Lumbar Spine MRI Prior Authorization (demo)', "
-        "'سياسة الموافقة المسبقة للرنين المغناطيسي القطني (تجريبية)') RETURNING id"),
-        {"o": org, "p": payers["DPA"]}).scalar_one()
-    version = conn.execute(text(
-        "INSERT INTO policy_versions (organization_id, policy_id, version, effective_from, source_text, "
-        "source_sha256) VALUES (:o, :p, :ver, '2026-01-01', :t, :h) RETURNING id"),
-        {"o": org, "p": policy, "ver": POLICY_VERSION, "t": POLICY_TEXT, "h": hashlib.sha256(POLICY_TEXT.encode()).hexdigest()}
-    ).scalar_one()
-    rules = {}
-    for r in RULES:
-        rules[r["code"]] = _exec(conn,
-            "INSERT INTO policy_rules (organization_id, policy_version_id, code, title, title_ar, requirement, "
-            "requirement_ar, spec) VALUES (:o, :v, :c, :t, :ta, :r, :ra, :spec) RETURNING id",
-            {"o": org, "v": version, "c": r["code"], "t": r["title"], "ta": r["title_ar"], "r": r["requirement"],
-             "ra": r["requirement_ar"], "spec": r["spec"]}, "spec").scalar_one()
-    conn.execute(text(
-        "INSERT INTO price_lists (organization_id, payer_id, service_code, description, price_sar) "
-        "VALUES (:o, :p, :c, 'MRI lumbar spine without contrast (illustrative demo price)', :v)"),
-        {"o": org, "p": payers["DPA"], "c": MRI_LUMBAR_CODE, "v": MRI_LUMBAR_PRICE_SAR})
+    rules: dict[str, Any] = {}
+    for pol in engine.load_policies():
+        policy = conn.execute(text(
+            "INSERT INTO payer_policies (organization_id, payer_id, code, title, title_ar) VALUES "
+            "(:o, :p, :c, :t, :ta) RETURNING id"),
+            {"o": org, "p": payers[pol.payer], "c": pol.code, "t": pol.raw["title"], "ta": pol.raw.get("title_ar")}
+        ).scalar_one()
+        src = pol.raw["source_text"]
+        version = conn.execute(text(
+            "INSERT INTO policy_versions (organization_id, policy_id, version, effective_from, source_text, "
+            "source_sha256) VALUES (:o, :p, :ver, '2026-01-01', :t, :h) RETURNING id"),
+            {"o": org, "p": policy, "ver": pol.version, "t": src, "h": hashlib.sha256(src.encode()).hexdigest()}
+        ).scalar_one()
+        for r in policy_rules(pol):
+            rules[r["code"]] = _exec(conn,
+                "INSERT INTO policy_rules (organization_id, policy_version_id, code, title, title_ar, requirement, "
+                "requirement_ar, spec) VALUES (:o, :v, :c, :t, :ta, :r, :ra, :spec) RETURNING id",
+                {"o": org, "v": version, "c": r["code"], "t": r["title"], "ta": r["title_ar"], "r": r["requirement"],
+                 "ra": r["requirement_ar"], "spec": r["spec"]}, "spec").scalar_one()
+    for payer in ("DPA", "DPB"):
+        conn.execute(text(
+            "INSERT INTO price_lists (organization_id, payer_id, service_code, description, price_sar) "
+            "VALUES (:o, :p, :c, 'MRI lumbar spine without contrast (illustrative demo price)', :v)"),
+            {"o": org, "p": payers[payer], "c": MRI_LUMBAR_CODE, "v": MRI_LUMBAR_PRICE_SAR})
     for code, display, cat in (("DEN-STEP-04", "Step therapy requirements not met (demo)", "clinical"),
                                ("DEN-DOC-01", "Insufficient clinical documentation (demo)", "documentation")):
         conn.execute(text("INSERT INTO denial_reasons (organization_id, code, display, category) "
@@ -360,13 +365,16 @@ def _load_bundle(conn: Connection, ctx: dict[str, Any], bundle: dict[str, Any]) 
             index_note = content
     cond = by_type["Condition"][0]["code"]["coding"][0]
     svc = sr["code"]["coding"][0]
+    payer = payer_from_bundle(bundle)
+    pol = engine.policy_for(payer, svc["code"])
+    assert pol is not None, f"no policy for {payer}/{svc['code']}"
     rid = _request(conn, ctx, org, case_number=bundle["id"], legacy_id=None, patient_id=pid,
-                   facility_id=ctx["facility"], payer_id=ctx["payers"]["DPA"], physician="Synthetic Orthopedic Clinic",
+                   facility_id=ctx["facility"], payer_id=ctx["payers"][payer], physician="Synthetic Orthopedic Clinic",
                    specialty="Orthopedic Surgery", service="MRI Lumbar Spine", service_ar="رنين مغناطيسي للفقرات القطنية",
                    service_code=svc["code"], dx_code=cond["code"], dx_display=cond["display"],
                    value=MRI_LUMBAR_PRICE_SAR, status="DRAFT", note=index_note, source="synthetic",
                    requested_on=date.fromisoformat(sr["authoredOn"]))
-    for i, r in enumerate(RULES):
+    for i, r in enumerate(policy_rules(pol)):
         conn.execute(text(
             """INSERT INTO authorization_requirements (organization_id, authorization_request_id, policy_rule_id,
                code, title, title_ar, requirement, requirement_ar, status, ord)

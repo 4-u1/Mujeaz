@@ -1,0 +1,42 @@
+{
+ "dataset": "mri_lumbar_dpb",
+ "split": "dpb",
+ "version": 1,
+ "seed": 20261031,
+ "payer": "DPB",
+ "cases": 20,
+ "scenarios": {
+  "found_weeks": 5,
+  "found_sessions": 3,
+  "short_both": 4,
+  "missing": 3,
+  "contradictory": 2,
+  "red_flag": 2,
+  "wrong_coding": 1
+ },
+ "synthetic": true,
+ "note": "Second payer policy (8 weeks or 6 sessions; no post-request addenda).",
+ "sha256": {
+  "DPB-MRI-001.json": "c2a9a720cf6f49642ecefade5d005fce59cb87b3f79ff4a8f9151966a0a4a069",
+  "DPB-MRI-002.json": "c7e6ff92647b6e6421983e819664e7a1967cf7d4214fb51e5eb8d52361ef53d7",
+  "DPB-MRI-003.json": "1911995047465e5bcb04dfc8d85d87b73aa20460e97d40341162513753ac977b",
+  "DPB-MRI-004.json": "b1b375ae85e0c7213002f6f2bb57b14871e03b8e04d7f39e34ee2bafc6a4053f",
+  "DPB-MRI-005.json": "ecc95ddccdfdfdad6c95c22f03a3da035d0c20eaadd7de8692e3b7ebbe30baf2",
+  "DPB-MRI-006.json": "786c82806d85431c50c88dbbdf0100d4b1d9f26b091e2e8ec8aa08ecb3425896",
+  "DPB-MRI-007.json": "a0b8e0364d81f5a01a1e7a46fecd99a6f1b9e810b13002a0b5bd218e5d730004",
+  "DPB-MRI-008.json": "79a9b85435ce53f02c2cb3c68965806cf3e3cdc8e634ef0c8c83a46fcb545d1a",
+  "DPB-MRI-009.json": "af423c07df793b94d4da487711ed237722b7878833b9258349c780bb035d2552",
+  "DPB-MRI-010.json": "577732f830dc9272a1bd9c47689ebec533e99bb250344c0e853a757d9ea7c82a",
+  "DPB-MRI-011.json": "f1a62dccdfee22306ba8047441a936206c544aae559d76aca2e68611f917f7f5",
+  "DPB-MRI-012.json": "02e7eccea1f5245e3a2ff1fc8fe26c1c53e51829ae096a0872185aef8421614b",
+  "DPB-MRI-013.json": "e5cd010c031ab45ee68d18f81e014cbeaf16b6eef5d29622132a99a25a14e535",
+  "DPB-MRI-014.json": "b20ad7ff714038383146b91a21bf2ada0edd1e9b45d9047c5252a2f85a40dd3c",
+  "DPB-MRI-015.json": "9ca57df812fd9a4389fcc328af8a5d7fd2becacca52e985190bc0e8e65480ba7",
+  "DPB-MRI-016.json": "9217c57c97904b26a7234d9acb4dd79a5f62898144b005d6aeb4e47de7793a84",
+  "DPB-MRI-017.json": "a7c02d9b45deccb3a8b68d9702e3dd982a46a8fe7c413d462edba1d8afe259cd",
+  "DPB-MRI-018.json": "7ee2e099eb98dae28e67e6212a2883ffbf161a84cdb542d9d8336dd5ef45b658",
+  "DPB-MRI-019.json": "591a58afb6fc4b47c8e1989430667c44e0df4d862b0936a1a9e63206c6f2e294",
+  "DPB-MRI-020.json": "e90cb2bc0fad28616ac1b81e0d360871c43609c90aef7945fd2bc994612dc1bf",
+  "annotations.jsonl": "165fedefbdf02afbd6d4af5a650e7562a9630296618d6073ccc9b5cdb7151c4b"
+ }
+}

@@ -1,0 +1,145 @@
+{
+ "resourceType": "Bundle",
+ "id": "DPB-MRI-018",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic-dpb"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-DPB-P-3018",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "DPB-P-3018",
+    "gender": "male",
+    "birthDate": "1985-01-01",
+    "name": [
+     {
+      "text": "DPB Patient 018 (synthetic)"
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Coverage-DPB-MRI-018-COV",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "DPB-MRI-018-COV",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/DPB-P-3018"
+    },
+    "payor": [
+     {
+      "identifier": {
+       "system": "urn:mujeaz:demo:payer",
+       "value": "DPB"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-DPB-MRI-018-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "DPB-MRI-018-E1",
+    "status": "finished",
+    "type": [
+     {
+      "text": "orthopedic-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/DPB-P-3018"
+    },
+    "period": {
+     "start": "2026-10-07",
+     "end": "2026-10-07"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-DPB-MRI-018-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "DPB-MRI-018-D1",
+    "status": "current",
+    "type": {
+     "text": "orthopedic-note"
+    },
+    "subject": {
+     "reference": "Patient/DPB-P-3018"
+    },
+    "date": "2026-10-07T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/DPB-MRI-018-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "T3J0aG9wYWVkaWMgY29uc3VsdGF0aW9uLiBMdW1iYXIgcGFpbiB3aXRoIHJhZGlhdGlvbiB0byB0aGUgbGVnIGZvciA5IHdlZWtzLiBTdHJhaWdodCBsZWcgcmFpc2UgcG9zaXRpdmUgb24gdGhlIGFmZmVjdGVkIHNpZGUuIE5vIHBoeXNpb3RoZXJhcHkgaGFzIGJlZW4gdHJpZWQgc28gZmFyLiBQbGFuOiBNUkkgb2YgdGhlIGx1bWJhciBzcGluZSB3aXRob3V0IGNvbnRyYXN0Lg=="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-DPB-MRI-018-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "DPB-MRI-018-C1",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M51.26",
+       "display": "Other intervertebral disc displacement, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/DPB-P-3018"
+    },
+    "encounter": {
+     "reference": "Encounter/DPB-MRI-018-E1"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-DPB-MRI-018-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "DPB-MRI-018-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/DPB-P-3018"
+    },
+    "encounter": {
+     "reference": "Encounter/DPB-MRI-018-E1"
+    },
+    "authoredOn": "2026-10-07"
+   }
+  }
+ ]
+}

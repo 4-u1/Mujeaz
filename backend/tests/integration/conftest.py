@@ -35,7 +35,7 @@ def database() -> Iterator[None]:
     command.upgrade(cfg, "head")
     enable_app_role()
     counts = run_seed(reset=True)
-    assert counts["legacy_cases"] == 3 and counts["synthetic_cases"] == 50
+    assert counts["legacy_cases"] == 3 and counts["synthetic_cases"] == 70
     yield
 
 

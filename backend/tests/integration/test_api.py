@@ -44,7 +44,7 @@ def test_jwks_published(client) -> None:  # type: ignore[no-untyped-def]
 
 def test_cases_are_listed_from_the_database(client, login) -> None:  # type: ignore[no-untyped-def]
     body = client.get("/api/cases", params={"limit": 500}, headers=login("sara.auth")).json()
-    assert body["total"] == 53
+    assert body["total"] == 73
     numbers = {c["caseNumber"] for c in body["items"]}
     assert {"AUTH-2026-4922", "AUTH-2026-8103", "AUTH-2026-3109", "SYN-MRI-001"} <= numbers
     assert "OTHER-0001" not in numbers
@@ -61,7 +61,7 @@ def test_tenant_isolation_in_the_database() -> None:
     with get_engine().begin() as conn:
         assert conn.execute(text("SELECT count(*) FROM authorization_requests")).scalar_one() == 0
         conn.execute(text("SELECT set_config('app.org_id', :o, true)"), {"o": DEMO_ORG_ID})
-        assert conn.execute(text("SELECT count(*) FROM authorization_requests")).scalar_one() == 53
+        assert conn.execute(text("SELECT count(*) FROM authorization_requests")).scalar_one() == 73
 
 
 def test_twin_shape_for_legacy_case(client, login) -> None:  # type: ignore[no-untyped-def]
@@ -158,7 +158,7 @@ def test_concurrent_appends_keep_one_chain(client, login) -> None:  # type: igno
 
 def test_metrics_are_computed(client, login) -> None:  # type: ignore[no-untyped-def]
     m = client.get("/api/metrics", headers=login("faisal.rcm")).json()
-    assert m["totalCases"] == 53 and m["recoveryQueueCount"] >= 1
+    assert m["totalCases"] == 73 and m["recoveryQueueCount"] >= 1
     assert client.get("/api/metrics", headers=login("dr.khalid")).status_code == 403
 
 
@@ -191,8 +191,8 @@ def test_twins_use_a_constant_number_of_queries(client, login) -> None:  # type:
         r = client.get("/api/twins", headers=login("sara.auth"))
     finally:
         event.remove(engine, "before_cursor_execute", record)
-    assert r.status_code == 200 and len(r.json()["items"]) == 53
-    assert len(statements) <= 15, f"{len(statements)} queries for 53 cases"
+    assert r.status_code == 200 and len(r.json()["items"]) == 73
+    assert len(statements) <= 15, f"{len(statements)} queries for 73 cases"
 
 
 def test_batched_twin_matches_single_twin(client, login) -> None:  # type: ignore[no-untyped-def]

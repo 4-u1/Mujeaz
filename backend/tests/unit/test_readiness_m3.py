@@ -106,3 +106,28 @@ def test_wrong_coding_gate_is_explained() -> None:
     assert ex["gateText"].startswith("Capped at 50")
     coding = next(c for c in ex["components"] if c["component"] == "codingIntegrity")
     assert "J45.909" in coding["causes"][0]
+
+
+def test_second_policy_is_configuration_only() -> None:
+    dpb = engine.policy_for("DPB", "72148")
+    assert dpb is not None and dpb.code == "DPB-LUMBAR-POL"
+    assert dpb.accepts_post_request_addenda is False
+    pt = Document("D2", "physiotherapy-note", "en", date(2026, 8, 20), "Physiotherapy record: 7 sessions completed over 4 weeks.")
+    dpa_res = analyze(_rec(INDEX, pt), price_sar=2800)
+    dpb_res = analyze(_rec(INDEX, pt, payer="DPB"), price_sar=2800)
+    assert dpa_res.evidence["R1_conservative_therapy_6w"].status == "PARTIAL"  # 4 weeks < 6
+    assert dpb_res.evidence["R1_conservative_therapy_dpb"].status == "FOUND"   # 7 sessions >= 6
+    assert dpb_res.policy_version == "DPB-LUMBAR-POL@2026.1"
+
+
+def test_payer_comes_from_the_bundle_coverage() -> None:
+    import json
+    from pathlib import Path
+
+    from app.agents.fhir import payer_from_bundle, record_from_bundle
+
+    root = Path(__file__).resolve().parents[3] / "evals" / "data"
+    dpb = json.loads((root / "mri_lumbar_dpb" / "DPB-MRI-001.json").read_text(encoding="utf-8"))
+    dev = json.loads((root / "mri_lumbar" / "SYN-MRI-001.json").read_text(encoding="utf-8"))
+    assert payer_from_bundle(dpb) == "DPB" and record_from_bundle(dpb).payer_code == "DPB"
+    assert payer_from_bundle(dev) == "DPA"

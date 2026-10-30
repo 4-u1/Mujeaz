@@ -19,20 +19,20 @@ from typing import Any
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
 
-from app.agents.a2_evidence import bm25_rank
-from app.agents.fhir import record_from_bundle
-from app.agents.types import Document, PatientRecord
-from app.cdi.addendum import TherapyAnswer, render
-from app.llm.provider import GeminiProvider, Provider, ReplayProvider
-from app.orchestrator.core import AnalysisResult, analyze
-from app.rules import engine
-from app.scoring.scoring import compute_overall, js_round
+from app.agents.a2_evidence import bm25_rank  # noqa: E402
+from app.agents.fhir import record_from_bundle  # noqa: E402
+from app.agents.types import Document, PatientRecord  # noqa: E402
+from app.cdi.addendum import TherapyAnswer, render  # noqa: E402
+from app.llm.provider import GeminiProvider, Provider, ReplayProvider  # noqa: E402
+from app.orchestrator.core import AnalysisResult, analyze  # noqa: E402
+from app.rules import engine  # noqa: E402
+from app.scoring.scoring import compute_overall, js_round  # noqa: E402
 
 GATES = {"a1_precision": 0.90, "a1_recall": 0.85, "unverified_facts": 0, "a2_accuracy": 0.90,
          "a2_recall_at_5": 0.90, "a3_agreement": 0.95, "injection_unchanged": 1.0, "llm_fallbacks": 0,
          "explanation_consistent": 1.0, "cdi_loop_correct": 1.0}
 MAX_GATES = {"unverified_facts", "llm_fallbacks"}
-SPLITS = {"mri_lumbar": "dev", "mri_lumbar_heldout": "held-out"}
+SPLITS = {"mri_lumbar": "dev", "mri_lumbar_heldout": "held-out", "mri_lumbar_dpb": "second policy (DPB)"}
 CONTAMINATION_NOTE = (
     "The held-out templates and the deterministic baseline were written by the same author in the same "
     "session, so held-out scores guard against regressions but do not measure generalisation. "
@@ -173,8 +173,11 @@ def evaluate_case(bundle: dict[str, Any], ann: dict[str, Any], mode: str, tallie
             after = analyze(replace(record, documents=(*record.documents, doc)), mode=mode,  # type: ignore[arg-type]
                             provider=provider)
             status = after.evidence[rid].status
-            expected = ("MISSING" if ann["expected"].get("contradiction") else
-                        "FOUND" if label == "sufficient" else "PARTIAL")
+            if not policy.accepts_post_request_addenda:
+                expected = exp["evidence"]  # addenda are not evidence for this payer: nothing may change
+            else:
+                expected = ("MISSING" if ann["expected"].get("contradiction") else
+                            "FOUND" if label == "sufficient" else "PARTIAL")
             add("cdi_n")
             if status == expected:
                 add("cdi_ok")
