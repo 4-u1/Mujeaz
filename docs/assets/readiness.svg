@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="560" viewBox="0 0 900 560" role="img">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#040C1A"/><stop offset="1" stop-color="#0A1D38"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#F7DC9B"/><stop offset="0.55" stop-color="#E2B861"/><stop offset="1" stop-color="#B8862F"/>
+  </linearGradient>
+  <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#10B981"/>
+  </linearGradient>
+  <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+    <path d="M36 0H0V36" fill="none" stroke="#22D3EE" stroke-opacity="0.06" stroke-width="1"/>
+  </pattern>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+    <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.35"/>
+  </filter>
+</defs>
+<rect width="900" height="560" rx="28" fill="url(#bg)"/>
+<rect width="900" height="560" rx="28" fill="url(#grid)"/>
+<rect x="0.75" y="0.75" width="898.5" height="558.5" rx="27.5" fill="none" stroke="#1E3A5F" stroke-opacity="0.8"/>
+
+<text x="40" y="60" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3" fill="#22D3EE">MUJEAZ READINESS SCORE</text>
+<text x="860" y="60" text-anchor="start" direction="rtl" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="18" font-weight="700" fill="#E2B861">مؤشر جاهزية مُجاز</text><text x="40" y="94" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#E8EEF8">Measures how ready a request is — not whether it will be approved</text>
+<circle cx="190" cy="300" r="120" fill="none" stroke="#1E3A5F" stroke-width="22"/>
+<circle cx="190" cy="300" r="120" fill="none" stroke="url(#brand)" stroke-width="22" stroke-linecap="round"
+  stroke-dasharray="738.9 754.0" transform="rotate(-90 190 300)" filter="url(#glow)">
+  <animate attributeName="stroke-dasharray" from="0 754.0" to="738.9 754.0" dur="1.6s" fill="freeze"/>
+</circle>
+<text x="190" y="318" text-anchor="middle" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="76" font-weight="800" fill="#E8EEF8">98</text>
+<text x="190" y="350" text-anchor="middle" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="18" fill="#8EA4C2">/ 100</text>
+<rect x="98" y="450" width="184" height="36" rx="18" fill="#10B981" fill-opacity="0.15" stroke="#10B981"/>
+<text x="190" y="474" text-anchor="middle" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="800" fill="#10B981">DECISION READY</text>
+
+<text x="400" y="140" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#E8EEF8">Clinical Evidence</text>
+<text x="780" y="140" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="14" fill="#5E7698">w 30%</text>
+<text x="840" y="140" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="17" font-weight="800" fill="#22D3EE">98</text>
+<rect x="400" y="152" width="440" height="10" rx="5" fill="#1E3A5F"/>
+<rect x="400" y="152" width="431.2" height="10" rx="5" fill="url(#brand)">
+  <animate attributeName="width" from="0" to="431.2" dur="1.2s" begin="0.00s" fill="freeze"/>
+</rect>
+<text x="400" y="194" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#E8EEF8">Policy Match</text>
+<text x="780" y="194" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="14" fill="#5E7698">w 25%</text>
+<text x="840" y="194" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="17" font-weight="800" fill="#22D3EE">96</text>
+<rect x="400" y="206" width="440" height="10" rx="5" fill="#1E3A5F"/>
+<rect x="400" y="206" width="422.4" height="10" rx="5" fill="url(#brand)">
+  <animate attributeName="width" from="0" to="422.4" dur="1.2s" begin="0.15s" fill="freeze"/>
+</rect>
+<text x="400" y="248" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#E8EEF8">Documentation</text>
+<text x="780" y="248" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="14" fill="#5E7698">w 15%</text>
+<text x="840" y="248" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="17" font-weight="800" fill="#22D3EE">97</text>
+<rect x="400" y="260" width="440" height="10" rx="5" fill="#1E3A5F"/>
+<rect x="400" y="260" width="426.8" height="10" rx="5" fill="url(#brand)">
+  <animate attributeName="width" from="0" to="426.8" dur="1.2s" begin="0.30s" fill="freeze"/>
+</rect>
+<text x="400" y="302" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#E8EEF8">Coding Integrity</text>
+<text x="780" y="302" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="14" fill="#5E7698">w 15%</text>
+<text x="840" y="302" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="17" font-weight="800" fill="#22D3EE">100</text>
+<rect x="400" y="314" width="440" height="10" rx="5" fill="#1E3A5F"/>
+<rect x="400" y="314" width="440.0" height="10" rx="5" fill="url(#brand)">
+  <animate attributeName="width" from="0" to="440.0" dur="1.2s" begin="0.45s" fill="freeze"/>
+</rect>
+<text x="400" y="356" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#E8EEF8">Required Attachments</text>
+<text x="780" y="356" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="14" fill="#5E7698">w 10%</text>
+<text x="840" y="356" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="17" font-weight="800" fill="#22D3EE">99</text>
+<rect x="400" y="368" width="440" height="10" rx="5" fill="#1E3A5F"/>
+<rect x="400" y="368" width="435.6" height="10" rx="5" fill="url(#brand)">
+  <animate attributeName="width" from="0" to="435.6" dur="1.2s" begin="0.60s" fill="freeze"/>
+</rect>
+<text x="400" y="410" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="700" fill="#E8EEF8">Administrative</text>
+<text x="780" y="410" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="14" fill="#5E7698">w 5%</text>
+<text x="840" y="410" text-anchor="end" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="17" font-weight="800" fill="#22D3EE">100</text>
+<rect x="400" y="422" width="440" height="10" rx="5" fill="#1E3A5F"/>
+<rect x="400" y="422" width="440.0" height="10" rx="5" fill="url(#brand)">
+  <animate attributeName="width" from="0" to="440.0" dur="1.2s" begin="0.75s" fill="freeze"/>
+</rect>
+<rect x="400" y="470" width="440" height="58" rx="14" fill="#FB7185" fill-opacity="0.08" stroke="#FB7185" stroke-opacity="0.45"/>
+<text x="418" y="494" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="800" fill="#FB7185">HARD GATES</text>
+<text x="418" y="516" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="14" fill="#8EA4C2">Failed mandatory rule → max 60 · Invalid coding → max 50</text>
+</svg>

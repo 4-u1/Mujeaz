@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="600" viewBox="0 0 900 600" role="img">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#040C1A"/><stop offset="1" stop-color="#0A1D38"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#F7DC9B"/><stop offset="0.55" stop-color="#E2B861"/><stop offset="1" stop-color="#B8862F"/>
+  </linearGradient>
+  <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#10B981"/>
+  </linearGradient>
+  <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+    <path d="M36 0H0V36" fill="none" stroke="#22D3EE" stroke-opacity="0.06" stroke-width="1"/>
+  </pattern>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+    <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.35"/>
+  </filter>
+</defs>
+<rect width="900" height="600" rx="28" fill="url(#bg)"/>
+<rect width="900" height="600" rx="28" fill="url(#grid)"/>
+<rect x="0.75" y="0.75" width="898.5" height="598.5" rx="27.5" fill="none" stroke="#1E3A5F" stroke-opacity="0.8"/>
+
+<text x="40" y="60" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3" fill="#22D3EE">EVIDENCE HUNTER IN ACTION</text>
+<text x="860" y="60" text-anchor="start" direction="rtl" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="18" font-weight="700" fill="#E2B861">صيد الأدلة قبل الإرسال</text><text x="40" y="94" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#E8EEF8">MRI Lumbar Spine · AUTH-2026-4922 · demo case</text>
+<g filter="url(#shadow)"><rect x="40" y="128" width="360" height="430" rx="22" fill="#0D1E36" stroke="#FB7185" stroke-opacity="0.55"/></g>
+<rect x="64" y="150" width="94" height="30" rx="15" fill="#FB7185" fill-opacity="0.14" stroke="#FB7185" stroke-opacity="0.6"/>
+<text x="78" y="171" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="2" fill="#FB7185">BEFORE</text>
+<text x="64" y="232" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Readiness Score</text>
+<text x="376" y="236" text-anchor="end" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="800" fill="#FB7185">74</text>
+<line x1="64" y1="256" x2="376" y2="256" stroke="#1E3A5F"/>
+<text x="64" y="292" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Denial risk</text>
+<text x="376" y="294" text-anchor="end" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="800" fill="#E8EEF8">78%</text>
+<text x="64" y="336" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Revenue at risk</text>
+<text x="376" y="338" text-anchor="end" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="800" fill="#E8EEF8">2,184 SAR</text>
+<line x1="64" y1="362" x2="376" y2="362" stroke="#1E3A5F"/>
+<text x="64" y="396" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Conservative therapy (6 weeks)</text>
+<rect x="64" y="412" width="110" height="30" rx="8" fill="#FB7185" fill-opacity="0.15"/>
+<text x="77" y="433" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="15" font-weight="800" fill="#FB7185">MISSING</text>
+<text x="64" y="476" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#E8EEF8">Not explicit in the current request</text>
+<text x="64" y="502" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13" fill="#5E7698">source: —</text>
+<g filter="url(#shadow)"><rect x="500" y="128" width="360" height="430" rx="22" fill="#0D1E36" stroke="#10B981" stroke-opacity="0.55"/></g>
+<rect x="524" y="150" width="83" height="30" rx="15" fill="#10B981" fill-opacity="0.14" stroke="#10B981" stroke-opacity="0.6"/>
+<text x="538" y="171" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="14" font-weight="800" letter-spacing="2" fill="#10B981">AFTER</text>
+<text x="524" y="232" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Readiness Score</text>
+<text x="836" y="236" text-anchor="end" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="40" font-weight="800" fill="#10B981">98</text>
+<line x1="524" y1="256" x2="836" y2="256" stroke="#1E3A5F"/>
+<text x="524" y="292" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Denial risk</text>
+<text x="836" y="294" text-anchor="end" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="800" fill="#E8EEF8">5%</text>
+<text x="524" y="336" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Revenue at risk</text>
+<text x="836" y="338" text-anchor="end" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="28" font-weight="800" fill="#E8EEF8">140 SAR</text>
+<line x1="524" y1="362" x2="836" y2="362" stroke="#1E3A5F"/>
+<text x="524" y="396" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Conservative therapy (6 weeks)</text>
+<rect x="524" y="412" width="86" height="30" rx="8" fill="#10B981" fill-opacity="0.15"/>
+<text x="537" y="433" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="15" font-weight="800" fill="#10B981">FOUND</text>
+<text x="524" y="476" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#E8EEF8">6 physiotherapy sessions + NSAID</text>
+<text x="524" y="502" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="13" fill="#5E7698">Encounter #1820 · 2026-06-11 · 97%</text>
+<circle cx="450" cy="340" r="34" fill="#040C1A" stroke="url(#brand)" stroke-width="3"/>
+<text x="450" y="348" text-anchor="middle" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="20" font-weight="800" fill="#10B981">A2</text>
+<path d="M404 340 H418" stroke="#10B981" stroke-width="3"/><path d="M484 340 H496" stroke="#10B981" stroke-width="3"/>
+<path d="M490 333 l8 7 -8 7" fill="none" stroke="#10B981" stroke-width="3"/>
+<text x="450" y="586" text-anchor="middle" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="13" fill="#5E7698">Illustrative demo data · service value 2,800 SAR · risk heuristic per PRD §8</text>
+</svg>

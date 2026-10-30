@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="860" viewBox="0 0 900 860" role="img">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#040C1A"/><stop offset="1" stop-color="#0A1D38"/>
+  </linearGradient>
+  <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#F7DC9B"/><stop offset="0.55" stop-color="#E2B861"/><stop offset="1" stop-color="#B8862F"/>
+  </linearGradient>
+  <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#22D3EE"/><stop offset="1" stop-color="#10B981"/>
+  </linearGradient>
+  <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+    <path d="M36 0H0V36" fill="none" stroke="#22D3EE" stroke-opacity="0.06" stroke-width="1"/>
+  </pattern>
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+    <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000" flood-opacity="0.35"/>
+  </filter>
+</defs>
+<rect width="900" height="860" rx="28" fill="url(#bg)"/>
+<rect width="900" height="860" rx="28" fill="url(#grid)"/>
+<rect x="0.75" y="0.75" width="898.5" height="858.5" rx="27.5" fill="none" stroke="#1E3A5F" stroke-opacity="0.8"/>
+
+<text x="40" y="60" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="700" letter-spacing="3" fill="#22D3EE">SIX SPECIALISED AGENTS</text>
+<text x="860" y="60" text-anchor="start" direction="rtl" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="18" font-weight="700" fill="#E2B861">ستة وكلاء متخصصون</text><text x="40" y="94" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="700" fill="#E8EEF8">One traceable pipeline — from clinical order to recovered revenue</text>
+<g filter="url(#shadow)">
+  <rect x="40" y="120" width="390" height="180" rx="20" fill="#0D1E36" stroke="#22D3EE" stroke-opacity="0.45"/>
+  <rect x="40" y="120" width="6" height="180" rx="3" fill="#22D3EE"/>
+</g>
+<circle cx="86" cy="168" r="26" fill="#22D3EE" fill-opacity="0.14" stroke="#22D3EE" stroke-width="2"/>
+<text x="86" y="175" text-anchor="middle" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="18" font-weight="800" fill="#22D3EE">A1</text>
+<text x="126" y="165" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="800" fill="#E8EEF8">Clinical Understanding</text>
+<text x="126" y="190" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="16" fill="#E2B861">وكيل الفهم السريري</text>
+<text x="66" y="240" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">Free-text notes → structured facts</text>
+<text x="66" y="264" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">every fact linked to its source</text>
+
+<g filter="url(#shadow)">
+  <rect x="470" y="120" width="390" height="180" rx="20" fill="#0D1E36" stroke="#10B981" stroke-opacity="0.45"/>
+  <rect x="470" y="120" width="6" height="180" rx="3" fill="#10B981"/>
+</g>
+<circle cx="516" cy="168" r="26" fill="#10B981" fill-opacity="0.14" stroke="#10B981" stroke-width="2"/>
+<text x="516" y="175" text-anchor="middle" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="18" font-weight="800" fill="#10B981">A2</text>
+<text x="556" y="165" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="800" fill="#E8EEF8">Evidence Hunter</text>
+<text x="556" y="190" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="16" fill="#E2B861">وكيل صيد الأدلة</text>
+<text x="496" y="240" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">Searches the whole patient record</text>
+<text x="496" y="264" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">for proof each requirement is met</text>
+<rect x="764" y="138" width="78" height="24" rx="12" fill="#10B981" fill-opacity="0.15" stroke="#10B981" stroke-opacity="0.6"/>
+<text x="803" y="155" text-anchor="middle" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="12" font-weight="800" letter-spacing="1.5" fill="#10B981">CORE</text>
+<g filter="url(#shadow)">
+  <rect x="40" y="340" width="390" height="180" rx="20" fill="#0D1E36" stroke="#A78BFA" stroke-opacity="0.45"/>
+  <rect x="40" y="340" width="6" height="180" rx="3" fill="#A78BFA"/>
+</g>
+<circle cx="86" cy="388" r="26" fill="#A78BFA" fill-opacity="0.14" stroke="#A78BFA" stroke-width="2"/>
+<text x="86" y="395" text-anchor="middle" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="18" font-weight="800" fill="#A78BFA">A3</text>
+<text x="126" y="385" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="800" fill="#E8EEF8">Policy Reasoning</text>
+<text x="126" y="410" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="16" fill="#E2B861">وكيل تحليل السياسات</text>
+<text x="66" y="460" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">RAG over payer policy text +</text>
+<text x="66" y="484" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">deterministic, testable rules</text>
+
+<g filter="url(#shadow)">
+  <rect x="470" y="340" width="390" height="180" rx="20" fill="#0D1E36" stroke="#60A5FA" stroke-opacity="0.45"/>
+  <rect x="470" y="340" width="6" height="180" rx="3" fill="#60A5FA"/>
+</g>
+<circle cx="516" cy="388" r="26" fill="#60A5FA" fill-opacity="0.14" stroke="#60A5FA" stroke-width="2"/>
+<text x="516" y="395" text-anchor="middle" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="18" font-weight="800" fill="#60A5FA">A4</text>
+<text x="556" y="385" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="800" fill="#E8EEF8">NPHIES / FHIR Conformance</text>
+<text x="556" y="410" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="16" fill="#E2B861">وكيل التوافق مع نفيس</text>
+<text x="496" y="460" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">Builds the FHIR R4 Claim</text>
+<text x="496" y="484" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">(use: preauthorization) &amp; checks it</text>
+
+<g filter="url(#shadow)">
+  <rect x="40" y="560" width="390" height="180" rx="20" fill="#0D1E36" stroke="#F59E0B" stroke-opacity="0.45"/>
+  <rect x="40" y="560" width="6" height="180" rx="3" fill="#F59E0B"/>
+</g>
+<circle cx="86" cy="608" r="26" fill="#F59E0B" fill-opacity="0.14" stroke="#F59E0B" stroke-width="2"/>
+<text x="86" y="615" text-anchor="middle" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="18" font-weight="800" fill="#F59E0B">A5</text>
+<text x="126" y="605" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="800" fill="#E8EEF8">Revenue Risk</text>
+<text x="126" y="630" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="16" fill="#E2B861">وكيل مخاطر الإيراد</text>
+<text x="66" y="680" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">Readiness Score, denial risk,</text>
+<text x="66" y="704" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">revenue at risk, priority</text>
+
+<g filter="url(#shadow)">
+  <rect x="470" y="560" width="390" height="180" rx="20" fill="#0D1E36" stroke="#FB7185" stroke-opacity="0.45"/>
+  <rect x="470" y="560" width="6" height="180" rx="3" fill="#FB7185"/>
+</g>
+<circle cx="516" cy="608" r="26" fill="#FB7185" fill-opacity="0.14" stroke="#FB7185" stroke-width="2"/>
+<text x="516" y="615" text-anchor="middle" font-family="'SF Mono', 'JetBrains Mono', Menlo, Consolas, monospace" font-size="18" font-weight="800" fill="#FB7185">A6</text>
+<text x="556" y="605" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="20" font-weight="800" fill="#E8EEF8">Recovery</text>
+<text x="556" y="630" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="16" fill="#E2B861">وكيل الاسترداد</text>
+<text x="496" y="680" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">Root cause → evidence map →</text>
+<text x="496" y="704" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="16" fill="#8EA4C2">bilingual appeal for review</text>
+<path d="M434 210.0 H464" stroke="#5E7698" stroke-width="2.5"/><path d="M460 204.0 l8 6 -8 6" fill="none" stroke="#5E7698" stroke-width="2.5"/><path d="M434 430.0 H464" stroke="#5E7698" stroke-width="2.5"/><path d="M460 424.0 l8 6 -8 6" fill="none" stroke="#5E7698" stroke-width="2.5"/><path d="M434 650.0 H464" stroke="#5E7698" stroke-width="2.5"/><path d="M460 644.0 l8 6 -8 6" fill="none" stroke="#5E7698" stroke-width="2.5"/><path d="M665.0 304 V320.0 H235.0 V334" fill="none" stroke="#5E7698" stroke-width="2.5" stroke-dasharray="6 6"/>
+<path d="M229.0 330 l6 8 6 -8" fill="none" stroke="#5E7698" stroke-width="2.5"/><path d="M665.0 524 V540.0 H235.0 V554" fill="none" stroke="#5E7698" stroke-width="2.5" stroke-dasharray="6 6"/>
+<path d="M229.0 550 l6 8 6 -8" fill="none" stroke="#5E7698" stroke-width="2.5"/>
+<rect x="40" y="774" width="820" height="72" rx="18" fill="#E2B861" fill-opacity="0.08" stroke="#E2B861" stroke-opacity="0.5"/>
+<text x="64" y="805" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="800" fill="#E2B861">HUMAN-IN-THE-LOOP</text>
+<text x="64" y="829" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="15" fill="#8EA4C2">Nothing is submitted or appealed without an authorised reviewer.</text>
+<text x="836" y="805" text-anchor="end" font-family="Inter, 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif" font-size="17" font-weight="800" fill="#10B981">NO EVIDENCE, NO CLAIM</text>
+<text x="836" y="829" text-anchor="end" font-family="'SF Arabic', 'Geeza Pro', 'Noto Kufi Arabic', 'Noto Sans Arabic', 'Segoe UI', Tahoma, 'DejaVu Sans', sans-serif" font-size="16" fill="#8EA4C2">لا دليل = لا ادعاء</text>
+</svg>

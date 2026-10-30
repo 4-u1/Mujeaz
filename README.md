@@ -1,185 +1,220 @@
 <div align="center">
 
-# مُجاز · Mujeaz
+<img src="docs/assets/hero.svg" alt="مُجاز Mujeaz — Revenue Assurance & Prior-Authorization Command Center" width="100%"/>
 
-### AI Revenue Assurance & Prior-Authorization Command Center for Saudi Healthcare
+<br/>
 
-**نمنع الرفض. نحمي الإيراد. نستعيد المفقود.**
-*Prevent the denial. Protect the revenue. Recover the lost.*
+<img src="https://img.shields.io/badge/Status-Prototype-F59E0B?style=for-the-badge" alt="Status: prototype"/>
+<img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React 19"/>
+<img src="https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
+<img src="https://img.shields.io/badge/Gemini-Structured%20Output-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini"/>
+<img src="https://img.shields.io/badge/HL7%20FHIR-R4-E34F26?style=for-the-badge" alt="HL7 FHIR R4"/>
+<img src="https://img.shields.io/badge/UI-Arabic%20RTL%20First-10B981?style=for-the-badge" alt="Arabic RTL first"/>
+<img src="https://img.shields.io/badge/License-Apache%202.0-0A1D38?style=for-the-badge" alt="Apache 2.0"/>
 
-![Status](https://img.shields.io/badge/status-prototype-orange)
-![Stack](https://img.shields.io/badge/stack-React%2019%20·%20Express%20·%20Gemini-blue)
-![Standards](https://img.shields.io/badge/target-HL7%20FHIR%20R4%20·%20NPHIES-teal)
-![UI](https://img.shields.io/badge/UI-Arabic%20RTL--first-green)
+<br/><br/>
 
-Designed & built by **Yazeed Hamad Alharthi · يزيد حمد الحارثي**
+**[How it works](#-how-it-works) · [Readiness Score](#-mujeaz-readiness-score) · [Product tour](#-product-tour) · [Quick start](#-quick-start) · [PRD](docs/PRD.md)**
+
+</div>
+
+<br/>
+
+<div dir="rtl" align="right">
+
+### مُجاز في ثلاثين ثانية
+
+**مُجاز** طبقة ذكاء تشغيلية بين أنظمة المستشفى السريرية ومسار التأمين (نفيس). قبل إرسال أي طلب موافقة مسبقة، يفهم الحالة، ويبحث تلقائيًا عن الأدلة داخل السجل الطبي، ويطابقها مع سياسة الجهة الدافعة، ويكشف أسباب الرفض المحتملة ويعالجها. وإذا وقع الرفض، يحلل سببه ويبني حزمة استئناف موثقة بالمصادر وجاهزة للمراجعة البشرية.
+
+> **لا ينتظر الرفض ليبدأ — يتنبأ به، يمنعه، وإذا وقع يحوّله إلى فرصة لاسترداد الإيراد.**
 
 </div>
 
 ---
 
-## نبذة | Overview
+## ⚡ The problem
 
-**مُجاز** طبقة ذكاء تشغيلية تعمل بين الأنظمة السريرية (HIS/EMR) والمسار التأميني (NPHIES). تقرأ الطلب السريري، تبحث عن الأدلة الداعمة داخل السجل الطبي، تطابقها مع سياسة شركة التأمين، وتحسب جاهزية الطلب قبل إرساله. وإذا رُفض الطلب، تبني حزمة استئناف موثقة بالمصادر وجاهزة للمراجعة البشرية.
+A medically correct request still gets **delayed or denied** because three processes run in isolation:
 
-**Mujeaz** is an intelligence layer that sits between clinical systems and the payer channel. It works **before, during and after** a denial:
+<table>
+<tr>
+<td width="33%" valign="top">
 
+### 🩺 Clinical decision
+The physician writes the order. The proof that conservative therapy was tried sits in a **different encounter** nobody attaches.
+
+</td>
+<td width="33%" valign="top">
+
+### 📄 Payer authorization
+Coverage rules, required attachments, diagnosis–procedure matching and coding all have to line up **before** submission.
+
+</td>
+<td width="33%" valign="top">
+
+### 💰 Revenue cycle
+Denials surface weeks later. Appeal teams start from zero — **after** the revenue is already at risk.
+
+</td>
+</tr>
+</table>
+
+**Existing tools cover one side.** Authorization tools submit without understanding the clinical context; appeal tools only start after the loss. Mujeaz joins both:
+
+```text
+Traditional        Submit → Wait → Denied → Manual work
+Appeal-only        Denied → Appeal
+Mujeaz             Understand → Validate → Predict → Complete → Submit → Monitor → Recover → Learn
 ```
-Prevent → Approve → Monitor → Recover → Learn
-```
 
-| Without Mujeaz | Appeal-only tools | Mujeaz |
+---
+
+## 🧠 How it works
+
+<p align="center">
+  <img src="docs/assets/agents.svg" alt="Six specialised agents A1 to A6" width="100%"/>
+</p>
+
+Each agent has one job, a typed output, and an audit trail. Language understanding comes from the LLM; **anything that decides a number or a rule outcome is deterministic and testable**.
+
+<details>
+<summary><b>What each agent does in the prototype today</b></summary>
+
+<br/>
+
+| | Agent | Prototype status |
 |---|---|---|
-| Submit → Wait → Denied → Manual work | Denied → Appeal | Understand → Validate → Predict → Complete → Submit → Monitor → Recover → Learn |
+| **A1** | Clinical Understanding | Gemini extraction (AI Sandbox) with source-quoted facts |
+| **A2** | Evidence Hunter | Surfaces only evidence present in each case's record; logs a miss otherwise |
+| **A3** | Policy Reasoning | Model judges rule status; rules engine planned (PRD FR-A3-03) |
+| **A4** | NPHIES / FHIR Conformance | Sample `Claim` with `use: preauthorization`; profile validation planned |
+| **A5** | Revenue Risk | Deterministic formulas in [`shared/scoring.ts`](shared/scoring.ts) |
+| **A6** | Recovery | Gemini appeal drafting from whitelisted evidence only |
+
+</details>
+
+### See it on a real case
+
+<p align="center">
+  <img src="docs/assets/evidence-hunter.svg" alt="Evidence Hunter before and after: readiness 74 to 98, denial risk 78% to 5%" width="100%"/>
+</p>
+
+The physician already documented six physiotherapy sessions — just not in this request. **A2** finds them in Encounter #1820, attaches them with source and date, and the request moves from *Action Required* to *Decision Ready* before it ever reaches the payer.
 
 ---
 
-## ⚠️ Project status — read first
+## 🎯 Mujeaz Readiness Score
 
-This repository is a **functional prototype / demo**, not a production system.
+<p align="center">
+  <img src="docs/assets/readiness.svg" alt="Readiness Score 98 out of 100 with six weighted components" width="100%"/>
+</p>
 
-| Area | Current state |
-|---|---|
-| Clinical data | Synthetic mock cases (`src/data/mockCases.ts`). No real patient data. |
-| Payers & policies | All payers (Demo Payer A/B/C), facilities, patients, policy codes and rules are **fictional**. Procedure and drug codes are reference codes, not SBS / NPHIES codes. |
-| NPHIES | **Not connected.** All submissions and payer responses are simulated. |
-| AI analysis | Live via Google Gemini when `GEMINI_API_KEY` is set. Without it, the API returns a **clearly labelled sample** (`mode: "fallback"`) that is never presented as an analysis of the note. |
-| Scoring | Readiness Score, denial risk and revenue figures are computed **deterministically** in [`shared/scoring.ts`](shared/scoring.ts), not generated by the model. |
-| Audit log | Linked by a real SHA-256 hash chain, computed in the browser for the demo. |
-| Persistence | In-memory React state only. Refreshing the page resets everything. |
-| Auth / RBAC | Not implemented. |
+- **Readiness, not a promise.** It measures how complete a request is — never the probability that a payer approves it.
+- **Explainable.** Every missing point comes with the reason and the action that recovers it.
+- **Reproducible.** Same inputs → same score. Computed in code, not generated by the model.
 
-See [`docs/PRD.md`](docs/PRD.md) for the full product requirements, the gap analysis against this codebase, and the roadmap to a production-grade system.
-
----
-
-## Core concepts
-
-### Multi-agent pipeline
-
-| ID | Agent | Responsibility | Prototype status |
-|---|---|---|---|
-| A1 | Clinical Understanding | Turn free-text notes into structured, source-linked clinical facts | LLM (Gemini) in Sandbox; mocked elsewhere |
-| A2 | Evidence Hunter | Search the patient record for proof that each policy requirement is met | Demo: surfaces only the evidence present in each case's record; logs a miss otherwise |
-| A3 | Policy Reasoning | Match the request against payer coverage rules (RAG + deterministic rules) | LLM judges rule status; no rules engine yet |
-| A4 | NPHIES / FHIR Conformance | Build and validate the FHIR bundle before submission | Sample `Claim` (`use: preauthorization`); profile validation not implemented |
-| A5 | Revenue Risk | Revenue at risk, denial risk, recoverable value, priority | Deterministic formulas (`shared/scoring.ts`) |
-| A6 | Recovery | Root-cause the denial and build an Appeal Evidence Map + letters | LLM (Gemini) via `/api/ai/generate-appeal` |
-
-### Mujeaz Readiness Score
-
-A 0–100 score of how ready a request is to submit — **not** a prediction that the payer will approve. Six components:
-
-`Clinical Evidence · Policy Match · Documentation · Coding Integrity · Required Attachments · Administrative Completeness`
-
-Weights: Clinical Evidence 30% · Policy Match 25% · Documentation 15% · Coding Integrity 15% · Attachments 10% · Administrative 5%.
-Hard gates: a failed mandatory rule caps the score at 60; invalid coding caps it at 50.
-Labels: ≥ 90 Decision Ready · 70–89 Action Recommended · < 70 Action Required.
-
-The system must always explain what is keeping a request below 100.
-
-### "No Evidence, No Claim"
-
-Every clinical fact the system relies on must carry **Fact + Source + Date + Confidence**. If no evidence is found, the system reports it as missing — it never invents it.
+| Score | Label | Meaning |
+|:---:|---|---|
+| **≥ 90** | 🟢 Decision Ready | Submit after human review |
+| **70 – 89** | 🟡 Action Recommended | Fix listed gaps first |
+| **< 70** | 🔴 Action Required | Mandatory requirement or coding problem |
 
 ---
 
-## Features in the app
+## 🛡️ No Evidence, No Claim
 
-| Tab | What it shows |
-|---|---|
-| **Command Center** | Revenue protected / at risk / recovered, prevented denials, active authorizations, recovery queue |
-| **Live Walkthrough** | Guided 7-stage demo: MRI Lumbar Spine request → risk detected → evidence found → policy satisfied → readiness 98/100 → FHIR → approval; plus a denial → recovery scenario |
-| **Digital Twin Inspector** | Per-case view: clinical facts, policy rules, evidence, agent runs, FHIR payload, audit trail |
-| **AI Sandbox** | Paste any clinical note (Arabic or English) and run live analysis through Gemini |
-| **Recovery Queue** | Denied cases and AI-generated appeal packages (Arabic + English letters) |
-| **Policy RAG** | Browsable sample payer policy knowledge base |
+> [!IMPORTANT]
+> Every clinical fact Mujeaz relies on carries **Fact + Source + Date + Confidence**.
+> If the evidence is not in the record, Mujeaz reports it as **missing** — it never invents it.
 
-All screens are bilingual with Arabic RTL as the default.
-
----
-
-## Architecture (prototype)
-
-```
-┌──────────────────────────── Browser ─────────────────────────────┐
-│ React 19 + Vite + Tailwind v4 + motion + lucide-react            │
-│ Command Center · Walkthrough · Digital Twin · Sandbox · Recovery │
-└───────────────────────────────┬──────────────────────────────────┘
-                                │ fetch /api/*
-┌───────────────────────────────▼──────────────────────────────────┐
-│ Express server (server.ts)                                       │
-│  GET  /api/health                                                │
-│  POST /api/ai/analyze-order   → A1/A3 (Gemini) + A5 scoring      │
-│  POST /api/ai/generate-appeal → A6 appeal package (Gemini)        │
-│  input validation · 200 KB body limit · 20 req/min per IP        │
-│  Vite middleware in dev · static dist/ in prod                   │
-└───────────────────────────────┬──────────────────────────────────┘
-                                │ structured JSON output (responseSchema)
-                                │ → shared/scoring.ts recomputes all scores
-                       ┌────────▼────────┐
-                       │  Google Gemini  │
-                       └─────────────────┘
+```text
+Physiotherapy — 6 sessions
+Source:      Encounter #1820 · Physical Therapy
+Date:        2026-06-11
+Confidence:  97%
 ```
 
-Target production architecture (FastAPI services, PostgreSQL + pgvector, rules engine, evidence graph, NPHIES gateway) is specified in [`docs/PRD.md`](docs/PRD.md#9-target-architecture).
+The same rule applies to appeal letters: the Recovery Agent may only cite evidence that exists in the case's Appeal Evidence Map.
 
 ---
 
-## Getting started
+## 🖥️ Product tour
 
-**Requirements:** Node.js 20+ and a Gemini API key (optional — the app runs without it using fallback data).
+| Workspace | What you get |
+|---|---|
+| 📊 **Command Center** | Revenue protected, at risk and recovered · prevented denials · active authorizations · recovery queue |
+| ▶️ **Live Walkthrough** | Guided 7-stage MRI Lumbar Spine story, then a denial → recovery scenario |
+| 🧬 **Digital Twin Inspector** | One case end-to-end: facts, rules, evidence, agent runs, FHIR payload, **SHA-256 hash-chained audit log** |
+| 🧪 **AI Sandbox** | Paste any clinical note (Arabic or English) and run live analysis |
+| 🔁 **Recovery Queue** | Denied cases with root cause, strategy and bilingual appeal drafts |
+| 📚 **Policy RAG** | Browsable sample payer policy knowledge base |
+
+All screens are bilingual, with Arabic RTL as the default.
+
+---
+
+## 🏗️ Architecture
+
+<p align="center">
+  <img src="docs/assets/architecture.svg" alt="Prototype architecture and production target" width="100%"/>
+</p>
+
+---
+
+## 🚀 Quick start
 
 ```bash
 git clone https://github.com/4-u1/Mujeaz.git
 cd Mujeaz
 npm install
-cp .env.example .env.local     # then set GEMINI_API_KEY
-npm run dev                    # http://localhost:3000
+cp .env.example .env.local   # add GEMINI_API_KEY for live AI
+npm run dev                  # → http://localhost:3000
 ```
+
+> [!TIP]
+> No API key? The app still runs. AI endpoints return a **clearly labelled sample** (`mode: "fallback"`) that is never presented as an analysis of your note.
 
 | Script | Purpose |
 |---|---|
-| `npm run dev` | Start Express + Vite dev server on port 3000 |
-| `npm run build` | Build the client to `dist/` and bundle the server to `dist/server.cjs` |
+| `npm run dev` | Express + Vite dev server on port 3000 |
+| `npm run build` | Client → `dist/`, server → `dist/server.cjs` |
 | `npm start` | Run the production build |
 | `npm run lint` | Type-check with `tsc --noEmit` |
 
-### Environment variables
+| Variable | Required | Description |
+|---|:---:|---|
+| `GEMINI_API_KEY` | — | Enables live AI. Server-side only. |
+| `GEMINI_MODEL` | — | Overrides the Gemini model name. |
+| `APP_URL` | — | Public URL of the deployment. |
 
-| Name | Required | Description |
-|---|---|---|
-| `GEMINI_API_KEY` | No | Enables live AI analysis. Server-side only; never exposed to the browser. |
-| `GEMINI_MODEL` | No | Overrides the Gemini model name. |
-| `APP_URL` | No | Public URL of the deployment. |
+<details>
+<summary><b>📡 API reference</b></summary>
 
----
+<br/>
 
-## API
-
-### `POST /api/ai/analyze-order`
+#### `POST /api/ai/analyze-order`
 
 ```json
 {
   "clinicalNoteText": "45M, low back pain radiating to left leg for 8 weeks ... requesting MRI lumbar spine.",
-  "payerName": "Sample Payer",
+  "payerName": "Demo Payer A",
   "requestedService": "MRI Lumbar Spine"
 }
 ```
 
-Returns diagnosis and procedure codes, clinical facts with sources and confidence, policy rule results, the readiness breakdown, revenue risk, and evidence-hunter findings, plus:
+Returns diagnosis and procedure codes, source-quoted clinical facts, rule results, evidence findings, the readiness breakdown and revenue risk, plus:
 
 | Field | Meaning |
 |---|---|
-| `mode` | `live` (model output) or `fallback` (static sample — not an analysis of the note) |
+| `mode` | `live` (model output) or `fallback` (static sample — not an analysis) |
 | `notice` / `noticeAr` | Present in fallback mode; must be shown to the user |
-| `scoring` | `method`, any hard `gateApplied`, and where the financial value came from |
+| `scoring` | `method`, any hard `gateApplied`, and the source of the financial value |
 
-Limits: note ≤ 20,000 characters. Schema: `AnalyzeOrderResult` in [`server/geminiService.ts`](server/geminiService.ts).
+Limits: note ≤ 20,000 characters · 200 KB body · 20 requests/min per IP.
 
-### `POST /api/ai/generate-appeal`
+#### `POST /api/ai/generate-appeal`
 
-Body (whitelisted fields only — no patient name or ID is sent to the model):
+Whitelisted fields only — **no patient name or ID reaches the model**:
 
 ```json
 {
@@ -192,75 +227,74 @@ Body (whitelisted fields only — no patient name or ID is sent to the model):
 }
 ```
 
-Returns `formalLetterEn`, `formalLetterAr`, `appealStrategy`, `appealStrategyAr`, `appealStrength` (the model's estimate of argument strength, not an overturn probability), and `mode` / `notice`.
+Returns `formalLetterEn`, `formalLetterAr`, `appealStrategy`, `appealStrategyAr`, `appealStrength` (the model's estimate of argument strength — not an overturn probability), `mode`, `notice`.
 
-### `GET /api/health`
-
+#### `GET /api/health`
 Liveness check.
 
----
+</details>
 
-## Project structure
+<details>
+<summary><b>🗂️ Project structure</b></summary>
 
-```
+<br/>
+
+```text
 .
-├── server.ts                    # Express server + API routes
-├── server/
-│   └── geminiService.ts         # Gemini calls, JSON schemas, labelled fallback
-├── shared/
-│   └── scoring.ts               # Deterministic Readiness Score & revenue-risk formulas
+├── server.ts                  Express server, validation, rate limiting
+├── server/geminiService.ts    Gemini calls, JSON schemas, labelled fallback
+├── shared/scoring.ts          Deterministic Readiness Score & revenue risk
 ├── src/
-│   ├── App.tsx                  # App shell, tab routing, state
-│   ├── types.ts                 # Domain model (ClaimDigitalTwin, ReadinessBreakdown, …)
-│   ├── data/mockCases.ts        # Synthetic cases + initial dashboard metrics
-│   └── components/
-│       ├── ExecutiveDashboard.tsx
-│       ├── LiveWalkthrough.tsx
-│       ├── DigitalTwinInspector.tsx
-│       ├── AISandbox.tsx
-│       ├── RecoveryQueue.tsx
-│       ├── PolicyKnowledgeBase.tsx
-│       ├── Navbar.tsx
-│       └── Footer.tsx
+│   ├── App.tsx                App shell and state
+│   ├── types.ts               Domain model (ClaimDigitalTwin, …)
+│   ├── data/mockCases.ts      Synthetic demo cases
+│   └── components/            Command Center, Walkthrough, Digital Twin, Sandbox, Recovery, Policy RAG
 ├── docs/
-│   └── PRD.md                   # Product Requirements Document
-└── public/                      # Logos
+│   ├── PRD.md                 Product Requirements Document (Arabic)
+│   └── assets/                README illustrations + generator script
+└── public/                    Logos
 ```
 
----
-
-## Roadmap
-
-| Phase | Focus |
-|---|---|
-| 1 — Intelligence | Clinical extraction, evidence retrieval, policy matching |
-| 2 — Decision Readiness | Readiness Score, coding validation, document completeness |
-| 3 — Interoperability | FHIR R4 profiles, NPHIES sandbox integration, payer responses |
-| 4 — Revenue Recovery | Denial intelligence, appeal generation, evidence packages |
-| 5 — Predictive Revenue | Denial prediction, revenue-at-risk forecasting, recovery prioritization |
-| 6 — Learning Network | Governed learning from denial and recovery outcomes |
-
-The MVP covers **one end-to-end scenario: MRI Lumbar Spine**, then expands to CT, endoscopy and specialty drugs.
+</details>
 
 ---
 
-## Responsible AI & compliance
+## 🗺️ Roadmap
 
-- Mujeaz is **decision support**. Every submission and appeal requires human review.
-- It is not an insurer, a claims adjudicator, or an accredited NPHIES body.
-- Production use requires compliance with the Saudi **Personal Data Protection Law (PDPL)**, **CHI** requirements for NPHIES integration, **NCA** cybersecurity controls, and the hosting facility's own policies.
-- Patient data must not be used to train models without an appropriate legal and contractual basis.
+| | Phase | Focus | |
+|:---:|---|---|:---:|
+| **M0** | Credibility | Honest labels, deterministic scoring, real audit chain, demo data | ✅ |
+| **M1** | Foundation | FastAPI · PostgreSQL + pgvector · auth & roles · persistent audit | ⏳ |
+| **M2** | Intelligence | A1 + A2 + A3 on MRI Lumbar Spine · golden dataset · eval in CI | ⏳ |
+| **M3** | Readiness | Rules engine · physician documentation query (CDI) | ⏳ |
+| **M4** | Interoperability | NPHIES-profile `Claim` · real validation · labelled sandbox responses | ⏳ |
+| **M5** | Recovery | Appeal Evidence Map · deadlines · retro denial audit | ⏳ |
+| **M6** | Pilot | First facility · measured baseline · NPHIES test environment | ⏳ |
+
+Full requirements, formulas, data model, gap analysis and proposed features: **[docs/PRD.md](docs/PRD.md)**.
 
 ---
 
-## Author
+## ⚠️ Project status
 
-**Yazeed Hamad Alharthi · يزيد حمد الحارثي**
-Developer · AI Engineering — Saudi Arabia
-GitHub: [@4-u1](https://github.com/4-u1)
+> [!WARNING]
+> **This is a prototype.** All patients, payers (Demo Payer A/B/C), facilities, policies and codes are **synthetic**. There is **no live NPHIES connection** — every payer response is simulated and labelled as such. Procedure and drug codes are reference codes, not SBS / NPHIES codes. Data is held in memory only.
+
+> [!NOTE]
+> Mujeaz is **decision support**. It is not an insurer, a claims adjudicator or an accredited NPHIES body. Production use requires compliance with the Saudi **PDPL**, **CHI** requirements for NPHIES integration, **NCA** cybersecurity controls and the facility's own policies. Patient data must not be used to train models without a proper legal and contractual basis.
 
 ---
 
-## License
+<div align="center">
 
-Declared as `Apache-2.0` in `package.json` and the source headers. Add the root `LICENSE` file from GitHub (**Add file → Create new file → `LICENSE` → Choose a license template → Apache 2.0**).
+<img src="docs/assets/shield.png" alt="Mujeaz shield" width="110"/>
+
+### Yazeed Hamad Alharthi · يزيد حمد الحارثي
+
+Designed & built in Saudi Arabia 🇸🇦
+
+[![GitHub](https://img.shields.io/badge/GitHub-4--u1-181717?style=for-the-badge&logo=github)](https://github.com/4-u1)
+
+<sub>Apache 2.0 · مُجاز — نمنع الرفض. نحمي الإيراد. نستعيد المفقود.</sub>
+
+</div>
