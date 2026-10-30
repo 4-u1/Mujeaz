@@ -11,6 +11,16 @@ def esc(s: str) -> str:
 
 
 count = 0
+# First: the most informative lines (exception messages, failures) across all logs.
+KEYS = ("Error:", "error:", "FAILED", "ERROR ", "assert", "Traceback", "E   ")
+hits = []
+for path in sys.argv[1:]:
+    p = Path(path)
+    if p.exists():
+        hits += [f"{p.name}: {ln[:300]}" for ln in p.read_text(errors="replace").splitlines() if any(k in ln for k in KEYS)]
+if hits:
+    print(f"::error title=key lines::{esc(chr(10).join(hits[:40]))}")
+    count += 1
 for path in sys.argv[1:]:
     p = Path(path)
     if not p.exists() or count >= MAX_ANNOTATIONS:

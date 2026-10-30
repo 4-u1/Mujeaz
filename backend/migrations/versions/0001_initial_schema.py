@@ -514,9 +514,13 @@ REVOKE ALL ON FUNCTION auth_lookup_user(text) FROM PUBLIC;
 
 
 def _sql(statement: str) -> None:
-    # Run through the driver without bind parameters so multi-statement DDL and
-    # PL/pgSQL bodies are sent verbatim (simple query protocol).
-    op.get_bind().exec_driver_sql(statement)
+    # Send the DDL on the raw psycopg cursor with no parameters: psycopg then uses the
+    # simple query protocol, which allows several statements and leaves '%' untouched.
+    # Runs inside Alembic's transaction on the same connection.
+    dbapi_conn = op.get_bind().connection.dbapi_connection
+    assert dbapi_conn is not None
+    with dbapi_conn.cursor() as cur:
+        cur.execute(statement)
 
 
 def upgrade() -> None:
