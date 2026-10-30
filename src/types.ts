@@ -50,6 +50,16 @@ export interface EvidenceItem {
   confidence: number;
 }
 
+export interface DiscoverableEvidence {
+  evidenceItems: EvidenceItem[];
+  satisfiesRuleIds: string[];     // policy rules that become PASSED once this evidence is attached
+  evidenceSource: string;         // e.g. "Encounter #1820 - Physical Therapy"
+  readinessAfter: Partial<ReadinessBreakdown>;
+  denialRiskAfter: number;        // 0-100
+  summary: string;
+  summaryAr: string;
+}
+
 export interface ReadinessBreakdown {
   clinicalEvidence: number; // 0-100
   policyMatch: number;      // 0-100
@@ -84,7 +94,7 @@ export interface AgentRunState {
 }
 
 export interface FHIRPayload {
-  resourceType: 'Claim' | 'CoverageEligibilityRequest';
+  resourceType: 'Claim' | 'ClaimResponse';
   id: string;
   status: string;
   patientRef: string;
@@ -155,6 +165,10 @@ export interface ClaimDigitalTwin {
   // FHIR
   fhirPayload: FHIRPayload;
   
+  // Evidence that exists elsewhere in the patient's record (demo data) and that the
+  // Evidence Hunter (A2) can surface. Empty or absent means a deep search finds nothing new.
+  discoverableEvidence?: DiscoverableEvidence;
+
   // Recovery if denied
   appealPackage?: AppealEvidenceMap;
   

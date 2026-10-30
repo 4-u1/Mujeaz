@@ -21,22 +21,22 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
     gender: 'M',
     doctorName: 'د. خالد العمري / Dr. Khalid Al-Omari',
     specialty: 'Orthopedic Surgery',
-    facilityName: 'المستشفى السعودي الألماني / Saudi German Hospital',
-    payerName: 'التعاونية للتأمين / Tawuniya Insurance',
-    payerCode: 'TAW-NPHIES-01',
+    facilityName: 'مستشفى تجريبي عام - الرياض / Demo General Hospital, Riyadh',
+    payerName: 'جهة دافعة تجريبية أ / Demo Payer A',
+    payerCode: 'DPA-NPHIES-01',
     requestedService: 'MRI Lumbar Spine L4-L5',
     requestedServiceAr: 'تصوير بالرنين المغناطيسي للفقرات القطنية L4-L5',
     cptCode: '72148',
     icd10Code: 'M54.50',
     createdDate: '2026-08-12',
     status: 'RISK_DETECTED',
-    clinicalNoteText: `Patient present with 8-week history of persistent severe lower back pain radiating down to the left leg (L5 distribution). Visual Analog Scale pain score 8/10. Positive straight leg raise test on left at 45 degrees. Numbness on dorsum of left foot. Requesting MRI Lumbar Spine with and without contrast to evaluate L4-L5 disc herniation and nerve root compression.`,
+    clinicalNoteText: `Patient present with 8-week history of persistent severe lower back pain radiating down to the left leg (L5 distribution). Visual Analog Scale pain score 8/10. Positive straight leg raise test on left at 45 degrees. Numbness on dorsum of left foot. Requesting MRI Lumbar Spine without contrast to evaluate L4-L5 disc herniation and nerve root compression.`,
     
     revenueRisk: {
-      financialValue: 486000,
+      financialValue: 2800,
       denialRiskPercentage: 78,
-      revenueAtRisk: 378000,
-      recoverableValue: 342000,
+      revenueAtRisk: 2184,
+      recoverableValue: 1966,
       priority: 'HIGH',
     },
     
@@ -78,7 +78,7 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
     policyRules: [
       {
         id: 'pr-1',
-        code: 'TAW-LUMBAR-POL-04',
+        code: 'DPA-LUMBAR-POL-04',
         title: '6-Week Conservative Therapy Requirement',
         titleAr: 'شرط العلاج التحفظي لمدة 6 أسابيع على الأقل',
         requirement: 'Proof of at least 6 weeks of non-surgical management (Physiotherapy/NSAIDS) prior to Lumbar MRI unless red flags exist.',
@@ -87,7 +87,7 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
       },
       {
         id: 'pr-2',
-        code: 'TAW-CODING-01',
+        code: 'DPA-CODING-01',
         title: 'ICD-10 vs CPT Compatibility',
         titleAr: 'تطابق الترميز الطبي مع الإجراء',
         requirement: 'ICD-10 M54.50 valid for Lumbar MRI CPT 72148.',
@@ -132,8 +132,8 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
         name: 'Policy Reasoning Agent',
         nameAr: 'وكيل مطابقة السياسات',
         status: 'COMPLETED',
-        outputSummary: 'Matched rule TAW-LUMBAR-POL-04. High risk of denial (78%) if submitted without physio attachments.',
-        outputSummaryAr: 'تمت مطابقة قاعدة التعاونية. مخاطر رفض عالية (78%) في حال الإرسال بدون مرفقات.',
+        outputSummary: 'Matched rule DPA-LUMBAR-POL-04. High risk of denial (78%) if submitted without physio attachments.',
+        outputSummaryAr: 'تمت مطابقة قاعدة الجهة الدافعة (أ). مخاطر رفض عالية (78%) في حال الإرسال بدون مرفقات.',
         durationMs: 210,
         timestamp: '2026-08-12 10:14:04',
       },
@@ -142,8 +142,8 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
         name: 'NPHIES / FHIR Conformance Agent',
         nameAr: 'وكيل معايير نفيس والترميز',
         status: 'COMPLETED',
-        outputSummary: 'FHIR Claim structure generated successfully. Coding 100% compliant.',
-        outputSummaryAr: 'تم بناء هيكل FHIR بنجاح. الترميز مطابق 100%.',
+        outputSummary: 'Built FHIR Claim (use: preauthorization) sample. Schema validation against NPHIES profiles not yet implemented.',
+        outputSummaryAr: 'تم بناء نموذج FHIR Claim للموافقة المسبقة. التحقق بملفات تعريف نفيس غير مفعّل بعد.',
         durationMs: 190,
         timestamp: '2026-08-12 10:14:04',
       },
@@ -152,8 +152,8 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
         name: 'Revenue Risk Agent',
         nameAr: 'وكيل مخاطر الإيرادات',
         status: 'COMPLETED',
-        outputSummary: 'Revenue at risk: 378,000 SAR. Case flagged as HIGH PRIORITY for Evidence Hunter.',
-        outputSummaryAr: 'الإيراد المعرض للخطر: 378,000 ريال. أولوية تشغيلية قصوى.',
+        outputSummary: 'Revenue at risk: 2,184 SAR (78% of 2,800 SAR contracted price). Flagged for Evidence Hunter.',
+        outputSummaryAr: 'الإيراد المعرض للخطر: 2,184 ريال (78% من سعر الخدمة 2,800 ريال). محال لوكيل صيد الأدلة.',
         durationMs: 110,
         timestamp: '2026-08-12 10:14:05',
       },
@@ -169,29 +169,80 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
       },
     ],
     
+    discoverableEvidence: {
+      evidenceItems: [
+        {
+          id: 'e-hunter-1',
+          requirement: 'Proof of conservative physiotherapy and medications in EMR',
+          requirementAr: 'إثبات توثيق جلسات العلاج الطبيعي وأدويتها في السجل الطبي',
+          status: 'FOUND',
+          matchedFact: '6 physiotherapy sessions (2026-06-11 → 2026-07-16) + NSAID prescription',
+          sourceEncounter: 'Physical Therapy Encounter #1820',
+          date: '2026-06-11',
+          confidence: 97,
+        },
+      ],
+      satisfiesRuleIds: ['pr-1'],
+      evidenceSource: 'Encounter #1820 - Physical Therapy',
+      readinessAfter: {
+        clinicalEvidence: 98,
+        policyMatch: 96,
+        documentation: 97,
+        requiredAttachments: 99,
+        overallScore: 98,
+        readinessLabel: 'Decision Ready',
+        readinessLabelAr: 'جاهز للقرار',
+      },
+      denialRiskAfter: 5,
+      summary: 'Found 6 physiotherapy sessions & NSAID prescription in Encounter #1820.',
+      summaryAr: 'تم العثور على 6 جلسات علاج طبيعي ووصفة مسكنات في الزيارة #1820.',
+    },
+
     fhirPayload: {
-      resourceType: 'CoverageEligibilityRequest',
-      id: 'nphies-req-4922',
+      resourceType: 'Claim',
+      id: 'nphies-preauth-4922',
       status: 'active',
       patientRef: 'Patient/SA-1094821',
-      providerRef: 'Organization/SGH-RIYADH',
-      payerRef: 'Organization/TAWUNIYA',
+      providerRef: 'Organization/DEMO-HOSP-01',
+      payerRef: 'Organization/DEMO-PAYER-A',
       diagnosisCodes: [{ code: 'M54.50', display: 'Low back pain, unspecified' }],
-      procedureCodes: [{ code: '72148', display: 'MRI Lumbar Spine w/o & w/ Contrast', costSAR: 15500 }],
+      procedureCodes: [{ code: '72148', display: 'MRI Lumbar Spine without contrast', costSAR: 2800 }],
       attachmentsCount: 1,
+      // Illustrative FHIR R4 prior-authorization request (Claim, use = preauthorization).
+      // Production must follow the NPHIES Implementation Guide profiles and code with
+      // ICD-10-AM (diagnoses) and SBS (services). Codes below are demo references only.
       rawJson: JSON.stringify({
-        resourceType: "CoverageEligibilityRequest",
-        id: "nphies-req-4922",
-        purpose: ["validation", "benefits"],
+        resourceType: "Claim",
+        id: "nphies-preauth-4922",
+        status: "active",
+        use: "preauthorization",
+        type: { coding: [{ system: "http://terminology.hl7.org/CodeSystem/claim-type", code: "professional" }] },
         patient: { reference: "Patient/SA-1094821" },
         created: "2026-08-12T10:14:00Z",
+        insurer: { reference: "Organization/DEMO-PAYER-A" },
+        provider: { reference: "Organization/DEMO-HOSP-01" },
+        priority: { coding: [{ system: "http://terminology.hl7.org/CodeSystem/processpriority", code: "normal" }] },
+        insurance: [{ sequence: 1, focal: true, coverage: { reference: "Coverage/DEMO-COV-4922" } }],
+        diagnosis: [
+          {
+            sequence: 1,
+            diagnosisCodeableConcept: { coding: [{ system: "urn:mujeaz:demo:diagnosis-code", code: "M54.50", display: "Low back pain, unspecified" }] }
+          }
+        ],
+        supportingInfo: [
+          { sequence: 1, category: { text: "attachment" }, valueReference: { reference: "DocumentReference/physio-1820" } }
+        ],
         item: [
           {
             sequence: 1,
-            diagnosis: [{ diagnosisCodeableConcept: { coding: [{ system: "http://hl7.org/fhir/sid/icd-10", code: "M54.50" }] } }],
-            productOrService: { coding: [{ system: "http://www.ama-assn.org/go/cpt", code: "72148" }] }
+            diagnosisSequence: [1],
+            informationSequence: [1],
+            productOrService: { coding: [{ system: "urn:mujeaz:demo:procedure-code", code: "72148", display: "MRI Lumbar Spine without contrast (reference code — map to SBS)" }] },
+            unitPrice: { value: 2800, currency: "SAR" },
+            net: { value: 2800, currency: "SAR" }
           }
-        ]
+        ],
+        total: { value: 2800, currency: "SAR" }
       }, null, 2),
     },
     
@@ -220,12 +271,12 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
     gender: 'F',
     doctorName: 'د. سارة التميمي / Dr. Sarah Al-Tamimi',
     specialty: 'Dermatology & Rheumatology',
-    facilityName: 'مستشفى سليمان الحبيب / Dr. Sulaiman Al Habib Hospital',
-    payerName: 'بوبا العربية / Bupa Arabia',
-    payerCode: 'BUP-NPHIES-02',
-    requestedService: 'Secukinumab (Cosentyx) 150mg Subcutaneous Injection',
-    requestedServiceAr: 'عقار سيكوكينوماب (كوسينتيكس) 150 مجم حقن تحت الجلد',
-    cptCode: 'J3358',
+    facilityName: 'مستشفى تخصصي تجريبي / Demo Specialist Hospital',
+    payerName: 'جهة دافعة تجريبية ب / Demo Payer B',
+    payerCode: 'DPB-NPHIES-02',
+    requestedService: 'Secukinumab (Cosentyx) 150mg SC — 12-month course',
+    requestedServiceAr: 'عقار سيكوكينوماب (كوسينتيكس) 150 مجم تحت الجلد — كورس 12 شهرًا',
+    cptCode: 'DRUG-SECU-150',
     icd10Code: 'L40.50',
     createdDate: '2026-08-11',
     status: 'DENIED',
@@ -286,7 +337,7 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
     policyRules: [
       {
         id: 'pr-8103-1',
-        code: 'BUP-BIO-L40-02',
+        code: 'DPB-BIO-L40-02',
         title: 'Step Therapy & Contraindication Exception Policy',
         titleAr: 'سياسة العلاج المتدرج واستثناء موانع الاستعمال',
         requirement: 'Secukinumab approved if patient failed TNF-alpha inhibitor OR has documented contraindication/intolerance to TNF-alpha inhibitors.',
@@ -364,7 +415,7 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
         name: 'Recovery Agent',
         nameAr: 'وكيل استرداد الإيرادات',
         status: 'COMPLETED',
-        outputSummary: 'Generated Appeal Evidence Map & Formal Reconsideration Package citing Bupa Step Therapy Contraindication Exemption.',
+        outputSummary: 'Generated Appeal Evidence Map & Formal Reconsideration Package citing Demo Payer B Step Therapy Contraindication Exemption.',
         outputSummaryAr: 'تم إنشاء خريطة أدلة الاستئناف وخطاب إعادة النظر الموثق بناءً على استثناء الحساسية.',
         durationMs: 450,
         timestamp: '2026-08-11 14:20:04',
@@ -373,20 +424,32 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
     
     fhirPayload: {
       resourceType: 'Claim',
-      id: 'claim-bupa-8103',
+      id: 'preauth-dpb-8103',
       status: 'active',
       patientRef: 'Patient/SA-2041952',
-      providerRef: 'Organization/DSFH-RIYADH',
-      payerRef: 'Organization/BUPA-ARABIA',
+      providerRef: 'Organization/DEMO-HOSP-02',
+      payerRef: 'Organization/DEMO-PAYER-B',
       diagnosisCodes: [{ code: 'L40.50', display: 'Psoriatic arthropathy, unspecified' }],
-      procedureCodes: [{ code: 'J3358', display: 'Secukinumab Subcutaneous 150mg', costSAR: 144000 }],
+      procedureCodes: [{ code: 'DRUG-SECU-150', display: 'Secukinumab 150mg SC, 12-month course (demo drug code — map to NPHIES/SFDA drug code)', costSAR: 144000 }],
       attachmentsCount: 3,
       rawJson: JSON.stringify({
-        resourceType: "Claim",
-        id: "claim-bupa-8103",
-        status: "denied",
-        adjudication: [
-          { category: { coding: [{ code: "denial-reason" }] }, reason: { coding: [{ code: "DEN-STEP-04", display: "Step therapy requirements not met" }] } }
+        // Illustrative payer response to a prior-authorization request (simulated, not from NPHIES).
+        resourceType: "ClaimResponse",
+        id: "resp-preauth-dpb-8103",
+        status: "active",
+        use: "preauthorization",
+        outcome: "complete",
+        disposition: "Denied — step therapy requirements not met (simulated payer response)",
+        request: { reference: "Claim/preauth-dpb-8103" },
+        insurer: { reference: "Organization/DEMO-PAYER-B" },
+        item: [
+          {
+            itemSequence: 1,
+            adjudication: [
+              { category: { coding: [{ system: "http://terminology.hl7.org/CodeSystem/adjudication", code: "submitted" }] }, amount: { value: 144000, currency: "SAR" } },
+              { category: { coding: [{ system: "http://terminology.hl7.org/CodeSystem/adjudication", code: "benefit" }] }, reason: { coding: [{ system: "urn:mujeaz:demo:denial-reason", code: "DEN-STEP-04", display: "Step therapy requirements not met" }] }, amount: { value: 0, currency: "SAR" } }
+            ]
+          }
         ]
       }, null, 2),
     },
@@ -413,19 +476,19 @@ export const MOCK_CASES: ClaimDigitalTwin[] = [
         },
       ],
       appealStrength: 96,
-      appealStrategy: 'Cite Bupa Policy Article 14.3 (Medical Contraindication Exemption to Step Therapy). Attach Adverse Event Entry #1102 signed by Consultant Dermatologist.',
-      appealStrategyAr: 'الاستناد إلى المادة 14.3 من سياسة بوبا (استثناء المانع الطبي من العلاج المتدرج) وإرفاق سجل الحساسية الموثق من الاستشاري.',
-      formalLetterEn: `TO: Bupa Arabia Medical Reconsideration Committee
+      appealStrategy: 'Cite Demo Payer B Policy Article 14.3 (Medical Contraindication Exemption to Step Therapy). Attach Adverse Event Entry #1102 signed by Consultant Dermatologist.',
+      appealStrategyAr: 'الاستناد إلى المادة 14.3 من سياسة الجهة الدافعة (ب) (استثناء المانع الطبي من العلاج المتدرج) وإرفاق سجل الحساسية الموثق من الاستشاري.',
+      formalLetterEn: `TO: Demo Payer B Medical Reconsideration Committee
 SUBJECT: Reconsideration Request - Authorization Case AUTH-2026-8103
 PATIENT: Maryam Al-Shammari (ID: SA-2041952)
-REQUESTED SERVICE: Secukinumab (Cosentyx) 150mg (CPT J3358 / ICD-10 L40.50)
+REQUESTED SERVICE: Secukinumab (Cosentyx) 150mg (Drug code DRUG-SECU-150 [demo] / ICD-10 L40.50)
 
 Dear Medical Review Team,
 
 We hereby request a formal reconsideration for the denial of Secukinumab for Patient Maryam Al-Shammari.
 
 REASON FOR APPEAL:
-The denial cited denial code DEN-STEP-04 (unfulfilled step therapy requiring TNF-alpha inhibitor trial). However, according to Bupa Arabia Clinical Coverage Policy Section 14.3, step therapy requirements are explicitly waived in cases of documented severe drug hypersensitivity or medical contraindication.
+The denial cited denial code DEN-STEP-04 (unfulfilled step therapy requiring TNF-alpha inhibitor trial). However, according to Demo Payer B Clinical Coverage Policy Section 14.3, step therapy requirements are explicitly waived in cases of documented severe drug hypersensitivity or medical contraindication.
 
 EVIDENCE OF CONTRAINDICATION:
 1. Encounter #1102 (Dated 2026-03-20): Patient experienced severe Grade III cutaneous hypersensitivity reaction to Adalimumab (Humira). Continued TNF-alpha inhibitor therapy poses an immediate health risk.
@@ -436,17 +499,17 @@ Patient satisfies all criteria for IL-17 inhibitor therapy under medical contrai
 
 Sincerely,
 Dr. Sarah Al-Tamimi, Consultant Rheumatologist & Mujeaz Revenue Assurance Team`,
-      formalLetterAr: `إلى: لجنة إعادة النظر الطبية - شركة بوبا العربية
+      formalLetterAr: `إلى: لجنة إعادة النظر الطبية - شركة جهة دافعة تجريبية ب
 الموضوع: طلب إعادة نظر واستئناف للمطالبة رقم AUTH-2026-8103
 المريض: مريم الشمري (رقم الهوية: SA-2041952)
-الخدمة المطلوبة: سيكوكينوماب (كوسينتيكس) 150 مجم (CPT J3358 / ICD-10 L40.50)
+الخدمة المطلوبة: سيكوكينوماب (كوسينتيكس) 150 مجم (رمز الدواء DRUG-SECU-150 [تجريبي] / ICD-10 L40.50)
 
 السلام عليكم ورحمة الله وبركاته،،
 
 نتقدم إليكم بطلب إعادة النظر الموثق بشأن رفض موافقة العلاج البيولوجي للمريضة المذكورة أعلاه.
 
 سبب الاستئناف:
-استند الرفض إلى كود DEN-STEP-04 (عدم استيفاء العلاج المتدرج بـ TNF-alpha). وبحسب المادة 14.3 من دليل التغطية الطبية لشركة بوبا العربية، يستثنى المريض من العلاج المتدرج في حال وجود تحسس دوائي حاد وثابت سريرياً.
+استند الرفض إلى كود DEN-STEP-04 (عدم استيفاء العلاج المتدرج بـ TNF-alpha). وبحسب المادة 14.3 من دليل التغطية الطبية لشركة جهة دافعة تجريبية ب، يستثنى المريض من العلاج المتدرج في حال وجود تحسس دوائي حاد وثابت سريرياً.
 
 الأدلة السريرية القاطعة:
 1. زيارة رقم #1102 (بتاريخ 2026-03-20): أصيبت المريضة بتفاعل تحسسي حاد من الدرجة الثالثة تجاه عقار أداريموماب (هوميرا)، مما يشكل خطورة عند إعادة التعرض لمثبطات TNF.
@@ -461,15 +524,15 @@ Dr. Sarah Al-Tamimi, Consultant Rheumatologist & Mujeaz Revenue Assurance Team`,
     auditTrail: [
       {
         timestamp: '2026-08-11 14:15:00',
-        action: 'Claim Submitted to Bupa Arabia Payer Portal via NPHIES',
-        actionAr: 'تم إرسال المطالبة لبوبا عبر منصة نفيس',
+        action: 'Claim Submitted to Demo Payer B Payer Portal via NPHIES',
+        actionAr: 'تم إرسال المطالبة للجهة الدافعة (ب) عبر منصة نفيس',
         actor: 'NPHIES Gateway',
       },
       {
         timestamp: '2026-08-11 14:20:00',
         action: 'Automated Payer Denial Received: DEN-STEP-04',
         actionAr: 'استلام الرفض التلقائي من التأمين: كود DEN-STEP-04',
-        actor: 'Bupa Adjudication Engine',
+        actor: 'Demo Payer B Adjudication Engine',
       },
       {
         timestamp: '2026-08-11 14:20:04',
@@ -489,8 +552,8 @@ Dr. Sarah Al-Tamimi, Consultant Rheumatologist & Mujeaz Revenue Assurance Team`,
     gender: 'M',
     doctorName: 'د. طارق السعيد / Dr. Tariq Al-Saeed',
     specialty: 'Interventional Cardiology',
-    facilityName: 'مدينة الملك فهد الطبية / King Fahad Medical City',
-    payerName: 'ميدغلف للتأمين / Medgulf Insurance',
+    facilityName: 'مدينة طبية تجريبية / Demo Medical City',
+    payerName: 'جهة دافعة تجريبية ج / Demo Payer C',
     payerCode: 'MED-NPHIES-03',
     requestedService: 'Coronary Angioplasty with Drug-Eluting Stent Placement',
     requestedServiceAr: 'قسطرة شرايين القلب مع تركيب دعامة دوائية',
@@ -535,7 +598,7 @@ Dr. Sarah Al-Tamimi, Consultant Rheumatologist & Mujeaz Revenue Assurance Team`,
     policyRules: [
       {
         id: 'pr-3109-1',
-        code: 'MED-CARD-01',
+        code: 'DPC-CARD-01',
         title: 'Severe Stenosis (>70%) PCI Coverage Rule',
         titleAr: 'تغطية القسطرة للتضيق الشديد المستوفي للشرط (>70%)',
         requirement: 'Stenosis >70% with objective ischemia proof meets medical necessity criteria.',
@@ -583,8 +646,8 @@ Dr. Sarah Al-Tamimi, Consultant Rheumatologist & Mujeaz Revenue Assurance Team`,
         name: 'Policy Reasoning Agent',
         nameAr: 'وكيل مطابقة السياسات',
         status: 'COMPLETED',
-        outputSummary: '100% Policy Match against Medgulf Cardiac Intervention Policy.',
-        outputSummaryAr: 'مطابقة 100% مع سياسة ميدغلف للتدخلات القلبية.',
+        outputSummary: '100% Policy Match against Demo Payer C Cardiac Intervention Policy.',
+        outputSummaryAr: 'مطابقة 100% مع سياسة الجهة الدافعة (ج) للتدخلات القلبية.',
         durationMs: 180,
         timestamp: '2026-08-12 09:10:01',
       },
@@ -621,20 +684,27 @@ Dr. Sarah Al-Tamimi, Consultant Rheumatologist & Mujeaz Revenue Assurance Team`,
     ],
     
     fhirPayload: {
-      resourceType: 'CoverageEligibilityRequest',
-      id: 'nphies-req-3109',
+      resourceType: 'Claim',
+      id: 'nphies-preauth-3109',
       status: 'active',
       patientRef: 'Patient/SA-3891024',
-      providerRef: 'Organization/KFMC-RIYADH',
-      payerRef: 'Organization/MEDGULF',
+      providerRef: 'Organization/DEMO-HOSP-03',
+      payerRef: 'Organization/DEMO-PAYER-C',
       diagnosisCodes: [{ code: 'I25.10', display: 'Atherosclerotic heart disease' }],
       procedureCodes: [{ code: '92928', display: 'PCI with drug-eluting stent', costSAR: 68000 }],
       attachmentsCount: 2,
       rawJson: JSON.stringify({
-        resourceType: "CoverageEligibilityRequest",
-        id: "nphies-req-3109",
-        status: "approved",
-        outcome: "queued"
+        // Illustrative prior-authorization request (Claim, use = preauthorization). Demo codes only.
+        resourceType: "Claim",
+        id: "nphies-preauth-3109",
+        status: "active",
+        use: "preauthorization",
+        patient: { reference: "Patient/SA-3891024" },
+        insurer: { reference: "Organization/DEMO-PAYER-C" },
+        provider: { reference: "Organization/DEMO-HOSP-03" },
+        diagnosis: [{ sequence: 1, diagnosisCodeableConcept: { coding: [{ system: "urn:mujeaz:demo:diagnosis-code", code: "I25.10" }] } }],
+        item: [{ sequence: 1, diagnosisSequence: [1], productOrService: { coding: [{ system: "urn:mujeaz:demo:procedure-code", code: "92928", display: "PCI with drug-eluting stent (reference code — map to SBS)" }] }, net: { value: 68000, currency: "SAR" } }],
+        total: { value: 68000, currency: "SAR" }
       }, null, 2),
     },
     
@@ -649,7 +719,7 @@ Dr. Sarah Al-Tamimi, Consultant Rheumatologist & Mujeaz Revenue Assurance Team`,
         timestamp: '2026-08-12 09:10:03',
         action: 'Payer Instant Approval Issued - 68,000 SAR Revenue Protected',
         actionAr: 'الموافقة الفورية من التأمين - حماية إيراد بقيمة 68,000 ريال',
-        actor: 'Medgulf Payer NPHIES API',
+        actor: 'Demo Payer C Payer NPHIES API',
       },
     ],
   },

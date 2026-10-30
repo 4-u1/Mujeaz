@@ -40,18 +40,18 @@ export const Footer: React.FC<FooterProps> = ({ lang }) => {
           <div className="flex flex-wrap items-center gap-3 text-xs">
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
               <Lock className="w-3.5 h-3.5 text-emerald-400" />
-              <span>{isAr ? 'حماية وأمان البيانات الطبية' : 'HIPAA / Saudi Data Privacy Compliance'}</span>
+              <span>{isAr ? 'نموذج أولي — بيانات اصطناعية فقط' : 'Prototype — synthetic data only'}</span>
             </div>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300">
               <Activity className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{isAr ? 'تكامل معايير منصة نفيس FHIR R4' : 'NPHIES / FHIR R4 Standard'}</span>
+              <span>{isAr ? 'مصمم لمعايير FHIR R4 ونفيس' : 'Designed for FHIR R4 / NPHIES'}</span>
             </div>
           </div>
         </div>
 
         <div className="border-t border-slate-900 pt-6 flex flex-col sm:flex-row items-center justify-between text-[11px] text-slate-500 gap-4">
           <div>
-            © {new Date().getFullYear()} Mujeaz AI Operating Stack. All rights reserved.
+            © {new Date().getFullYear()} Mujeaz · {isAr ? 'تصميم وتطوير يزيد حمد الحارثي' : 'Designed & built by Yazeed Hamad Alharthi'}
           </div>
           <div className="flex items-center gap-4">
             <span>{isAr ? 'مبدأ: لا دليل = لا مطالبة' : 'Principle: "No Evidence, No Claim"'}</span>

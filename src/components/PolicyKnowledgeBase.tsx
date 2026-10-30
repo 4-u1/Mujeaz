@@ -9,8 +9,8 @@ interface PolicyKnowledgeBaseProps {
 const POLICY_DOCS = [
   {
     id: 'pol-1',
-    payer: 'Tawuniya Insurance',
-    code: 'TAW-LUMBAR-POL-04',
+    payer: 'Demo Payer A',
+    code: 'DPA-LUMBAR-POL-04',
     titleEn: 'Lumbar Spine MRI Prior Authorization Policy',
     titleAr: 'سياسة الموافقة المسبقة للرنين المغناطيسي للفقرات القطنية',
     rules: [
@@ -26,8 +26,8 @@ const POLICY_DOCS = [
   },
   {
     id: 'pol-2',
-    payer: 'Bupa Arabia',
-    code: 'BUP-BIO-L40-02',
+    payer: 'Demo Payer B',
+    code: 'DPB-BIO-L40-02',
     titleEn: 'Specialty Biologic Therapy Coverage Exemption Policy',
     titleAr: 'سياسة استثناءات تغطية العلاجات البيولوجية المتخصصة',
     rules: [
@@ -43,8 +43,8 @@ const POLICY_DOCS = [
   },
   {
     id: 'pol-3',
-    payer: 'Medgulf Insurance',
-    code: 'MED-CARD-01',
+    payer: 'Demo Payer C',
+    code: 'DPC-CARD-01',
     titleEn: 'Coronary Angioplasty & Stent Coverage Rules',
     titleAr: 'شروط تغطية قسطرة الشرايين التاجية والدعامات',
     rules: [
