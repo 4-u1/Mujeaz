@@ -154,7 +154,8 @@ def run_analysis(conn: Connection, *, case_id: str, org_id: str, actor: Actor, a
 
     rule_ids = {r.code: r.id for r in conn.execute(text(
         "SELECT pr.id, pr.code FROM policy_rules pr JOIN policy_versions pv ON pv.id = pr.policy_version_id "
-        "WHERE pv.version = :v"), {"v": res.policy_version.split("@", 1)[1]})}
+        "JOIN payer_policies pp ON pp.id = pv.policy_id WHERE pp.code = :p AND pv.version = :v"),
+        dict(zip(("p", "v"), res.policy_version.split("@", 1), strict=True)))}
     from app.rules import engine  # local import keeps the policy cache out of module import time
 
     policy = engine.policy_for(record.payer_code, record.service_code)

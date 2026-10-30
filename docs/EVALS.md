@@ -62,4 +62,4 @@ LLM results appear here after the `live-evals` workflow runs with the `GEMINI_AP
 | LLM fallbacks in LLM mode | 0 | **Active** when replay fixtures exist |
 | A6 appeal sentences with cited support | 100% | M4 |
 
-CI runs the baseline on both splits on every push and writes the report to the job summary. When recorded fixtures exist in `evals/fixtures/`, CI also replays the LLM path offline and gates it. The `live-evals` workflow (manual or weekly) calls Gemini, records fixtures and compares baseline and LLM side by side.
+CI runs the baseline on both splits on every push and writes the report to the job summary. When recorded fixtures exist in `evals/fixtures/`, CI also replays the LLM path offline and gates it. The `live-evals` workflow (manual or weekly) calls Gemini, records fixtures and compares baseline and LLM side by side. Recorded fixtures are uploaded as the `live-evals` artifact; to make CI gate the LLM path offline, download them into `evals/fixtures/` and commit them (a new prompt version needs a new recording).
