@@ -1,0 +1,149 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: backend (lint · types · unit · integration)
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: mujeaz
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres -d mujeaz" --health-interval 5s --health-timeout 3s --health-retries 20
+    env:
+      MUJEAZ_ENV: test
+      MUJEAZ_RUN_INTEGRATION: "1"
+      MUJEAZ_OWNER_DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/mujeaz
+      MUJEAZ_DATABASE_URL: postgresql+psycopg://mujeaz_app:mujeaz_app@localhost:5432/mujeaz
+      MUJEAZ_APP_DB_PASSWORD: mujeaz_app
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: |
+          set -o pipefail
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]" 2>&1 | tee /tmp/install.log
+      - name: Ruff
+        run: set -o pipefail; ruff check app tests migrations ../evals 2>&1 | tee /tmp/ruff.log
+      - name: Mypy
+        run: set -o pipefail; mypy app 2>&1 | tee /tmp/mypy.log
+      - name: Synthetic dataset is reproducible
+        working-directory: .
+        run: set -o pipefail; python -m evals.generator.generate --check 2>&1 | tee /tmp/dataset.log
+      - name: Tests (unit + integration against PostgreSQL)
+        run: |
+          set -o pipefail
+          pytest -q --cov=app --cov-report=term-missing:skip-covered 2>&1 | tee /tmp/pytest.log
+      - name: Coverage gate (scoring, audit, security ≥ 80%)
+        run: |
+          set -o pipefail
+          coverage report --include="app/scoring/*,app/audit/*,app/security/*" --fail-under=80 2>&1 | tee /tmp/coverage.log
+      - name: Summary
+        if: always()
+        run: |
+          echo "::notice title=pytest::$(tail -n 1 /tmp/pytest.log 2>/dev/null || echo 'did not run')"
+          echo "::notice title=coverage (core)::$(tail -n 1 /tmp/coverage.log 2>/dev/null || echo 'did not run')"
+      - name: Dependency audit (report only)
+        continue-on-error: true
+        run: pip-audit --skip-editable 2>&1 | tail -n 20
+      - name: Explain failure
+        if: failure()
+        working-directory: .
+        run: python .github/scripts/annotate.py /tmp/install.log /tmp/ruff.log /tmp/mypy.log /tmp/dataset.log /tmp/pytest.log /tmp/coverage.log
+
+  frontend:
+    name: frontend (types · tests · build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+      - name: Install
+        run: set -o pipefail; npm install --no-audit --no-fund 2>&1 | tee /tmp/npm.log
+      - name: Scoring vectors match the TypeScript reference
+        working-directory: .
+        run: |
+          set -o pipefail
+          node --experimental-strip-types shared/generate-scoring-vectors.ts 2>&1 | tee /tmp/vectors.log
+          git diff --exit-code shared/scoring_vectors.json 2>&1 | tee -a /tmp/vectors.log
+      - name: Type-check
+        run: set -o pipefail; npx tsc --noEmit 2>&1 | tee /tmp/tsc.log
+      - name: Vitest
+        run: set -o pipefail; npx vitest run 2>&1 | tee /tmp/vitest.log
+      - name: Build
+        run: set -o pipefail; npm run build 2>&1 | tee /tmp/build.log
+      - name: Dependency audit (report only)
+        continue-on-error: true
+        run: npm audit --omit=dev 2>&1 | tail -n 15
+      - name: Explain failure
+        if: failure()
+        working-directory: .
+        run: python3 .github/scripts/annotate.py /tmp/npm.log /tmp/vectors.log /tmp/tsc.log /tmp/vitest.log /tmp/build.log
+
+  stack:
+    name: stack (docker compose · end-to-end smoke)
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v5
+      - name: Build and start
+        run: |
+          set -o pipefail
+          docker compose -f infra/docker-compose.yml up -d --build --wait --wait-timeout 300 2>&1 | tee /tmp/compose.log
+      - name: API smoke through nginx
+        run: |
+          set -o pipefail
+          {
+            curl -fsS http://localhost:8080/healthz
+            TOKEN=$(curl -fsS -X POST http://localhost:8080/api/auth/dev-login \
+              -H 'Content-Type: application/json' -d '{"username":"sara.auth"}' | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])')
+            TOTAL=$(curl -fsS http://localhost:8080/api/cases -H "Authorization: Bearer $TOKEN" | python3 -c 'import sys,json;print(json.load(sys.stdin)["total"])')
+            echo "cases from database: $TOTAL"
+            test "$TOTAL" = "53"
+          } 2>&1 | tee /tmp/smoke.log
+          echo "::notice title=stack::compose up OK; $(tail -n 1 /tmp/smoke.log)"
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+      - name: Playwright end-to-end (login → cases → audit verify)
+        working-directory: e2e
+        run: |
+          set -o pipefail
+          npm install --no-audit --no-fund 2>&1 | tail -n 3
+          npx playwright install --with-deps chromium > /tmp/pw-install.log 2>&1
+          npx playwright test 2>&1 | tee /tmp/e2e.log
+      - name: Explain failure
+        if: failure()
+        run: |
+          docker compose -f infra/docker-compose.yml logs --no-color --tail 60 > /tmp/compose-services.log 2>&1 || true
+          python3 .github/scripts/annotate.py /tmp/compose.log /tmp/compose-services.log /tmp/smoke.log /tmp/e2e.log
+      - name: Stop
+        if: always()
+        run: docker compose -f infra/docker-compose.yml down -v
