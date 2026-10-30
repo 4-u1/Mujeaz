@@ -94,6 +94,8 @@ export default function App() {
   const selectedCase = cases.find((c) => c.id === selectedCaseId) || cases[0];
   const case4922 = cases.find((c) => c.legacyId === 'case-4922');
   const case8103 = cases.find((c) => c.legacyId === 'case-8103');
+  // Mirrors the server's RBAC matrix (case:analyze); the server still enforces it.
+  const canAnalyze = user.roles.some((r) => r === 'auth_officer' || r === 'coder');
   const role = ROLE_LABELS[user.roles[0]] ?? { en: user.roles[0], ar: user.roles[0] };
 
   return (
@@ -166,6 +168,8 @@ export default function App() {
                 lang={lang}
                 onBack={() => setActiveTab('dashboard')}
                 onRunEvidenceHunter={handleRunEvidenceHunter}
+                canAnalyze={canAnalyze}
+                onAnalyzed={refreshCase}
               />
             )}
 

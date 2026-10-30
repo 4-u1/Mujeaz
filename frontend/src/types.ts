@@ -22,10 +22,28 @@ export interface ClinicalFact {
   id: string;
   fact: string; // e.g. "6 Physiotherapy Sessions Completed"
   factAr: string;
-  category: 'DIAGNOSIS' | 'SYMPTOM' | 'CONSERVATIVE_CARE' | 'MEDICATION' | 'LAB' | 'PROCEDURE';
+  category: 'DIAGNOSIS' | 'SYMPTOM' | 'CONSERVATIVE_CARE' | 'MEDICATION' | 'LAB' | 'PROCEDURE' | 'EXAM' | 'THERAPY' | 'ORDER' | 'OTHER';
   source: string; // e.g. "Encounter #2081 - Orthopedic Note"
   date: string; // e.g. "2026-06-11"
   confidence: number; // 0-100
+  // Present for facts extracted by the M2 agents: the verified span in a stored document.
+  label?: string;
+  quote?: string;
+  docRef?: string;
+  charStart?: number;
+  charEnd?: number;
+  value?: Record<string, number>;
+}
+
+export interface AnalysisInfo {
+  id: string;
+  mode: 'baseline' | 'llm';
+  requestedMode: 'baseline' | 'llm';
+  policyVersion: string | null;
+  fallbackReason: string | null;
+  completedAt: string | null;
+  injectionFlags: number;
+  rejectedQuotes: number;
 }
 
 export interface PolicyRule {
@@ -37,6 +55,8 @@ export interface PolicyRule {
   requirementAr: string;
   status: 'PASSED' | 'WARNING' | 'FAILED' | 'PENDING';
   evidenceSource?: string;
+  reason?: string;
+  reasonAr?: string;
 }
 
 export interface EvidenceItem {
@@ -48,6 +68,8 @@ export interface EvidenceItem {
   sourceEncounter?: string;
   date?: string;
   confidence: number;
+  cdiQuestion?: string;
+  cdiQuestionAr?: string;
 }
 
 export interface DiscoverableEvidence {
@@ -86,7 +108,7 @@ export interface AgentRunState {
   agentId: 'A1' | 'A2' | 'A3' | 'A4' | 'A5' | 'A6';
   name: string;
   nameAr: string;
-  status: 'IDLE' | 'RUNNING' | 'COMPLETED' | 'FLAGGED';
+  status: 'IDLE' | 'RUNNING' | 'COMPLETED' | 'FLAGGED' | 'FAILED';
   outputSummary: string;
   outputSummaryAr: string;
   durationMs: number;
@@ -131,6 +153,7 @@ export interface ClaimDigitalTwin {
   legacyId?: string | null; // e.g. 'case-4922' for the original demo cases
   dataSource?: 'legacy-demo' | 'synthetic';
   analyzed?: boolean;
+  analysis?: AnalysisInfo;
   allowedTransitions?: CaseStatus[];
   claimNumber: string;
   patientName: string;
