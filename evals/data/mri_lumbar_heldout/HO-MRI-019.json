@@ -1,0 +1,126 @@
+{
+ "resourceType": "Bundle",
+ "id": "HO-MRI-019",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic-heldout"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-HO-P-2019",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "HO-P-2019",
+    "gender": "female",
+    "birthDate": "1975-01-01",
+    "name": [
+     {
+      "text": "Held-out Patient 019 (synthetic)"
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-019-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-019-E1",
+    "status": "finished",
+    "type": [
+     {
+      "text": "spine-clinic-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2019"
+    },
+    "period": {
+     "start": "2026-10-27",
+     "end": "2026-10-27"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-019-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-019-D1",
+    "status": "current",
+    "type": {
+     "text": "spine-clinic-note"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2019"
+    },
+    "date": "2026-10-27T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-019-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2YXYsdin2KzYudipINi52YrYp9iv2Kkg2KfZhNi52YXZiNivINin2YTZgdmC2LHZiiAo2KfZhNi52YXYsSDZpdmhKS4g2YrYudin2YbZiiDZhdmGINij2YTZhSDYo9iz2YHZhCDYp9mE2LjZh9ixINmF2Lkg2LnYsdmCINin2YTZhtiz2Kcg2YHZiiDYp9mE2LPYp9mCINin2YTZitiz2LHZiSDZhdmG2LAg2acg2KPYs9in2KjZiti5LiDYudmE2KfZhdipINmE2KfYs9mK2Log2KXZitis2KfYqNmK2Kkg2LnZhtivINmk2aAg2K/Ysdis2KkuINiu2YTZhCDYrNiv2YrYryDZgdmKINin2YTYqtit2YPZhSDYqNin2YTZhdir2KfZhtipINmF2Lkg2KrZhtmF2YrZhCDZgdmKINmF2YbYt9mC2Kkg2KfZhNi52KzYp9mGINmI2LbYudmBINmF2KrYstin2YrYryDZgdmKINin2YTZgtiv2YUuINin2YTZhdi32YTZiNioOiDYsdmG2YrZhiDZhdi62YbYp9i32YrYs9mKINmE2YTYudmF2YjYryDYp9mE2YLYt9mG2Yog2KjYr9mI2YYg2LXYqNi62Kku"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-HO-MRI-019-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "HO-MRI-019-C1",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M51.26",
+       "display": "Other intervertebral disc displacement, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2019"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-019-E1"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-HO-MRI-019-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "HO-MRI-019-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2019"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-019-E1"
+    },
+    "authoredOn": "2026-10-27"
+   }
+  }
+ ]
+}

@@ -1,0 +1,177 @@
+{
+ "resourceType": "Bundle",
+ "id": "HO-MRI-020",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic-heldout"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-HO-P-2020",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "HO-P-2020",
+    "gender": "female",
+    "birthDate": "1995-01-01",
+    "name": [
+     {
+      "text": "Held-out Patient 020 (synthetic)"
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-020-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-020-E1",
+    "status": "finished",
+    "type": [
+     {
+      "text": "spine-clinic-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2020"
+    },
+    "period": {
+     "start": "2026-10-29",
+     "end": "2026-10-29"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-020-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-020-D1",
+    "status": "current",
+    "type": {
+     "text": "spine-clinic-note"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2020"
+    },
+    "date": "2026-10-29T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-020-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2YXYsdin2KzYudipINi52YrYp9iv2Kkg2KfZhNi52YXZiNivINin2YTZgdmC2LHZiiAo2KfZhNi52YXYsSDZo9mhKS4g2YrYudin2YbZiiDZhdmGINij2YTZhSDYo9iz2YHZhCDYp9mE2LjZh9ixINmF2Lkg2LnYsdmCINin2YTZhtiz2Kcg2YHZiiDYp9mE2LPYp9mCINin2YTZitiz2LHZiSDZhdmG2LAg2akg2KPYs9in2KjZiti5LiDYudmE2KfZhdipINmE2KfYs9mK2Log2KXZitis2KfYqNmK2Kkg2LnZhtivINmm2aAg2K/Ysdis2KkuINmK2YHZitivINio2KPZhtmHINij2YbZh9mJINin2YTYudmE2KfYrCDYp9mE2LfYqNmK2LnZii4g2KfZhNmF2LfZhNmI2Kg6INix2YbZitmGINmF2LrZhtin2LfZitiz2Yog2YTZhNi52YXZiNivINin2YTZgti32YbZiiDYqNiv2YjZhiDYtdio2LrYqS4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-020-E2",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-020-E2",
+    "status": "finished",
+    "type": [
+     {
+      "text": "physio-summary"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2020"
+    },
+    "period": {
+     "start": "2026-10-15",
+     "end": "2026-10-15"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-020-D2",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-020-D2",
+    "status": "current",
+    "type": {
+     "text": "physio-summary"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2020"
+    },
+    "date": "2026-10-15T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-020-E2"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "Tm8tc2hvdyBmb3IgYWxsIHNjaGVkdWxlZCBwaHlzaW90aGVyYXB5IGFwcG9pbnRtZW50cy4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-HO-MRI-020-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "HO-MRI-020-C1",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M51.26",
+       "display": "Other intervertebral disc displacement, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2020"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-020-E1"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-HO-MRI-020-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "HO-MRI-020-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2020"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-020-E1"
+    },
+    "authoredOn": "2026-10-29"
+   }
+  }
+ ]
+}

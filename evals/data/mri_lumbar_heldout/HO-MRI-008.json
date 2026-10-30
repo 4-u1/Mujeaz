@@ -1,0 +1,228 @@
+{
+ "resourceType": "Bundle",
+ "id": "HO-MRI-008",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic-heldout"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-HO-P-2008",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "HO-P-2008",
+    "gender": "female",
+    "birthDate": "1994-01-01",
+    "name": [
+     {
+      "text": "Held-out Patient 008 (synthetic)"
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-008-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-008-E1",
+    "status": "finished",
+    "type": [
+     {
+      "text": "spine-clinic-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2008"
+    },
+    "period": {
+     "start": "2026-10-06",
+     "end": "2026-10-06"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-008-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-008-D1",
+    "status": "current",
+    "type": {
+     "text": "spine-clinic-note"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2008"
+    },
+    "date": "2026-10-06T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-008-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "U3BpbmUgY2xpbmljIHJldmlldyAoMzJGKS4gQmFjayBwYWluIGdvaW5nIGRvd24gdGhlIHJpZ2h0IGxlZyBzaW5jZSBzZXZlbiB3ZWVrcy4gU0xSIHRlc3QgcmVwcm9kdWNlcyBsZWcgcGFpbiBhdCA1MMKwLiBSZXF1ZXN0OiBsdW1iYXIgc3BpbmUgTVJJLCBubyBjb250cmFzdC4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-008-E2",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-008-E2",
+    "status": "finished",
+    "type": [
+     {
+      "text": "physio-summary"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2008"
+    },
+    "period": {
+     "start": "2026-09-22",
+     "end": "2026-09-22"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-008-D2",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-008-D2",
+    "status": "current",
+    "type": {
+     "text": "physio-summary"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2008"
+    },
+    "date": "2026-09-22T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-008-E2"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2K3YttixINmnINis2YTYs9in2Kog2LnZhNin2Kwg2YHZitiy2YrYp9im2Yog2K7ZhNin2YQg2acg2KPYs9in2KjZiti5LiDZhNinINmK2YjYrNivINiq2K3Ys9mGINmF2YTYrdmI2Lgu"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-008-E3",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-008-E3",
+    "status": "finished",
+    "type": [
+     {
+      "text": "gp-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2008"
+    },
+    "period": {
+     "start": "2026-08-25",
+     "end": "2026-08-25"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-008-D3",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-008-D3",
+    "status": "current",
+    "type": {
+     "text": "gp-note"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2008"
+    },
+    "date": "2026-08-25T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-008-E3"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2KrYrNix2KjYqSDZhdi22KfYryDYp9mE2KrZh9in2Kg6INmG2KfYqNix2YjZg9iz2YrZhiDZpdmg2aAg2YXZhNi6INmK2YjZhdmK2YvYpy4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-HO-MRI-008-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "HO-MRI-008-C1",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M51.26",
+       "display": "Other intervertebral disc displacement, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2008"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-008-E1"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-HO-MRI-008-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "HO-MRI-008-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2008"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-008-E1"
+    },
+    "authoredOn": "2026-10-06"
+   }
+  }
+ ]
+}
