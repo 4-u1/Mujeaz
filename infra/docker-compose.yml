@@ -1,0 +1,49 @@
+# Mujeaz local stack: PostgreSQL 16 + pgvector, FastAPI backend, React frontend (nginx).
+#   docker compose -f infra/docker-compose.yml up --build
+# Then open http://localhost:8080 and sign in as a demo user.
+name: mujeaz
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: mujeaz
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports: ["5432:5432"]
+    volumes: [db-data:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mujeaz"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    build: { context: .., dockerfile: backend/Dockerfile }
+    command: ["python", "-m", "app.cli", "bootstrap"]
+    environment: &backend-env
+      MUJEAZ_ENV: development
+      MUJEAZ_DEV_AUTH: "true"
+      MUJEAZ_OWNER_DATABASE_URL: postgresql+psycopg://postgres:${POSTGRES_PASSWORD:-postgres}@db:5432/mujeaz
+      MUJEAZ_DATABASE_URL: postgresql+psycopg://mujeaz_app:${MUJEAZ_APP_DB_PASSWORD:-mujeaz_app}@db:5432/mujeaz
+      MUJEAZ_APP_DB_PASSWORD: ${MUJEAZ_APP_DB_PASSWORD:-mujeaz_app}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+    depends_on:
+      db: { condition: service_healthy }
+    restart: "no"
+
+  backend:
+    build: { context: .., dockerfile: backend/Dockerfile }
+    environment: *backend-env
+    ports: ["8000:8000"]
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+
+  frontend:
+    build: { context: .., dockerfile: frontend/Dockerfile }
+    ports: ["8080:8080"]
+    depends_on:
+      backend: { condition: service_healthy }
+
+volumes:
+  db-data:
