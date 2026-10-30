@@ -78,9 +78,9 @@ Each agent has one job, a typed output, and an audit trail. Language understandi
 
 | | Agent | Prototype status |
 |---|---|---|
-| **A1** | Clinical Understanding | Gemini extraction (AI Sandbox) with source-quoted facts |
-| **A2** | Evidence Hunter | Demo: applies only evidence stored with the demo case, server-side and audited; real retrieval in M2 |
-| **A3** | Policy Reasoning | Model judges rule status; rules engine planned (PRD FR-A3-03) |
+| **A1** | Clinical Understanding | Extracts facts from every document in the record; each fact is a verified verbatim span (baseline or Gemini) |
+| **A2** | Evidence Hunter | Arabic/English BM25 over the whole record → FOUND / PARTIAL / MISSING, with a physician documentation query |
+| **A3** | Policy Reasoning | Deterministic rules engine over versioned YAML policies; the model never decides an outcome |
 | **A4** | NPHIES / FHIR Conformance | Sample `Claim` with `use: preauthorization`; profile validation planned |
 | **A5** | Revenue Risk | Deterministic formulas, TypeScript reference + Python port with 250 parity vectors |
 | **A6** | Recovery | Gemini appeal drafting from whitelisted evidence only |
@@ -278,7 +278,7 @@ Errors use one envelope: `{"error": {"code", "message", "request_id"}}`.
 |:---:|---|---|:---:|
 | **M0** | Credibility | Honest labels, deterministic scoring, real audit chain, demo data | ✅ |
 | **M1** | Foundation | FastAPI · PostgreSQL + pgvector · auth & roles · persistent audit | ✅ |
-| **M2** | Intelligence | A1 + A2 + A3 on MRI Lumbar Spine · golden dataset · eval in CI | ⏳ |
+| **M2** | Intelligence | A1 + A2 + A3 on MRI Lumbar Spine · span verifier · eval gates in CI | ✅ |
 | **M3** | Readiness | Rules engine · physician documentation query (CDI) | ⏳ |
 | **M4** | Interoperability | NPHIES-profile `Claim` · real validation · labelled sandbox responses | ⏳ |
 | **M5** | Recovery | Appeal Evidence Map · deadlines · retro denial audit | ⏳ |

@@ -1,6 +1,6 @@
 [project]
 name = "mujeaz-backend"
-version = "0.3.0"
+version = "0.4.0"
 description = "Mujeaz API — prior-authorization readiness and revenue assurance"
 authors = [{ name = "Yazeed Hamad Alharthi" }]
 license = "Apache-2.0"
