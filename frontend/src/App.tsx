@@ -11,13 +11,14 @@ import { Navbar } from './components/Navbar';
 import { ExecutiveDashboard } from './components/ExecutiveDashboard';
 import { LiveWalkthrough } from './components/LiveWalkthrough';
 import { DigitalTwinInspector } from './components/DigitalTwinInspector';
+import { WorkView } from './components/WorkView';
 import { AISandbox } from './components/AISandbox';
 import { RecoveryQueue } from './components/RecoveryQueue';
 import { PolicyKnowledgeBase } from './components/PolicyKnowledgeBase';
 import { Footer } from './components/Footer';
 import { LoginScreen } from './components/LoginScreen';
 
-type Tab = 'dashboard' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy';
+type Tab = 'dashboard' | 'work' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('ar');
@@ -152,6 +153,10 @@ export default function App() {
               />
             )}
 
+            {activeTab === 'work' && (
+              <WorkView lang={lang} roles={user.roles} onSelectCase={handleSelectCase} onCaseChanged={refreshCase} />
+            )}
+
             {activeTab === 'walkthrough' && case4922 && case8103 && (
               <LiveWalkthrough
                 lang={lang}
@@ -169,6 +174,7 @@ export default function App() {
                 onBack={() => setActiveTab('dashboard')}
                 onRunEvidenceHunter={handleRunEvidenceHunter}
                 canAnalyze={canAnalyze}
+                canApproveSubmission={user.roles.includes('auth_officer')}
                 onAnalyzed={refreshCase}
               />
             )}

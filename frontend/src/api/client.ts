@@ -91,6 +91,84 @@ export async function* readSse(body: ReadableStream<Uint8Array>): AsyncGenerator
   }
 }
 
+export type TherapyAnswer = {
+  kind: 'therapy';
+  start_date: string;
+  end_date: string;
+  sessions: number;
+  provider: string;
+  nsaid?: 'naproxen' | 'ibuprofen' | 'diclofenac' | 'celecoxib' | null;
+};
+export type RedFlagAnswer = { kind: 'red_flag'; finding: 'cauda_equina' | 'progressive_deficit' | 'urinary_retention'; observed_on: string };
+export type PhysicianAnswer = TherapyAnswer | RedFlagAnswer;
+
+export interface WhatIfOutcome {
+  readiness: number;
+  denialRisk: number;
+  revenueAtRisk: number;
+  status: string;
+  evidence: Record<string, string>;
+  rules: Record<string, string>;
+  reasons: Record<string, string>;
+}
+export interface WhatIfResult {
+  simulation: true;
+  policyVersion: string;
+  addendumPreview: string;
+  addendumAccepted: boolean;
+  before: WhatIfOutcome;
+  after: WhatIfOutcome;
+  delta: { readiness: number; revenueAtRisk: number };
+}
+
+export interface QueueItem {
+  id: string;
+  caseNumber: string;
+  status: string;
+  payerCode: string;
+  requestedService: string;
+  requestedOn: string;
+  analyzed: boolean;
+  readiness: number | null;
+  denialRisk: number | null;
+  amount: number;
+  amountBasis: 'revenue_at_risk' | 'full_value';
+  daysSinceRequest: number;
+  ageFactor: number;
+  priority: number;
+  openQueries: number;
+  declinedQueries: number;
+  nextAction: string;
+  nextActionAr: string;
+}
+
+export interface InboxQuery {
+  id: string;
+  caseId: string;
+  caseNumber: string;
+  requestedService: string;
+  requestedOn: string;
+  requirementId: string;
+  question: string;
+  questionAr: string;
+  status: string;
+  dueOn: string | null;
+}
+
+export interface CaseDocuments {
+  documents: {
+    docRef: string;
+    docType: string;
+    language: string;
+    authoredOn: string;
+    content: string;
+    postRequestAddendum: boolean;
+    signedAt: string | null;
+  }[];
+  facts: { id: string; label: string; docRef: string; start: number; end: number; utf16Start: number; utf16End: number }[];
+  retrieved: Record<string, { docRef: string; utf16Start: number; utf16End: number; score: number }[]>;
+}
+
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
@@ -210,6 +288,17 @@ export const api = {
     }
     throw new ApiError(500, 'Analysis stream ended unexpectedly');
   },
+  queue: () => request<{ items: QueueItem[]; formula: string; formulaAr: string }>('/api/queue'),
+  queries: (status = 'OPEN') => request<{ items: InboxQuery[] }>(`/api/queries?status=${encodeURIComponent(status)}`),
+  answerQuery: (id: string, answer: PhysicianAnswer, language: 'en' | 'ar') =>
+    post<{ document: string; addendum: string; analysis: AnalyzeResult }>(`/api/queries/${encodeURIComponent(id)}/answer`, {
+      answer,
+      language,
+    }),
+  declineQuery: (id: string, reason: string) => post<{ status: string }>(`/api/queries/${encodeURIComponent(id)}/decline`, { reason }),
+  whatIf: (id: string, answer: PhysicianAnswer, language: 'en' | 'ar') =>
+    post<WhatIfResult>(`/api/cases/${encodeURIComponent(id)}/what-if`, { answer, language }),
+  documents: (id: string) => request<CaseDocuments>(`/api/cases/${encodeURIComponent(id)}/documents`),
   analyzeOrder: (body: { clinicalNoteText: string; payerName?: string; requestedService?: string }) =>
     post<any>('/api/ai/analyze-order', body),
   generateAppeal: (body: Record<string, unknown>) => post<any>('/api/ai/generate-appeal', body),

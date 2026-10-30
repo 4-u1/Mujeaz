@@ -93,8 +93,9 @@ def documents(conn: Connection, case_id: str) -> dict[str, Any] | None:
         t = content.get(ref, "")
         return {"docRef": ref, "start": s, "end": e, "utf16Start": utf16_index(t, s), "utf16End": utf16_index(t, e)}
 
-    retrieved = {}
-    for rid, ev in ((run or {}).get("evidence") or {}).items():
+    retrieved: dict[str, list[dict[str, Any]]] = {}
+    evidence: dict[str, Any] = (run["evidence"] if run else None) or {}
+    for rid, ev in evidence.items():
         retrieved[rid] = [{**span(ref, s, e), "score": score} for ref, s, e, score in ev.get("retrieved", [])
                           if ref in content]
     return {

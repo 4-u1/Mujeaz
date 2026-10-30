@@ -33,6 +33,41 @@ export interface ClinicalFact {
   charStart?: number;
   charEnd?: number;
   value?: Record<string, number>;
+  postRequestAddendum?: boolean;
+}
+
+export interface ExplanationComponent {
+  component: string;
+  label: string;
+  labelAr: string;
+  score: number;
+  weight: number;
+  contribution: number;
+  pointsLost: number;
+  causes: string[];
+  causesAr: string[];
+}
+
+export interface ReadinessExplanation {
+  components: ExplanationComponent[];
+  weightedTotal: number;
+  gate: string | null;
+  gateReduction: number;
+  overall: number;
+  gateText?: string;
+  gateTextAr?: string;
+}
+
+export interface DocumentationQuery {
+  id: string;
+  requirementId: string;
+  question: string;
+  questionAr: string;
+  status: 'OPEN' | 'ANSWERED' | 'DECLINED' | 'WITHDRAWN';
+  dueOn: string | null;
+  closedAt: string | null;
+  declineReason: string | null;
+  addendumRef: string | null;
 }
 
 export interface AnalysisInfo {
@@ -44,6 +79,7 @@ export interface AnalysisInfo {
   completedAt: string | null;
   injectionFlags: number;
   rejectedQuotes: number;
+  decisionReadyMin?: number | null;
 }
 
 export interface PolicyRule {
@@ -154,6 +190,8 @@ export interface ClaimDigitalTwin {
   dataSource?: 'legacy-demo' | 'synthetic';
   analyzed?: boolean;
   analysis?: AnalysisInfo;
+  readinessExplanation?: ReadinessExplanation;
+  documentationQueries?: DocumentationQuery[];
   allowedTransitions?: CaseStatus[];
   claimNumber: string;
   patientName: string;

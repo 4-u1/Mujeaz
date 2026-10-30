@@ -8,14 +8,15 @@ import {
   RotateCcw, 
   BookOpen, 
   Globe, 
-  Layers
+  Layers,
+  ClipboardList
 } from 'lucide-react';
 
 interface NavbarProps {
   lang: Language;
   setLang: (l: Language) => void;
-  activeTab: 'dashboard' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy';
-  setActiveTab: (tab: 'dashboard' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy') => void;
+  activeTab: 'dashboard' | 'work' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy';
+  setActiveTab: (tab: 'dashboard' | 'work' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy') => void;
   selectedCaseId: string;
 }
 
@@ -81,6 +82,18 @@ export const Navbar: React.FC<NavbarProps> = ({
             >
               <Sparkles className="w-4 h-4 text-emerald-400 animate-pulse" />
               {isAr ? 'العرض الحي التفاعلي' : 'Live Walkthrough'}
+            </button>
+
+            <button
+              onClick={() => setActiveTab('work')}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                activeTab === 'work'
+                  ? 'bg-emerald-600 text-white shadow-md shadow-emerald-950'
+                  : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
+              }`}
+            >
+              <ClipboardList className="w-4 h-4" />
+              {isAr ? 'قائمة العمل' : 'Work Queue'}
             </button>
 
             <button
@@ -169,6 +182,12 @@ export const Navbar: React.FC<NavbarProps> = ({
             className={`whitespace-nowrap px-3 py-1 rounded-md ${activeTab === 'walkthrough' ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-300'}`}
           >
             {isAr ? 'العرض الحي' : 'Live Walkthrough'}
+          </button>
+          <button
+            onClick={() => setActiveTab('work')}
+            className={`whitespace-nowrap px-3 py-1 rounded-md ${activeTab === 'work' ? 'bg-emerald-600 text-white' : 'bg-slate-800 text-slate-300'}`}
+          >
+            {isAr ? 'قائمة العمل' : 'Work Queue'}
           </button>
           <button
             onClick={() => setActiveTab('digitalTwin')}
