@@ -6,7 +6,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { LogOut, RefreshCw, AlertTriangle } from 'lucide-react';
 import { ClaimDigitalTwin, CommandCenterMetrics, Language } from './types';
-import { api, onUnauthorized, ROLE_LABELS, session, SessionUser } from './api/client';
+import { api, ApiError, onUnauthorized, ROLE_LABELS, session, SessionUser } from './api/client';
 import { Navbar } from './components/Navbar';
 import { ExecutiveDashboard } from './components/ExecutiveDashboard';
 import { LiveWalkthrough } from './components/LiveWalkthrough';
@@ -19,24 +19,14 @@ import { LoginScreen } from './components/LoginScreen';
 
 type Tab = 'dashboard' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy';
 
-const EMPTY_METRICS: CommandCenterMetrics = {
-  revenueProtectedTodaySAR: 0,
-  revenueAtRiskSAR: 0,
-  revenueRecoveredSAR: 0,
-  preventedDenialsCount: 0,
-  activeAuthorizationsCount: 0,
-  recoveryQueueCount: 0,
-  cleanPassRate: 0,
-  averageReadinessScore: 0,
-};
-
 export default function App() {
   const [lang, setLang] = useState<Language>('ar');
   const [user, setUser] = useState<SessionUser | null>(() => (session.token() ? session.user() : null));
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [cases, setCases] = useState<ClaimDigitalTwin[]>([]);
   const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
-  const [metrics, setMetrics] = useState<CommandCenterMetrics>(EMPTY_METRICS);
+  // null = this role has no metrics:read permission (the dashboard says so instead of showing zeros)
+  const [metrics, setMetrics] = useState<CommandCenterMetrics | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const isAr = lang === 'ar';
@@ -49,8 +39,10 @@ export default function App() {
     try {
       const [twins, m] = await Promise.all([
         api.twins(),
-        // Metrics need metrics:read; other roles see the dashboard without totals.
-        api.metrics().catch(() => EMPTY_METRICS),
+        api.metrics().catch((e) => {
+          if (e instanceof ApiError && e.status === 403) return null;
+          throw e;
+        }),
       ]);
       setCases(twins.items);
       setMetrics(m);
@@ -69,7 +61,7 @@ export default function App() {
   const refreshCase = useCallback(async (caseId: string) => {
     const [twin, m] = await Promise.all([api.twin(caseId), api.metrics().catch(() => null)]);
     setCases((prev) => prev.map((c) => (c.id === caseId ? twin : c)));
-    if (m) setMetrics(m);
+    setMetrics(m);
   }, []);
 
   const handleSelectCase = (caseId: string) => {

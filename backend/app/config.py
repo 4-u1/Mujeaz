@@ -18,8 +18,9 @@ class Settings(BaseSettings):
     owner_database_url: str = "postgresql+psycopg://postgres:postgres@localhost:5432/mujeaz"
     app_db_password: str = "mujeaz_app"  # noqa: S105 — local development default; set in every deployment
 
-    # Authentication (ADR 0003)
-    dev_auth: bool = True
+    # Authentication (ADR 0003). Secure by default: the dev identity provider is OFF unless
+    # explicitly enabled (docker-compose and tests set MUJEAZ_DEV_AUTH=true).
+    dev_auth: bool = False
     jwt_issuer: str = "mujeaz-dev-idp"
     jwt_audience: str = "mujeaz-api"
     jwt_ttl_minutes: int = 480

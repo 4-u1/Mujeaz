@@ -28,6 +28,7 @@ docker run -d --name mujeaz-db -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=muje
 cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
+export MUJEAZ_DEV_AUTH=true            # dev sign-in is off by default
 python -m app.cli bootstrap
 uvicorn app.main:app --reload --port 8000
 
@@ -53,7 +54,7 @@ python -m evals.generator.generate --check  # from the repo root
 | Reset demo data | `python -m app.cli seed --reset` |
 | Regenerate synthetic dataset | `python -m evals.generator.generate` (commit the result) |
 | Regenerate scoring vectors | `node --experimental-strip-types shared/generate-scoring-vectors.ts` |
-| New migration | `cd backend && alembic revision -m "..."` (hand-written SQL; use `exec_driver_sql`) |
+| New migration | `cd backend && alembic revision -m "..."` (hand-written SQL through the `_sql` raw-cursor helper, see 0001) |
 | Verify a case's audit chain | `GET /api/audit/{case_id}/verify` as `noura.audit` |
 
 ## Troubleshooting
@@ -61,6 +62,8 @@ python -m evals.generator.generate --check  # from the repo root
 | Symptom | Likely cause |
 |---|---|
 | `401` after restarting the backend | Ephemeral dev signing key; sign in again or set `MUJEAZ_JWT_PRIVATE_KEY_PEM` |
+| Random `401`s with several workers | Each worker generates its own key unless `MUJEAZ_JWT_PRIVATE_KEY_PEM` is set; run one worker or set the key |
+| `404` on `/api/auth/dev-login` | `MUJEAZ_DEV_AUTH` is not `true` (it is off by default) |
 | Empty case list | Signed in as `other.auth` (isolation-test organisation), or seed not run |
 | `/readyz` 503 | Database unreachable or `mujeaz_app` password mismatch (`MUJEAZ_APP_DB_PASSWORD`) |
 | AI responses say “fallback” | `GEMINI_API_KEY` not set or the provider call failed (see backend logs by request id) |

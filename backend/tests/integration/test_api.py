@@ -175,3 +175,38 @@ def test_ai_fallback_is_labelled_and_has_no_facts(client, login) -> None:  # typ
 def test_validation_errors_use_the_error_envelope(client, login) -> None:  # type: ignore[no-untyped-def]
     r = client.post("/api/ai/analyze-order", json={"clinicalNoteText": ""}, headers=login("sara.auth"))
     assert r.status_code == 422 and r.json()["error"]["code"] == "validation_error"
+
+
+def test_twins_use_a_constant_number_of_queries(client, login) -> None:  # type: ignore[no-untyped-def]
+    from sqlalchemy import event
+
+    engine = get_engine()
+    statements: list[str] = []
+
+    def record(conn, cursor, statement, *args):  # type: ignore[no-untyped-def]
+        statements.append(statement)
+
+    event.listen(engine, "before_cursor_execute", record)
+    try:
+        r = client.get("/api/twins", headers=login("sara.auth"))
+    finally:
+        event.remove(engine, "before_cursor_execute", record)
+    assert r.status_code == 200 and len(r.json()["items"]) == 53
+    assert len(statements) <= 15, f"{len(statements)} queries for 53 cases"
+
+
+def test_batched_twin_matches_single_twin(client, login) -> None:  # type: ignore[no-untyped-def]
+    h = login("sara.auth")
+    twins = {t["id"]: t for t in client.get("/api/twins", headers=h).json()["items"]}
+    for number in ("AUTH-2026-8103", "AUTH-2026-3109", "SYN-MRI-010"):
+        cid = _case_id(client, h, number)
+        assert client.get(f"/api/cases/{cid}", headers=h).json() == twins[cid]
+    assert twins[_case_id(client, h, "AUTH-2026-8103")]["appealPackage"]["foundEvidence"]
+
+
+def test_dev_login_is_disabled_when_dev_auth_is_off(client, monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    from app.config import Settings
+
+    monkeypatch.setattr("app.auth_router.get_settings", lambda: Settings(_env_file=None, dev_auth=False))
+    assert client.post("/api/auth/dev-login", json={"username": "sara.auth"}).status_code == 404
+    assert client.get("/api/auth/dev-users").status_code == 404

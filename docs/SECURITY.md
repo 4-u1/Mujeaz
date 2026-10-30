@@ -7,7 +7,7 @@
 | Area | Control | Where |
 |---|---|---|
 | Authentication | RS256 JWT with `iss`, `aud`, `exp`, `iat`, `sub` required | `app/security/jwt.py` |
-| | Dev identity provider only when `MUJEAZ_DEV_AUTH=true`; startup refuses it with `MUJEAZ_ENV=production` | `app/config.py` |
+| | Dev identity provider is **off by default**; enabled only with `MUJEAZ_DEV_AUTH=true`, and startup refuses it with `MUJEAZ_ENV=production` | `app/config.py` |
 | | OIDC-ready: `MUJEAZ_JWKS_URL` switches verification to an external IdP | ADR 0003 |
 | Authorisation | Role → permission matrix; every route declares its permission; full matrix test | `app/security/rbac.py` |
 | | Human gates (submission, appeal) require specific permissions and are recorded | `app/cases/state_machine.py` |

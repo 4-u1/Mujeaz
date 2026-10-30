@@ -48,7 +48,7 @@ def list_twins(
 ) -> dict[str, Any]:
     """Full case views for the Command Center (bounded; fine for MVP volumes)."""
     ids = [c["id"] for c in repo.list_cases(conn, limit=limit)]
-    return {"items": [repo.build_twin(conn, i) for i in ids]}
+    return {"items": repo.build_twins(conn, ids)}
 
 
 @router.get("/cases/{case_id}")

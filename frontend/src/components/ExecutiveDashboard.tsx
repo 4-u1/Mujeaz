@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ClaimDigitalTwin, CommandCenterMetrics, Language } from '../types';
-import { 
+import {
+  Lock,
   TrendingUp, 
   AlertTriangle, 
   RotateCcw, 
@@ -19,7 +20,8 @@ import {
 } from 'lucide-react';
 
 interface ExecutiveDashboardProps {
-  metrics: CommandCenterMetrics;
+  /** null when the signed-in role has no metrics:read permission. */
+  metrics: CommandCenterMetrics | null;
   cases: ClaimDigitalTwin[];
   lang: Language;
   onSelectCase: (caseId: string) => void;
@@ -122,7 +124,18 @@ export const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
         </div>
       </div>
 
-      {/* Metric Cards Bar */}
+      {/* Metric Cards Bar — hidden (not zeroed) when the role cannot read financial metrics */}
+      {!metrics && (
+        <div className="flex items-start gap-3 bg-slate-900/90 rounded-xl p-4 border border-slate-800 text-xs text-slate-300">
+          <Lock className="w-4 h-4 shrink-0 text-slate-400 mt-0.5" />
+          <span>
+            {isAr
+              ? 'المؤشرات المالية متاحة لموظف الموافقات ومدير دورة الإيرادات والمدقق فقط. دورك يعرض قائمة الحالات أدناه.'
+              : 'Financial metrics are available to authorization officers, RCM managers and auditors. Your role shows the case list below.'}
+          </span>
+        </div>
+      )}
+      {metrics && (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         
         {/* Revenue Protected */}
@@ -225,6 +238,7 @@ export const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
         </div>
 
       </div>
+      )}
 
       {/* Main Content Area: Cases List & Digital Twin Explorer */}
       <div className="bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl overflow-hidden">

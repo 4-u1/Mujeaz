@@ -72,14 +72,19 @@ def append(
 
 
 def list_chain(conn: Connection, chain_key: str) -> list[dict[str, Any]]:
+    return list_chains(conn, [chain_key])
+
+
+def list_chains(conn: Connection, chain_keys: list[str]) -> list[dict[str, Any]]:
+    """Entries of several chains in one query, ordered by chain then seq."""
     rows = conn.execute(
         text(
             """
             SELECT chain_key, seq, occurred_at, actor_id, actor_role, action, details, prev_hash, hash
-            FROM audit_logs WHERE chain_key = :k ORDER BY seq
+            FROM audit_logs WHERE chain_key = ANY(:k) ORDER BY chain_key, seq
             """
         ),
-        {"k": chain_key},
+        {"k": chain_keys},
     ).mappings()
     out = []
     for r in rows:

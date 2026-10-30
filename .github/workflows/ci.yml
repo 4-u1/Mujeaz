@@ -29,6 +29,7 @@ jobs:
           --health-cmd "pg_isready -U postgres -d mujeaz" --health-interval 5s --health-timeout 3s --health-retries 20
     env:
       MUJEAZ_ENV: test
+      MUJEAZ_DEV_AUTH: "true"
       MUJEAZ_RUN_INTEGRATION: "1"
       MUJEAZ_OWNER_DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/mujeaz
       MUJEAZ_DATABASE_URL: postgresql+psycopg://mujeaz_app:mujeaz_app@localhost:5432/mujeaz
