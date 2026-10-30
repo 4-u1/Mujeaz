@@ -228,7 +228,7 @@ export const LiveWalkthrough: React.FC<LiveWalkthroughProps> = ({
                   <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                     <div className="text-xs text-slate-400 font-semibold">{isAr ? 'التقييم المالي للأثر:' : 'Financial Risk Impact:'}</div>
                     <div className="text-xl font-extrabold text-rose-400">
-                      378,000 SAR <span className="text-xs text-slate-400 font-normal">Revenue at Risk</span>
+                      2,184 SAR <span className="text-xs text-slate-400 font-normal">Revenue at Risk</span>
                     </div>
                     <div className="text-[11px] text-slate-400">
                       Mujeaz Readiness Score: <span className="font-bold text-amber-400">74 / 100</span>
@@ -322,7 +322,7 @@ export const LiveWalkthrough: React.FC<LiveWalkthroughProps> = ({
                 <div className="bg-slate-950 p-4 rounded-xl border border-emerald-900/60 space-y-2">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-bold text-slate-200">
-                      Tawuniya Policy TAW-LUMBAR-POL-04 (6-Week Physio)
+                      Demo Payer A Policy DPA-LUMBAR-POL-04 (6-Week Physio)
                     </span>
                     <span className="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-bold">
                       Requirement: Satisfied
@@ -347,7 +347,7 @@ export const LiveWalkthrough: React.FC<LiveWalkthroughProps> = ({
               </div>
             )}
 
-            {/* STAGE 5: Mujeaz Readiness Score™ = 98/100 */}
+            {/* STAGE 5: Mujeaz Readiness Score = 98/100 */}
             {currentStage === 5 && (
               <div className="space-y-4 animate-fadeIn">
                 <div className="flex items-center gap-3">
@@ -357,7 +357,7 @@ export const LiveWalkthrough: React.FC<LiveWalkthroughProps> = ({
                   <div>
                     <h3 className="text-lg font-bold text-emerald-400 flex items-center gap-2">
                       <ShieldCheck className="w-5 h-5 text-emerald-400" />
-                      <span>Mujeaz Readiness Score™: 98 / 100</span>
+                      <span>Mujeaz Readiness Score: 98 / 100</span>
                     </h3>
                     <p className="text-xs text-slate-400">
                       {isAr ? 'الطلب أصبح الآن جاهزاً للقرار (Decision-Ready)' : 'Authorization request is now Decision-Ready for Payer submission'}
@@ -413,10 +413,10 @@ export const LiveWalkthrough: React.FC<LiveWalkthroughProps> = ({
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-purple-300">
-                      {isAr ? 'المرحلة السادسة: التحقق من معايير FHIR ونفيس' : 'Stage 6: FHIR / NPHIES Conformance Passed'}
+                      {isAr ? 'المرحلة السادسة: بناء حمولة FHIR للموافقة المسبقة' : 'Stage 6: FHIR Prior-Authorization Payload Built'}
                     </h3>
                     <p className="text-xs text-slate-400">
-                      {isAr ? 'A4 Conformance Agent يبني الهيكل الموحد المعتمد قبل البث' : 'FHIR CoverageEligibilityRequest payload validated'}
+                      {isAr ? 'وكيل A4 يبني طلب Claim (use: preauthorization). التحقق بملفات تعريف نفيس غير مفعّل في هذا العرض.' : 'A4 builds a Claim (use: preauthorization). Validation against NPHIES profiles is not enabled in this demo.'}
                     </p>
                   </div>
                 </div>
@@ -445,13 +445,17 @@ export const LiveWalkthrough: React.FC<LiveWalkthroughProps> = ({
                 </div>
 
                 <h3 className="text-2xl font-extrabold text-white">
-                  {isAr ? 'تم حماية الإيراد بنجاح! (Revenue Protected)' : 'Authorization Approved & Revenue Protected!'}
+                  {isAr ? 'تمت الموافقة وحماية الإيراد' : 'Authorization Approved & Revenue Protected'}
                 </h3>
+
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-950/70 border border-amber-700/70 text-amber-300 text-[11px] font-bold">
+                  {isAr ? 'استجابة جهة دافعة محاكاة — Simulated Payer Response' : 'Simulated Payer Response — not from NPHIES'}
+                </div>
 
                 <p className="text-slate-300 text-xs max-w-md mx-auto">
                   {isAr
-                    ? 'تم منع الرفض المحتمل وحماية مبلغ 15,500 ريال للإجراء (و378,000 ريال إجمالي الحزمة والمعرضة للخطر).'
-                    : 'Potential 78% denial risk eliminated prior to submission. Procedure value 15,500 SAR protected.'}
+                    ? 'انخفضت مخاطر الرفض من 78% إلى 5% قبل الإرسال، وحُمي سعر الخدمة 2,800 ريال. الأرقام الكبيرة في لوحة القيادة هي مجموع المحفظة، لا طلب واحد.'
+                    : 'Denial risk reduced from 78% to 5% before submission; the 2,800 SAR service value is protected. Large figures on the Command Center are portfolio totals, not a single request.'}
                 </p>
 
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-950/80 border border-emerald-800 text-emerald-400 font-bold text-sm">
@@ -491,7 +495,7 @@ export const LiveWalkthrough: React.FC<LiveWalkthroughProps> = ({
                   {isAr ? 'سيناريو الرفض: محرك استرداد الإيرادات (Recovery Mode)' : 'Denied Claim Recovery Mode'}
                 </h2>
                 <p className="text-xs text-slate-400">
-                  {isAr ? 'تحليل سبب الرفض، ربط الاستثناءات السريرية، وبناء خطة استئناف محكمة' : 'Root cause analysis & automated formal appeal generation'}
+                  {isAr ? 'تحليل سبب الرفض، ربط الاستثناءات السريرية، وبناء خطة استئناف — الرفض هنا استجابة محاكاة' : 'Root cause analysis & appeal drafting — the denial shown is a simulated payer response'}
                 </p>
               </div>
             </div>

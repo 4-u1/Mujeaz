@@ -21,7 +21,7 @@ const PRESET_SAMPLES = [
   {
     titleEn: 'MRI Lumbar Spine L4-L5 (Orthopedic)',
     titleAr: 'رنين مغناطيسي للفقرات القطنية L4-L5',
-    text: `Patient 45yo male with 8 weeks of severe lower back pain radiating to left leg. L5 dermatomal numbness. Positive Straight Leg Raise test at 45 degrees. Requesting MRI Lumbar Spine with and without contrast.`,
+    text: `Patient 45yo male with 8 weeks of severe lower back pain radiating to left leg. L5 dermatomal numbness. Positive Straight Leg Raise test at 45 degrees. Requesting MRI Lumbar Spine without contrast.`,
   },
   {
     titleEn: 'Secukinumab (Cosentyx) Biologic (Rheumatology)',
@@ -38,7 +38,7 @@ const PRESET_SAMPLES = [
 export const AISandbox: React.FC<AISandboxProps> = ({ lang }) => {
   const isAr = lang === 'ar';
   const [inputText, setInputText] = useState(PRESET_SAMPLES[0].text);
-  const [payerName, setPayerName] = useState('Tawuniya Insurance');
+  const [payerName, setPayerName] = useState('Demo Payer A');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<any | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -86,7 +86,7 @@ export const AISandbox: React.FC<AISandboxProps> = ({ lang }) => {
               {isAr ? 'مختبر تحليل الطلبات السريرية بـ Gemini AI' : 'Mujeaz AI Order Analysis Sandbox'}
             </h1>
             <p className="text-xs text-slate-400">
-              {isAr ? 'أدخل أي ملاحظة طبية بـ العربية أو الإنجليزية واختبر قدرة مُجاز على الاستخراج ومطابقة السياسات وحساب المخاطر' : 'Test any custom clinical note or physician order against Saudi NPHIES & Payer rules'}
+              {isAr ? 'أدخل أي ملاحظة طبية بـ العربية أو الإنجليزية واختبر قدرة مُجاز على الاستخراج ومطابقة السياسات وحساب المخاطر' : 'Test any clinical note or physician order against demo payer rules'}
             </p>
           </div>
         </div>
@@ -127,11 +127,11 @@ export const AISandbox: React.FC<AISandboxProps> = ({ lang }) => {
                 onChange={(e) => setPayerName(e.target.value)}
                 className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-xs text-white focus:outline-none focus:border-emerald-500"
               >
-                <option value="Tawuniya Insurance">التعاونية للتأمين / Tawuniya Insurance</option>
-                <option value="Bupa Arabia">بوبا العربية / Bupa Arabia</option>
-                <option value="Medgulf Insurance">ميدغلف للتأمين / Medgulf Insurance</option>
+                <option value="Demo Payer A">جهة دافعة تجريبية أ / Demo Payer A</option>
+                <option value="Demo Payer B">جهة دافعة تجريبية ب / Demo Payer B</option>
+                <option value="Demo Payer C">جهة دافعة تجريبية ج / Demo Payer C</option>
                 <option value="Malath Cooperative">ملاذ للتأمين / Malath Insurance</option>
-                <option value="NPHIES Unified Rulebook">دليل قواعد منصة نفيس الموحد / NPHIES Default</option>
+                <option value="Generic payer rules (demo)">قواعد عامة (تجريبية) / Generic rules (demo)</option>
               </select>
             </div>
 
@@ -194,11 +194,18 @@ export const AISandbox: React.FC<AISandboxProps> = ({ lang }) => {
 
           {result && (
             <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6 text-white shadow-2xl animate-fadeIn">
+
+              {result.mode === 'fallback' && (
+                <div className="bg-amber-950/50 border border-amber-800/70 rounded-xl p-3 text-xs text-amber-200 flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-amber-400" />
+                  <span>{isAr ? result.noticeAr : result.notice}</span>
+                </div>
+              )}
               
               {/* Score Header */}
               <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                 <div>
-                  <span className="text-xs text-slate-400">{isAr ? 'النتيجة المولدة بواسطة AI:' : 'Generated Readiness Outcome:'}</span>
+                  <span className="text-xs text-slate-400">{result.mode === 'fallback' ? (isAr ? 'مخرجات عينة (لم يتم التحليل):' : 'Sample output (not analyzed):') : (isAr ? 'مؤشر الجاهزية (حسابه حتمي من نتائج الوكلاء):' : 'Readiness (computed deterministically from agent findings):')}</span>
                   <h2 className="text-xl font-bold text-emerald-400 mt-0.5">
                     {isAr ? result.readinessScore.readinessLabelAr : result.readinessScore.readinessLabel}
                   </h2>

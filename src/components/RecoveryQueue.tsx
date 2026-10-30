@@ -43,7 +43,16 @@ export const RecoveryQueue: React.FC<RecoveryQueueProps> = ({ cases, lang, onSel
       const response = await fetch('/api/ai/generate-appeal', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(selectedCase),
+        // Send only what the Recovery Agent needs (data minimisation): no patient name or ID.
+        body: JSON.stringify({
+          claimNumber: selectedCase.claimNumber,
+          payerName: selectedCase.payerName,
+          requestedService: selectedCase.requestedService,
+          clinicalNoteText: selectedCase.clinicalNoteText,
+          denialReason: selectedCase.appealPackage?.denialReason,
+          evidence: selectedCase.appealPackage?.foundEvidence?.map((e) => ({ fact: e.fact, source: e.source, date: e.date })),
+          appealPackage: selectedCase.appealPackage,
+        }),
       });
 
       if (response.ok) {
@@ -158,6 +167,12 @@ export const RecoveryQueue: React.FC<RecoveryQueueProps> = ({ cases, lang, onSel
                   {isAr ? selectedCase.appealPackage?.rootCauseAr : selectedCase.appealPackage?.rootCause}
                 </p>
               </div>
+
+              {appealResult?.mode === 'fallback' && (
+                <div className="bg-amber-950/50 border border-amber-800/70 rounded-xl p-3 text-[11px] text-amber-200">
+                  {isAr ? appealResult.noticeAr : appealResult.notice}
+                </div>
+              )}
 
               {/* Strategy */}
               <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">

@@ -53,7 +53,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
   const [auditSearch, setAuditSearch] = useState<string>('');
   const [expandedLogId, setExpandedLogId] = useState<string | null>(null);
   const [isVerifyingIntegrity, setIsVerifyingIntegrity] = useState(false);
-  const [integrityVerified, setIntegrityVerified] = useState(true);
+  const [integrityVerified, setIntegrityVerified] = useState<boolean | null>(null);
   const [auditCopied, setAuditCopied] = useState(false);
 
   const formatSAR = (val: number) => {
@@ -103,7 +103,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
       category: 'SYSTEM',
       severity: 'INFO',
       complianceStandard: 'HL7-FHIR-R4-HIS',
-      hash: `0x1e3a901f82c4d${claim.id.replace('case-', '')}`,
+      hash: '',
       rationaleEn: `Successfully received order note for ${claim.requestedService} from ${claim.facilityName}. Patient ID: ${claim.patientId}.`,
       rationaleAr: `تم استلام ملاحظة الطلب للخدمة ${claim.requestedServiceAr} من ${claim.facilityName}. رقم المريض: ${claim.patientId}.`,
       sourceRef: `EMR Encounter Note #${claim.patientId}`,
@@ -121,12 +121,12 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
       actionAr: `استخراج الحقائق والترميز الطبي (ICD-10: ${claim.icd10Code}, CPT: ${claim.cptCode})`,
       category: 'AI_DECISION',
       severity: 'DECISION',
-      complianceStandard: 'ICD-10-AM / CPT-2026',
-      hash: `0x8f4c21a93b5d${claim.cptCode}`,
+      complianceStandard: 'ICD-10 / reference procedure code (demo) — production: ICD-10-AM + SBS',
+      hash: '',
       confidence: 98,
       rationaleEn: `NLP Extractor parsed text with 98% confidence. Extracted ${claim.clinicalFacts.length} core clinical facts from physician encounter notes.`,
       rationaleAr: `حلل وكيل الذكاء الاصطناعي النص بدقة 98%. تم استخراج ${claim.clinicalFacts.length} حقائق سريرية من ملاحظات الطبيب.`,
-      sourceRef: `Gemini Clinical NLP Model v2.6`,
+      sourceRef: `Demo case data`,
     });
 
     // 3. A2 Policy Reasoning Agent Event
@@ -134,9 +134,9 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
     logs.push({
       id: `log-policy-${claim.id}`,
       timestamp: `${claim.createdDate} 10:14:03.080`,
-      actorId: 'A2',
-      actorName: 'A2: Payer Policy Engine',
-      actorNameAr: 'A2: محرك مطابقات سياسات التأمين',
+      actorId: 'A3',
+      actorName: 'A3: Policy Reasoning Agent',
+      actorNameAr: 'A3: وكيل مطابقة السياسات',
       action: warningRule 
         ? `Policy Guideline Flagged: ${warningRule.code} (${isAr ? warningRule.titleAr : warningRule.title})`
         : `All Policy Rules Verified Passed for ${claim.payerName}`,
@@ -146,7 +146,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
       category: 'POLICY',
       severity: warningRule ? 'WARNING' : 'SUCCESS',
       complianceStandard: `${claim.payerCode}-NPHIES-RuleSet`,
-      hash: `0x3b7d90e24f1c${warningRule ? warningRule.code.replace(/-/g, '') : 'PASS'}`,
+      hash: '',
       ruleCode: warningRule?.code || 'POL-CHECK-00',
       rationaleEn: warningRule 
         ? `Matched payer rule ${warningRule.code}: ${warningRule.requirement}`
@@ -162,9 +162,9 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
     logs.push({
       id: `log-hunter-${claim.id}`,
       timestamp: `${claim.createdDate} 10:14:03.520`,
-      actorId: 'A3',
-      actorName: 'A3: Evidence Hunter Agent',
-      actorNameAr: 'A3: وكيل صيد الأدلة السريرية',
+      actorId: 'A2',
+      actorName: 'A2: Evidence Hunter Agent',
+      actorNameAr: 'A2: وكيل صيد الأدلة السريرية',
       action: claim.status === 'APPROVED' || evidenceMissingCount === 0
         ? `EMR Deep Search Complete: Discovered All Required Clinical Prerequisites`
         : `EMR Deep Search Triggered: Identified ${evidenceMissingCount} Missing Prerequisite(s)`,
@@ -173,8 +173,8 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
         : `تم تشغيل صيد الأدلة: اكتشاف ${evidenceMissingCount} متطلب ينقص التوثيق الصريح`,
       category: 'EVIDENCE',
       severity: claim.status === 'APPROVED' || evidenceMissingCount === 0 ? 'SUCCESS' : 'WARNING',
-      complianceStandard: 'SDAIA-Evidence-Traceability',
-      hash: `0x9a12e4f58c7e${claim.id.replace('case-', '')}`,
+      complianceStandard: 'Mujeaz: No Evidence, No Claim',
+      hash: '',
       confidence: 96,
       rationaleEn: `Mined EMR longitudinal patient records. Found ${evidenceFoundCount} valid evidence items, ${evidenceMissingCount} pending validation.`,
       rationaleAr: `مسح السجل الطبي الممتد للمريض. تم العثور على ${evidenceFoundCount} دلالات سريرية، و ${evidenceMissingCount} بانتظار التأكيد.`,
@@ -185,15 +185,15 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
     logs.push({
       id: `log-score-${claim.id}`,
       timestamp: `${claim.createdDate} 10:14:04.190`,
-      actorId: 'A4',
-      actorName: 'A4: Revenue Risk & Readiness Scorer',
-      actorNameAr: 'A4: وكيل تقييم المخاطر والجاهزية',
-      action: `Mujeaz Readiness Score™ Evaluated: ${claim.readinessScore.overallScore}/100 (Risk: ${claim.revenueRisk.denialRiskPercentage}%)`,
-      actionAr: `احتساب مؤشر الجاهزية Mujeaz Score™: ${claim.readinessScore.overallScore}/100 (المخاطر: ${claim.revenueRisk.denialRiskPercentage}%)`,
+      actorId: 'A5',
+      actorName: 'A5: Revenue Risk & Readiness Scorer',
+      actorNameAr: 'A5: وكيل تقييم المخاطر والجاهزية',
+      action: `Mujeaz Readiness Score Evaluated: ${claim.readinessScore.overallScore}/100 (Risk: ${claim.revenueRisk.denialRiskPercentage}%)`,
+      actionAr: `احتساب مؤشر الجاهزية Mujeaz Score: ${claim.readinessScore.overallScore}/100 (المخاطر: ${claim.revenueRisk.denialRiskPercentage}%)`,
       category: 'SCORE',
       severity: claim.readinessScore.overallScore >= 90 ? 'SUCCESS' : claim.readinessScore.overallScore >= 70 ? 'DECISION' : 'WARNING',
-      complianceStandard: 'Mujeaz-Score-v2.6-Algorithm',
-      hash: `0xc4d812e91b3a${claim.readinessScore.overallScore}`,
+      complianceStandard: 'Mujeaz Readiness Score (PRD §8)',
+      hash: '',
       rationaleEn: `Overall Score ${claim.readinessScore.overallScore}/100. Revenue at risk evaluated at ${formatSAR(claim.revenueRisk.revenueAtRisk)}. Priority: ${claim.revenueRisk.priority}.`,
       rationaleAr: `درجة الجاهزية الكلية ${claim.readinessScore.overallScore}/100. الإيراد المعرض للخطر ${formatSAR(claim.revenueRisk.revenueAtRisk)}. الأولوية: ${claim.revenueRisk.priority}.`,
     });
@@ -202,17 +202,17 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
     logs.push({
       id: `log-fhir-${claim.id}`,
       timestamp: `${claim.createdDate} 10:14:04.810`,
-      actorId: 'A5',
-      actorName: 'A5: NPHIES / FHIR Conformance Agent',
-      actorNameAr: 'A5: وكيل معايير نفيس وهيكلة FHIR',
-      action: `Generated NPHIES FHIR Payload (${claim.fhirPayload.resourceType} - ID: ${claim.fhirPayload.id})`,
-      actionAr: `تمت هيكلة ملف FHIR المعتمد لمنصة نفيس (${claim.fhirPayload.resourceType})`,
+      actorId: 'A4',
+      actorName: 'A4: NPHIES / FHIR Conformance Agent',
+      actorNameAr: 'A4: وكيل معايير نفيس وهيكلة FHIR',
+      action: `Built sample FHIR payload (${claim.fhirPayload.resourceType} - ID: ${claim.fhirPayload.id})`,
+      actionAr: `تم بناء نموذج حمولة FHIR (${claim.fhirPayload.resourceType})`,
       category: 'FHIR',
-      severity: 'SUCCESS',
-      complianceStandard: 'HL7-FHIR-R4-NPHIES-v2.1',
-      hash: `0x7e8b34f19d2c${claim.fhirPayload.attachmentsCount}`,
-      rationaleEn: `Validated JSON schema against NPHIES FHIR R4 standard. ${claim.fhirPayload.attachmentsCount} attachments mapped.`,
-      rationaleAr: `تمت التحقق من تطابق هيكل JSON مع معايير NPHIES FHIR R4. إرفاق ${claim.fhirPayload.attachmentsCount} مرفقات ذات صلة.`,
+      severity: 'INFO',
+      complianceStandard: 'HL7 FHIR R4 — not validated against NPHIES profiles',
+      hash: '',
+      rationaleEn: `Sample payload with ${claim.fhirPayload.attachmentsCount} attachment(s). Validation against NPHIES Implementation Guide profiles is not implemented yet (PRD FR-A4-03).`,
+      rationaleAr: `نموذج حمولة مع ${claim.fhirPayload.attachmentsCount} مرفق. التحقق بملفات تعريف دليل تنفيذ نفيس غير مفعّل بعد (FR-A4-03).`,
     });
 
     // 7. A6 Recovery Specialist Event (If Denial / Appeal exists)
@@ -227,8 +227,8 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
         actionAr: `إنشاء حزمة الاستئناف الموثقة (نسبة القبول المتوقعة: ${claim.appealPackage?.appealStrength || 95}%)`,
         category: 'APPEAL',
         severity: 'SUCCESS',
-        complianceStandard: 'Saudi-CCHI-Appeal-Regulation',
-        hash: `0xd1f2e3a45b6c${claim.appealPackage?.appealStrength || 95}`,
+        complianceStandard: 'Payer reconsideration process (demo)',
+        hash: '',
         confidence: claim.appealPackage?.appealStrength || 95,
         rationaleEn: `Root cause identified: ${claim.appealPackage?.denialReason || 'Step Therapy Exception'}. Auto-drafted bilingual reconsideration letter with clinical evidence references.`,
         rationaleAr: `تحديد السبب الجذر: ${claim.appealPackage?.denialReasonAr || 'استثناء العلاج المتدرج'}. إعداد خطاب استئناف مزدوج اللغة مدعوم بالأدلة.`,
@@ -240,7 +240,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
       logs.push({
         id: `log-orig-${claim.id}-${index}`,
         timestamp: item.timestamp,
-        actorId: item.actor.includes('HIS') ? 'HIS' : item.actor.includes('Bupa') || item.actor.includes('NPHIES') ? 'NPHIES' : 'SYSTEM',
+        actorId: item.actor.includes('HIS') ? 'HIS' : item.actor.includes('Payer') || item.actor.includes('NPHIES') ? 'NPHIES' : 'SYSTEM',
         actorName: item.actor,
         actorNameAr: item.actor,
         action: item.action,
@@ -248,7 +248,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
         category: 'SYSTEM',
         severity: 'INFO',
         complianceStandard: 'Audit-Trail-Record',
-        hash: `0x5f2d1829a${index}1e`,
+        hash: '',
         rationaleEn: `Recorded operational action by ${item.actor}.`,
         rationaleAr: `تم تسجيل الإجراء التشغيلي بواسطة ${item.actor}.`,
       });
@@ -256,6 +256,41 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
 
     return logs.sort((a, b) => a.timestamp.localeCompare(b.timestamp));
   }, [claim, isAr]);
+
+  // SHA-256 hash chain: each entry's hash covers its content plus the previous hash,
+  // so altering any earlier entry changes every hash after it.
+  // NOTE: computed in the browser for demonstration; production computes and stores
+  // the chain server-side when each event is written (PRD FR-AU-01).
+  const computeHashChain = React.useCallback(async (entries: typeof allAuditLogs) => {
+    const enc = new TextEncoder();
+    const out: Record<string, string> = {};
+    let prev = 'GENESIS';
+    for (const entry of entries) {
+      const { hash: _omit, ...content } = entry;
+      const digest = await crypto.subtle.digest('SHA-256', enc.encode(prev + JSON.stringify(content)));
+      const hex = Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
+      out[entry.id] = hex;
+      prev = hex;
+    }
+    return { hashes: out, head: prev };
+  }, []);
+
+  const [chain, setChain] = useState<{ hashes: Record<string, string>; head: string } | null>(null);
+
+  React.useEffect(() => {
+    let cancelled = false;
+    setChain(null);
+    setIntegrityVerified(null);
+    computeHashChain(allAuditLogs).then((c) => {
+      if (!cancelled) setChain(c);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [allAuditLogs, computeHashChain]);
+
+  const hashOf = (id: string) => chain?.hashes[id] ?? '…';
+  const shortHead = chain ? `${chain.head.slice(0, 10)}…${chain.head.slice(-4)}` : '…';
 
   // Filtered logs
   const filteredLogs = React.useMemo(() => {
@@ -271,29 +306,34 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
       // Search filter
       if (auditSearch.trim()) {
         const q = auditSearch.toLowerCase();
-        const text = `${log.action} ${log.actionAr} ${log.actorName} ${log.actorNameAr} ${log.rationaleEn} ${log.rationaleAr} ${log.hash} ${log.complianceStandard}`.toLowerCase();
+        const text = `${log.action} ${log.actionAr} ${log.actorName} ${log.actorNameAr} ${log.rationaleEn} ${log.rationaleAr} ${hashOf(log.id)} ${log.complianceStandard}`.toLowerCase();
         return text.includes(q);
       }
       return true;
     });
   }, [allAuditLogs, actorFilter, categoryFilter, auditSearch]);
 
-  const handleVerifyIntegrity = () => {
+  // Recompute the chain from the current entries and compare with the stored head.
+  const handleVerifyIntegrity = async () => {
+    if (!chain) return;
     setIsVerifyingIntegrity(true);
-    setTimeout(() => {
+    try {
+      const recomputed = await computeHashChain(allAuditLogs);
+      setIntegrityVerified(recomputed.head === chain.head);
+    } finally {
       setIsVerifyingIntegrity(false);
-      setIntegrityVerified(true);
-    }, 800);
+    }
   };
 
   const handleCopyAuditJson = () => {
     const jsonStr = JSON.stringify({
       claimId: claim.id,
       claimNumber: claim.claimNumber,
-      integrityDigest: '0x7f8a91b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6',
+      hashAlgorithm: 'SHA-256 chain (prev_hash + entry JSON), genesis = "GENESIS"',
+      chainHead: chain?.head ?? null,
       auditEventsCount: allAuditLogs.length,
-      verifiedStandards: ['HL7-FHIR-R4', 'NPHIES-v2.1', 'SDAIA-AI-Ethics-Art-4', 'Saudi-CCHI'],
-      auditLogs: allAuditLogs
+      note: 'Demo: chain computed in the browser from demo case data.',
+      auditLogs: allAuditLogs.map((l) => ({ ...l, hash: hashOf(l.id) }))
     }, null, 2);
     
     navigator.clipboard.writeText(jsonStr);
@@ -402,7 +442,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
               activeTab === 'SCORE' ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white'
             }`}
           >
-            {isAr ? 'مؤشر الجاهزية Mujeaz Score™' : 'Readiness Breakdown'}
+            {isAr ? 'مؤشر الجاهزية Mujeaz Score' : 'Readiness Breakdown'}
           </button>
 
           <button
@@ -521,7 +561,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-bold text-white">Mujeaz Readiness Score™ Breakdown</h3>
+                <h3 className="text-lg font-bold text-white">Mujeaz Readiness Score Breakdown</h3>
                 <p className="text-xs text-slate-400">
                   {isAr ? 'قياس دقيق وجاهزية الطلب للقبول من المرة الأولى' : 'Multidimensional evaluation metrics for first-pass clean approval'}
                 </p>
@@ -611,7 +651,14 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
         {activeTab === 'FHIR' && (
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-bold text-white">NPHIES FHIR Payload Inspection</h3>
+              <div>
+                <h3 className="text-lg font-bold text-white">{isAr ? 'نموذج حمولة FHIR' : 'Sample FHIR Payload'}</h3>
+                <p className="text-[11px] text-amber-300/90">
+                  {isAr
+                    ? 'نموذج توضيحي بأكواد مرجعية. الإنتاج يتطلب ملفات تعريف نفيس وترميز ICD-10-AM و SBS.'
+                    : 'Illustrative sample with reference codes. Production requires NPHIES profiles with ICD-10-AM and SBS coding.'}
+                </p>
+              </div>
               <button
                 onClick={handleCopyFhir}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold cursor-pointer"
@@ -642,8 +689,8 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
                   </div>
                   <p className="text-xs text-slate-400">
                     {isAr 
-                      ? 'سجل تدقيق غير قابل للتعديل يوثق كافة قرارات وكلاء الذكاء الاصطناعي مع معلمات الدخل والتوقيع الموثق'
-                      : 'Cryptographically verified immutable audit log capturing every AI Agent decision, input parameter, policy match, and NPHIES / FHIR compliance check.'}
+                      ? 'سجل تدقيق مربوط بسلسلة تجزئة SHA-256: أي تعديل في حدث سابق يغيّر كل التجزئات بعده. (عرض تجريبي محسوب في المتصفح)'
+                      : 'Audit log linked by a SHA-256 hash chain: altering any earlier event changes every hash after it. (Demo — computed in the browser.)'}
                   </p>
                 </div>
 
@@ -675,17 +722,23 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
               <div className="pt-3 border-t border-slate-900 flex flex-wrap items-center gap-3 text-xs">
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-300 font-mono text-[11px]">
                   <Fingerprint className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>Digest: <strong className="text-cyan-300">0x7f8a91b2c3...e5f6</strong></span>
+                  <span>{isAr ? 'رأس السلسلة:' : 'Chain head:'} <strong className="text-cyan-300">{shortHead}</strong></span>
                 </div>
 
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-emerald-950/60 border border-emerald-800/60 text-emerald-300 text-[11px]">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{isAr ? 'معايير SDAIA وأخلاقيات الذكاء الاصطناعي: موثق' : 'SDAIA AI Ethics & Traceability: Verified'}</span>
-                </div>
+                {integrityVerified !== null && (
+                  <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] border ${integrityVerified ? 'bg-emerald-950/60 border-emerald-800/60 text-emerald-300' : 'bg-red-950/60 border-red-800/60 text-red-300'}`}>
+                    {integrityVerified ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <XCircle className="w-3.5 h-3.5 text-red-400" />}
+                    <span>
+                      {integrityVerified
+                        ? (isAr ? 'السلسلة سليمة: أُعيد حسابها وطابقت' : 'Chain intact: recomputed and matched')
+                        : (isAr ? 'السلسلة لا تطابق: تم تعديل السجل' : 'Chain mismatch: log was altered')}
+                    </span>
+                  </div>
+                )}
 
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-blue-950/60 border border-blue-800/60 text-blue-300 text-[11px]">
-                  <FileCode className="w-3.5 h-3.5 text-blue-400" />
-                  <span>{isAr ? 'توافق نفيس NPHIES FHIR R4: 100%' : 'NPHIES FHIR R4 Standard: 100% Valid'}</span>
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-950/60 border border-amber-800/60 text-amber-300 text-[11px]">
+                  <FileCode className="w-3.5 h-3.5 text-amber-400" />
+                  <span>{isAr ? 'حمولة FHIR: نموذج غير متحقق منه بملفات نفيس' : 'FHIR payload: sample, not validated against NPHIES profiles'}</span>
                 </div>
 
                 <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900 border border-slate-800 text-slate-400 text-[11px] ml-auto">
@@ -730,10 +783,10 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
                   >
                     <option value="ALL">{isAr ? 'جميع الفاعلين (All Actors)' : 'All Actors'}</option>
                     <option value="A1">A1: Clinical Extractor</option>
-                    <option value="A2">A2: Policy Engine</option>
-                    <option value="A3">A3: Evidence Hunter</option>
-                    <option value="A4">A4: Risk Scorer</option>
-                    <option value="A5">A5: FHIR Generator</option>
+                    <option value="A2">A2: Evidence Hunter</option>
+                    <option value="A3">A3: Policy Reasoning</option>
+                    <option value="A4">A4: FHIR Conformance</option>
+                    <option value="A5">A5: Risk Scorer</option>
                     <option value="A6">A6: Recovery Specialist</option>
                     <option value="HIS">HIS / EMR System</option>
                     <option value="NPHIES">NPHIES Gateway</option>
@@ -848,7 +901,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
                             
                             <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800">
                               <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-semibold">{isAr ? 'بصمة التوقيع التشفيري (SHA-256)' : 'Cryptographic Event Hash'}</span>
-                              <span className="font-mono text-emerald-400 text-[11px] font-semibold break-all">{log.hash}</span>
+                              <span className="font-mono text-emerald-400 text-[11px] font-semibold break-all">{hashOf(log.id)}</span>
                             </div>
 
                             <div className="bg-slate-900 p-2.5 rounded-lg border border-slate-800">

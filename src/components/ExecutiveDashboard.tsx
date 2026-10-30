@@ -237,7 +237,7 @@ export const ExecutiveDashboard: React.FC<ExecutiveDashboardProps> = ({
               <span>{isAr ? 'مركز قيادة الحالات والطلبات الطبية' : 'Authorization & Revenue Command Table'}</span>
             </h2>
             <p className="text-xs text-slate-400 mt-0.5">
-              {isAr ? 'عرض متكامل للطلبات السريرية، مؤشر الجاهزية Mujeaz Readiness Score™، وتقييم المخاطر المالية' : 'Integrated view of clinical orders, readiness scores, and revenue risk assessment'}
+              {isAr ? 'عرض متكامل للطلبات السريرية، مؤشر الجاهزية Mujeaz Readiness Score، وتقييم المخاطر المالية' : 'Integrated view of clinical orders, readiness scores, and revenue risk assessment'}
             </p>
           </div>
 

@@ -1,7 +1,10 @@
 {
-  "name": "react-example",
+  "name": "mujeaz",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.2.0",
+  "description": "Mujeaz — AI revenue assurance & prior-authorization command center for Saudi healthcare",
+  "author": "Yazeed Hamad Alharthi",
+  "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",

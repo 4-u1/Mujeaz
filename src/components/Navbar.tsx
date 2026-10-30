@@ -136,11 +136,11 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Right Controls */}
           <div className="flex items-center gap-3">
             
-            {/* Live NPHIES Status */}
+            {/* NPHIES connection status (demo: simulated) */}
             <div className="hidden sm:flex items-center gap-2 px-2.5 py-1 rounded-full bg-slate-950 border border-slate-800 text-xs">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-slate-300 font-mono text-[11px]">
-                NPHIES Gateway: Connected
+              <span className="w-2 h-2 rounded-full bg-amber-400" />
+              <span className="text-slate-300 font-mono text-[11px]" title={isAr ? 'لا يوجد اتصال فعلي بمنصة نفيس؛ كل الاستجابات محاكاة' : 'No live NPHIES connection; all payer responses are simulated'}>
+                NPHIES: {isAr ? 'وضع المحاكاة' : 'Simulated'}
               </span>
             </div>
 
