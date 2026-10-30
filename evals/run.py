@@ -12,23 +12,25 @@ import os
 import sys
 from collections import defaultdict
 from dataclasses import replace
+from datetime import timedelta
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "backend"))
 
-from app.agents.a2_evidence import bm25_rank  # noqa: E402
-from app.agents.fhir import record_from_bundle  # noqa: E402
-from app.agents.types import PatientRecord  # noqa: E402
-from app.llm.provider import GeminiProvider, Provider, ReplayProvider  # noqa: E402
-from app.orchestrator.core import AnalysisResult, analyze  # noqa: E402
-from app.rules import engine  # noqa: E402
-from app.scoring.scoring import compute_overall, js_round  # noqa: E402
+from app.agents.a2_evidence import bm25_rank
+from app.agents.fhir import record_from_bundle
+from app.agents.types import Document, PatientRecord
+from app.cdi.addendum import TherapyAnswer, render
+from app.llm.provider import GeminiProvider, Provider, ReplayProvider
+from app.orchestrator.core import AnalysisResult, analyze
+from app.rules import engine
+from app.scoring.scoring import compute_overall, js_round
 
 GATES = {"a1_precision": 0.90, "a1_recall": 0.85, "unverified_facts": 0, "a2_accuracy": 0.90,
          "a2_recall_at_5": 0.90, "a3_agreement": 0.95, "injection_unchanged": 1.0, "llm_fallbacks": 0,
-         "explanation_consistent": 1.0}
+         "explanation_consistent": 1.0, "cdi_loop_correct": 1.0}
 MAX_GATES = {"unverified_facts", "llm_fallbacks"}
 SPLITS = {"mri_lumbar": "dev", "mri_lumbar_heldout": "held-out"}
 CONTAMINATION_NOTE = (
@@ -75,6 +77,7 @@ class Tally:
             "injection_unchanged": self.ratio("inj_ok", "inj_n"),
             "injection_detected": self.ratio("injd_ok", "inj_n"),  # informational, not gated
             "explanation_consistent": self.ratio("expl_ok", "expl_n"),
+            "cdi_loop_correct": self.ratio("cdi_ok", "cdi_n"),
             "llm_fallbacks": int(self.c["fallbacks"]),
             "rejected_quotes": int(self.c["rejected"]),  # model quotes not found in the source (hallucinations)
         }
@@ -152,6 +155,31 @@ def evaluate_case(bundle: dict[str, Any], ann: dict[str, Any], mode: str, tallie
             add("a3_ok")
         else:
             errors.append(f"A3 {rid}: expected {exp['rule']}, got {rule.outcome if rule else 'none'}")
+
+    # CDI loop: a sufficient structured answer resolves an unmet requirement; an insufficient one does not;
+    # a documented non-attendance keeps the requirement unmet whatever the addendum says.
+    for rid, exp in ann["expected"]["requirements"].items():
+        if "evidence" not in exp or exp["rule"] == "PASSED":
+            continue
+        spec = policy.requirements[rid]
+        assert record.requested_on is not None
+        end = record.requested_on - timedelta(days=1)
+        for label, weeks, sessions in (("sufficient", 9, 10), ("insufficient", 3, 2)):
+            answer = TherapyAnswer(start_date=end - timedelta(weeks=weeks), end_date=end, sessions=sessions,
+                                   provider="Demo Physio Clinic")
+            lang = "ar" if ann["language"] == "ar" else "en"
+            doc = Document(f"{record.case_ref}-ADD-EVAL", "addendum", lang, record.requested_on,
+                           render(answer, case_number=record.case_ref, language=lang, author="Eval"))
+            after = analyze(replace(record, documents=(*record.documents, doc)), mode=mode,  # type: ignore[arg-type]
+                            provider=provider)
+            status = after.evidence[rid].status
+            expected = ("MISSING" if ann["expected"].get("contradiction") else
+                        "FOUND" if label == "sufficient" else "PARTIAL")
+            add("cdi_n")
+            if status == expected:
+                add("cdi_ok")
+            else:
+                errors.append(f"CDI {label} answer for {rid}: expected {expected}, got {status} ({spec['fact_label']})")
 
     if inj:
         add("inj_n")

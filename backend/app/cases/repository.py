@@ -133,6 +133,7 @@ class _Related:
     fhir: dict[str, Any] = field(default_factory=dict)
     appeals: dict[str, dict[str, Any]] = field(default_factory=dict)
     analysis: dict[str, Any] = field(default_factory=dict)
+    queries: dict[str, list[Any]] = field(default_factory=dict)
     audit: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
 
 
@@ -148,7 +149,7 @@ def _load_related(conn: Connection, ids: list[str]) -> _Related:
     rel = _Related()
     rel.facts = _group(conn.execute(text(
         "SELECT f.authorization_request_id AS case_id, f.id, f.fact, f.fact_ar, f.category, f.source_label, "
-        "f.fact_date, f.confidence, f.label, f.quote, f.value, f.char_start, f.char_end, d.doc_ref "
+        "f.fact_date, f.confidence, f.label, f.quote, f.value, f.char_start, f.char_end, d.doc_ref, d.doc_type "
         "FROM clinical_facts f LEFT JOIN clinical_documents d ON d.id = f.document_id "
         "WHERE f.authorization_request_id = ANY(CAST(:ids AS uuid[])) "
         "ORDER BY f.authorization_request_id, f.ord, f.created_at"), p).mappings())
@@ -178,6 +179,12 @@ def _load_related(conn: Connection, ids: list[str]) -> _Related:
         "(result->'readiness'->>'decision_ready_min')::int AS decision_ready_min FROM analysis_runs WHERE status = 'COMPLETED' AND "
         "authorization_request_id = ANY(CAST(:ids AS uuid[])) ORDER BY authorization_request_id, started_at DESC"),
         p).mappings()}
+    rel.queries = _group(conn.execute(text(
+        "SELECT q.authorization_request_id AS case_id, q.id, q.requirement_id, q.question, q.question_ar, q.status, "
+        "q.due_on, q.closed_at, q.decline_reason, d.doc_ref AS addendum_ref FROM documentation_queries q "
+        "LEFT JOIN clinical_documents d ON d.id = q.addendum_document_id "
+        "WHERE q.authorization_request_id = ANY(CAST(:ids AS uuid[])) ORDER BY q.authorization_request_id, q.created_at"),
+        p).mappings())
     rel.appeals = _appeal_packages(conn, ids)
     for entry in list_chains(conn, ids):
         rel.audit.setdefault(entry["chain_key"], []).append(entry)
@@ -256,7 +263,8 @@ def _assemble(r: Any, rel: _Related) -> dict[str, Any]:
             {"id": str(f["id"]), "fact": f["fact"], "factAr": f["fact_ar"] or f["fact"], "category": f["category"],
              "source": f["source_label"], "date": _iso(f["fact_date"]) or "", "confidence": f["confidence"],
              **({"label": f["label"], "quote": f["quote"], "docRef": f["doc_ref"], "charStart": f["char_start"],
-                 "charEnd": f["char_end"], "value": f["value"]} if f["label"] else {})}
+                 "charEnd": f["char_end"], "value": f["value"],
+                 "postRequestAddendum": f["doc_type"] == "addendum"} if f["label"] else {})}
             for f in rel.facts.get(cid, [])
         ],
         "policyRules": [
@@ -299,6 +307,13 @@ def _assemble(r: Any, rel: _Related) -> dict[str, Any]:
                             "decisionReadyMin": a["decision_ready_min"]}
         if a["explanation"]:
             twin["readinessExplanation"] = a["explanation"]
+    twin["documentationQueries"] = [
+        {"id": str(q["id"]), "requirementId": q["requirement_id"], "question": q["question"],
+         "questionAr": q["question_ar"] or q["question"], "status": q["status"], "dueOn": _iso(q["due_on"]),
+         "closedAt": q["closed_at"].isoformat() if q["closed_at"] else None, "declineReason": q["decline_reason"],
+         "addendumRef": q["addendum_ref"]}
+        for q in rel.queries.get(cid, [])
+    ]
     if cid in rel.appeals:
         twin["appealPackage"] = rel.appeals[cid]
     discoverable = (r["extra"] or {}).get("discoverable_evidence")

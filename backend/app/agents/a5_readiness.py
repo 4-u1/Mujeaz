@@ -112,7 +112,7 @@ def explain(components: dict[str, int], overall: int, gate: str | None,
     """
     from app.scoring.scoring import js_round
 
-    rows = []
+    rows: list[dict[str, Any]] = []
     for k in COMPONENTS:
         w = READINESS_WEIGHTS[k]
         score = components[k]

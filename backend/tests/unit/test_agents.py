@@ -237,7 +237,7 @@ def test_baseline_dev_split_regression_lock() -> None:
         "a1_precision": 1.0, "a1_recall": 1.0, "unverified_facts": 0, "a2_accuracy": 1.0,
         "a2_recall_at_5": 1.0, "a3_agreement": 1.0, "injection_unchanged": 1.0,
         "injection_detected": 1.0, "llm_fallbacks": 0, "rejected_quotes": 0,
-        "explanation_consistent": 1.0}
+        "explanation_consistent": 1.0, "cdi_loop_correct": 1.0}
 
 
 def test_eval_runner_counts_llm_fallbacks_and_rejections(tmp_path: Path) -> None:

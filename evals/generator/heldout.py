@@ -20,7 +20,14 @@ import sys
 from datetime import date, timedelta
 from pathlib import Path
 
-from evals.generator.generate import DX_OK, DX_OK_ALT, DX_WRONG, SERVICE, NoteBuilder, _ref
+from evals.generator.generate import (
+    DX_OK,
+    DX_OK_ALT,
+    DX_WRONG,
+    SERVICE,
+    NoteBuilder,
+    _ref,
+)
 
 SEED = 30102026
 OUT = Path(__file__).resolve().parents[1] / "data" / "mri_lumbar_heldout"
