@@ -72,17 +72,17 @@ Mujeaz             Understand → Validate → Predict → Complete → Submit �
 Each agent has one job, a typed output, and an audit trail. Language understanding comes from the LLM; **anything that decides a number or a rule outcome is deterministic and testable**.
 
 <details>
-<summary><b>What each agent does in the prototype today</b></summary>
+<summary><b>What each agent does today (milestone M1)</b></summary>
 
 <br/>
 
 | | Agent | Prototype status |
 |---|---|---|
 | **A1** | Clinical Understanding | Gemini extraction (AI Sandbox) with source-quoted facts |
-| **A2** | Evidence Hunter | Surfaces only evidence present in each case's record; logs a miss otherwise |
+| **A2** | Evidence Hunter | Demo: applies only evidence stored with the demo case, server-side and audited; real retrieval in M2 |
 | **A3** | Policy Reasoning | Model judges rule status; rules engine planned (PRD FR-A3-03) |
 | **A4** | NPHIES / FHIR Conformance | Sample `Claim` with `use: preauthorization`; profile validation planned |
-| **A5** | Revenue Risk | Deterministic formulas in [`shared/scoring.ts`](shared/scoring.ts) |
+| **A5** | Revenue Risk | Deterministic formulas, TypeScript reference + Python port with 250 parity vectors |
 | **A6** | Recovery | Gemini appeal drafting from whitelisted evidence only |
 
 </details>
@@ -160,26 +160,28 @@ All screens are bilingual, with Arabic RTL as the default.
 ```bash
 git clone https://github.com/4-u1/Mujeaz.git
 cd Mujeaz
-npm install
-cp .env.example .env.local   # add GEMINI_API_KEY for live AI
-npm run dev                  # → http://localhost:3000
+cp .env.example .env                                  # optional: GEMINI_API_KEY for live AI
+docker compose -f infra/docker-compose.yml up --build # → http://localhost:8080
 ```
+
+Sign in as any demo role, for example **`sara.auth`** (authorization officer) or **`noura.audit`** (auditor). API docs: http://localhost:8000/docs. Running services without Docker, tests and troubleshooting: **[docs/RUNBOOK.md](docs/RUNBOOK.md)**.
 
 > [!TIP]
 > No API key? The app still runs. AI endpoints return a **clearly labelled sample** (`mode: "fallback"`) that is never presented as an analysis of your note.
 
-| Script | Purpose |
+| What you get | |
 |---|---|
-| `npm run dev` | Express + Vite dev server on port 3000 |
-| `npm run build` | Client → `dist/`, server → `dist/server.cjs` |
-| `npm start` | Run the production build |
-| `npm run lint` | Type-check with `tsc --noEmit` |
+| **PostgreSQL 16 + pgvector** | Full PRD data model, Row-Level Security per organisation |
+| **FastAPI backend** | RS256 auth, six roles, explicit case state machine, hash-chained audit |
+| **53 cases** | 3 original demo cases + 50 synthetic MRI Lumbar Spine FHIR bundles |
+| **React frontend** | Same six workspaces, now reading and writing through the API |
 
 | Variable | Required | Description |
 |---|:---:|---|
 | `GEMINI_API_KEY` | — | Enables live AI. Server-side only. |
 | `GEMINI_MODEL` | — | Overrides the Gemini model name. |
-| `APP_URL` | — | Public URL of the deployment. |
+| `MUJEAZ_DEV_AUTH` | — | Development sign-in (`true` locally; must be `false` in production). |
+| `MUJEAZ_JWKS_URL` | — | Use an external OIDC identity provider instead of the dev one. |
 
 <details>
 <summary><b>📡 API reference</b></summary>
@@ -204,7 +206,7 @@ Returns diagnosis and procedure codes, source-quoted clinical facts, rule result
 | `notice` / `noticeAr` | Present in fallback mode; must be shown to the user |
 | `scoring` | `method`, any hard `gateApplied`, and the source of the financial value |
 
-Limits: note ≤ 20,000 characters · 200 KB body · 20 requests/min per IP.
+Requires `case:analyze`. Limits: note ≤ 20,000 characters · 20 requests/min per user.
 
 #### `POST /api/ai/generate-appeal`
 
@@ -221,10 +223,24 @@ Whitelisted fields only — **no patient name or ID reaches the model**:
 }
 ```
 
-Returns `formalLetterEn`, `formalLetterAr`, `appealStrategy`, `appealStrategyAr`, `appealStrength` (the model's estimate of argument strength — not an overturn probability), `mode`, `notice`.
+Returns `formalLetterEn`, `formalLetterAr`, `appealStrategy`, `appealStrategyAr`, `appealStrength` (the model's estimate of argument strength — not an overturn probability), `mode`, `notice`. Requires `appeal:draft`.
 
-#### `GET /api/health`
-Liveness check.
+#### Cases, audit and auth
+
+All endpoints except health, JWKS and dev sign-in need `Authorization: Bearer <token>`.
+
+| Method & path | Permission | Purpose |
+|---|---|---|
+| `POST /api/auth/dev-login` | — (dev only) | Issue a token for a demo user |
+| `GET /api/auth/me` | any | Current user, roles, permissions |
+| `GET /api/cases` | `case:read` | List with `status`, `q`, `limit`, `offset` |
+| `GET /api/cases/{id}` | `case:read` | Full case view (Digital Twin) |
+| `POST /api/cases/{id}/transitions` | per transition | Move through the state machine; human gates recorded |
+| `GET /api/metrics` | `metrics:read` | Command Center figures computed from stored data |
+| `GET /api/audit/{id}` · `/verify` | `audit:read` | Hash-chained audit entries and server-side verification |
+| `GET /healthz` · `/readyz` | — | Liveness and database readiness |
+
+Errors use one envelope: `{"error": {"code", "message", "request_id"}}`.
 
 </details>
 
@@ -235,18 +251,21 @@ Liveness check.
 
 ```text
 .
-├── server.ts                  Express server, validation, rate limiting
-├── server/geminiService.ts    Gemini calls, JSON schemas, labelled fallback
-├── shared/scoring.ts          Deterministic Readiness Score & revenue risk
-├── src/
-│   ├── App.tsx                App shell and state
-│   ├── types.ts               Domain model (ClaimDigitalTwin, …)
-│   ├── data/mockCases.ts      Synthetic demo cases
-│   └── components/            Command Center, Walkthrough, Digital Twin, Sandbox, Recovery, Policy RAG
-├── docs/
-│   ├── PRD.md                 Product Requirements Document (Arabic)
-│   └── assets/                README illustrations + generator script
-└── public/                    Logos
+├── backend/                   FastAPI service
+│   ├── app/security/          JWT, RBAC, request dependencies
+│   ├── app/audit/             Canonical JSON + hash-chained audit log
+│   ├── app/scoring/           Python port of the scoring formulas
+│   ├── app/cases/             State machine, case views, metrics, routes
+│   ├── app/ai/                Gemini analysis and appeal drafting
+│   ├── app/seed/              Demo organisations, users, policy, cases
+│   ├── migrations/            Alembic (schema, RLS, roles, triggers)
+│   └── tests/                 Unit + PostgreSQL integration tests
+├── frontend/                  React 19 + Vite web app (src/api/client.ts is the network layer)
+├── shared/                    TypeScript scoring reference + parity vectors
+├── evals/                     Synthetic dataset generator + 50 MRI cases with ground truth
+├── infra/                     docker compose + nginx
+├── e2e/                       Playwright smoke test
+└── docs/                      PRD, ADRs, architecture, security, runbook, evals
 ```
 
 </details>
@@ -258,21 +277,21 @@ Liveness check.
 | | Phase | Focus | |
 |:---:|---|---|:---:|
 | **M0** | Credibility | Honest labels, deterministic scoring, real audit chain, demo data | ✅ |
-| **M1** | Foundation | FastAPI · PostgreSQL + pgvector · auth & roles · persistent audit | ⏳ |
+| **M1** | Foundation | FastAPI · PostgreSQL + pgvector · auth & roles · persistent audit | ✅ |
 | **M2** | Intelligence | A1 + A2 + A3 on MRI Lumbar Spine · golden dataset · eval in CI | ⏳ |
 | **M3** | Readiness | Rules engine · physician documentation query (CDI) | ⏳ |
 | **M4** | Interoperability | NPHIES-profile `Claim` · real validation · labelled sandbox responses | ⏳ |
 | **M5** | Recovery | Appeal Evidence Map · deadlines · retro denial audit | ⏳ |
 | **M6** | Pilot | First facility · measured baseline · NPHIES test environment | ⏳ |
 
-Full requirements, formulas, data model, gap analysis and proposed features: **[docs/PRD.md](docs/PRD.md)**.
+Full requirements: **[docs/PRD.md](docs/PRD.md)** · Plan: **[docs/IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md)** · Design: **[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)** · **[docs/SECURITY.md](docs/SECURITY.md)** · **[docs/EVALS.md](docs/EVALS.md)** · Decisions: **[docs/adr/](docs/adr/)**
 
 ---
 
 ## ⚠️ Project status
 
 > [!WARNING]
-> **This is a prototype.** All patients, payers (Demo Payer A/B/C), facilities, policies and codes are **synthetic**. There is **no live NPHIES connection** — every payer response is simulated and labelled as such. Procedure and drug codes are reference codes, not SBS / NPHIES codes. Data is held in memory only.
+> **This is a prototype.** All patients, payers (Demo Payer A/B/C), facilities, policies and codes are **synthetic**. There is **no live NPHIES connection** — every payer response is simulated and labelled as such. Procedure and drug codes are reference codes, not SBS / NPHIES codes. Data lives in PostgreSQL; the dev sign-in is for local use only.
 
 > [!NOTE]
 > Mujeaz is **decision support**. It is not an insurer, a claims adjudicator or an accredited NPHIES body. Production use requires compliance with the Saudi **PDPL**, **CHI** requirements for NPHIES integration, **NCA** cybersecurity controls and the facility's own policies. Patient data must not be used to train models without a proper legal and contractual basis.
