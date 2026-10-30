@@ -109,7 +109,10 @@ def _result_json(res: AnalysisResult) -> dict[str, Any]:
                          "retrieved": [list(x) for x in v.retrieved]} for k, v in res.evidence.items()},
         "rules": [asdict(r) for r in res.rules],
         "readiness": {"components": res.readiness.components, "overall": res.readiness.overall,
-                      "gate": res.readiness.gate, "denial_risk": res.readiness.denial_risk},
+                      "gate": res.readiness.gate, "denial_risk": res.readiness.denial_risk,
+                      "explanation": res.readiness.explanation,
+                      "decision_ready_min": res.decision_ready_min},
+        "excluded_addenda": list(res.excluded_addenda),
     }
 
 

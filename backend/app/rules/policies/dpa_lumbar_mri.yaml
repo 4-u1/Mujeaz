@@ -4,6 +4,10 @@ policy: DPA-LUMBAR-POL
 version: "2026.1"
 payer: DPA
 service_codes: ["72148"]
+decision:
+  ready_min: 90            # readiness needed for DECISION_READY (and no failed mandatory rule)
+addenda:
+  accepts_post_request: true   # structured physician addenda written after the request count as evidence
 title: Lumbar Spine MRI Prior Authorization (demo)
 title_ar: سياسة الموافقة المسبقة للرنين المغناطيسي القطني (تجريبية)
 source_text: |
@@ -19,7 +23,7 @@ requirements:
     title: Proof of at least 6 weeks of conservative therapy
     title_ar: إثبات 6 أسابيع على الأقل من العلاج التحفظي
     fact_label: conservative_therapy
-    min_weeks: 6
+    satisfied_if: {min_weeks: 6}
     contradicted_by: [therapy_not_attended]
     supporting_labels: [medication, persistent_symptoms]
     query:

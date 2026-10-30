@@ -88,3 +88,4 @@ class RuleResult:
     reason: str
     reason_ar: str
     policy_version: str
+    exempt: bool = False

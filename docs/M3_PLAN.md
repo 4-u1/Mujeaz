@@ -5,7 +5,7 @@
 | Scope | **M3 — Readiness**: close the loop before submission — explain the score, simulate fixes, route the physician documentation query, re-analyse |
 | Baseline | `main` @ `9ac2a5a` (M2 merged, all checks green) |
 | Author | Yazeed Hamad Alharthi |
-| Status | **Draft — awaiting approval. No code written yet.** |
+| Status | **Approved (D1–D5 as recommended), in progress** |
 
 ---
 

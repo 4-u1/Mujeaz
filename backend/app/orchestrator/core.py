@@ -42,10 +42,12 @@ class AnalysisResult:
     rejected_quotes: list[str]
     policy_version: str
     fallback_reason: str | None = None
+    decision_ready_min: int = 90
+    excluded_addenda: tuple[str, ...] = ()
 
     @property
     def decision_ready(self) -> bool:
-        return self.readiness.overall >= 90 and all(r.outcome != "FAILED" for r in self.rules)
+        return self.readiness.overall >= self.decision_ready_min and all(r.outcome != "FAILED" for r in self.rules)
 
 
 class NoPolicy(Exception):
@@ -94,7 +96,9 @@ def analyze(record: PatientRecord, *, mode: Mode = "baseline", provider: Provide
 
     emit("step", {"agent": "A2", "status": "RUNNING"})
     t0 = time.perf_counter()
-    evidence = {rid: a2_evidence.evaluate_requirement(rid, spec, facts, record.documents)
+    excluded = frozenset() if policy.accepts_post_request_addenda else frozenset(
+        d.doc_ref for d in record.documents if d.doc_type == "addendum")
+    evidence = {rid: a2_evidence.evaluate_requirement(rid, spec, facts, record.documents, excluded)
                 for rid, spec in policy.requirements.items()}
     r1 = next(iter(evidence.values()))
     steps.append(StepRecord("A2", "Evidence Hunter Agent", "وكيل صيد الأدلة السريرية",
@@ -106,7 +110,8 @@ def analyze(record: PatientRecord, *, mode: Mode = "baseline", provider: Provide
 
     emit("step", {"agent": "A3", "status": "RUNNING"})
     t0 = time.perf_counter()
-    rules = engine.evaluate(policy, facts=facts, evidence=evidence, diagnosis_code=record.diagnosis_code)
+    usable = [f for f in facts if f.doc_ref not in excluded]
+    rules = engine.evaluate(policy, facts=usable, evidence=evidence, diagnosis_code=record.diagnosis_code)
     failed = [r for r in rules if r.outcome != "PASSED"]
     steps.append(StepRecord("A3", "Policy Reasoning Agent", "وكيل مطابقة السياسات",
                             "FLAGGED" if failed else "COMPLETED",
@@ -117,12 +122,13 @@ def analyze(record: PatientRecord, *, mode: Mode = "baseline", provider: Provide
     emit("step", {"agent": "A3", "status": "COMPLETED", "rules": {r.code: r.outcome for r in rules}})
 
     emit("step", {"agent": "A5", "status": "RUNNING"})
-    exempt = any(r.outcome == "PASSED" and r.reason.startswith("Exempt") for r in rules)
-    readiness = a5_readiness.assess(record, facts, evidence, rules, price_sar, exempt)
+    exempt = any(r.exempt for r in rules)
+    readiness = a5_readiness.assess(record, usable, evidence, rules, price_sar, exempt)
     steps.append(StepRecord("A5", "Revenue Risk Agent", "وكيل مخاطر الإيرادات", "COMPLETED",
                             f"Readiness {readiness.overall}/100; denial risk {readiness.denial_risk}%",
                             f"الجاهزية {readiness.overall}/100؛ مخاطر الرفض {readiness.denial_risk}%", 0,
                             {"overall": readiness.overall, "gate": readiness.gate}, "deterministic-v1", "PRD §8"))
     emit("step", {"agent": "A5", "status": "COMPLETED", "overall": readiness.overall})
     return AnalysisResult(mode, facts, flags, evidence, rules, readiness, steps, rejected,
-                          f"{policy.code}@{policy.version}", fallback)
+                          f"{policy.code}@{policy.version}", fallback, policy.decision_ready_min,
+                          tuple(sorted(excluded)))

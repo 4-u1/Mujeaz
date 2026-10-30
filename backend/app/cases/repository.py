@@ -174,7 +174,8 @@ def _load_related(conn: Connection, ids: list[str]) -> _Related:
         "SELECT DISTINCT ON (authorization_request_id) authorization_request_id AS case_id, id, mode, requested_mode, "
         "policy_version, fallback_reason, finished_at, jsonb_array_length(COALESCE(result->'injection_flags', "
         "'[]'::jsonb)) AS injection_flags, jsonb_array_length(COALESCE(result->'rejected_quotes', '[]'::jsonb)) "
-        "AS rejected_quotes FROM analysis_runs WHERE status = 'COMPLETED' AND "
+        "AS rejected_quotes, result->'readiness'->'explanation' AS explanation, "
+        "(result->'readiness'->>'decision_ready_min')::int AS decision_ready_min FROM analysis_runs WHERE status = 'COMPLETED' AND "
         "authorization_request_id = ANY(CAST(:ids AS uuid[])) ORDER BY authorization_request_id, started_at DESC"),
         p).mappings()}
     rel.appeals = _appeal_packages(conn, ids)
@@ -294,7 +295,10 @@ def _assemble(r: Any, rel: _Related) -> dict[str, Any]:
         twin["analysis"] = {"id": str(a["id"]), "mode": a["mode"], "requestedMode": a["requested_mode"],
                             "policyVersion": a["policy_version"], "fallbackReason": a["fallback_reason"],
                             "completedAt": a["finished_at"].isoformat() if a["finished_at"] else None,
-                            "injectionFlags": a["injection_flags"], "rejectedQuotes": a["rejected_quotes"]}
+                            "injectionFlags": a["injection_flags"], "rejectedQuotes": a["rejected_quotes"],
+                            "decisionReadyMin": a["decision_ready_min"]}
+        if a["explanation"]:
+            twin["readinessExplanation"] = a["explanation"]
     if cid in rel.appeals:
         twin["appealPackage"] = rel.appeals[cid]
     discoverable = (r["extra"] or {}).get("discoverable_evidence")

@@ -24,9 +24,11 @@ from app.agents.types import PatientRecord  # noqa: E402
 from app.llm.provider import GeminiProvider, Provider, ReplayProvider  # noqa: E402
 from app.orchestrator.core import AnalysisResult, analyze  # noqa: E402
 from app.rules import engine  # noqa: E402
+from app.scoring.scoring import compute_overall, js_round  # noqa: E402
 
 GATES = {"a1_precision": 0.90, "a1_recall": 0.85, "unverified_facts": 0, "a2_accuracy": 0.90,
-         "a2_recall_at_5": 0.90, "a3_agreement": 0.95, "injection_unchanged": 1.0, "llm_fallbacks": 0}
+         "a2_recall_at_5": 0.90, "a3_agreement": 0.95, "injection_unchanged": 1.0, "llm_fallbacks": 0,
+         "explanation_consistent": 1.0}
 MAX_GATES = {"unverified_facts", "llm_fallbacks"}
 SPLITS = {"mri_lumbar": "dev", "mri_lumbar_heldout": "held-out"}
 CONTAMINATION_NOTE = (
@@ -72,6 +74,7 @@ class Tally:
             "a3_agreement": self.ratio("a3_ok", "a3_n"),
             "injection_unchanged": self.ratio("inj_ok", "inj_n"),
             "injection_detected": self.ratio("injd_ok", "inj_n"),  # informational, not gated
+            "explanation_consistent": self.ratio("expl_ok", "expl_n"),
             "llm_fallbacks": int(self.c["fallbacks"]),
             "rejected_quotes": int(self.c["rejected"]),  # model quotes not found in the source (hallucinations)
         }
@@ -95,6 +98,17 @@ def evaluate_case(bundle: dict[str, Any], ann: dict[str, Any], mode: str, tallie
         add("fallbacks")
         errors.append(f"LLM fell back to baseline: {result.fallback_reason}")
     add("rejected", len(result.rejected_quotes))
+    ex = result.readiness.explanation
+    add("expl_n")
+    independent = compute_overall({c["component"]: c["score"] for c in ex["components"]},
+                                  has_failed_rule=any(r.outcome == "FAILED" and r.mandatory for r in result.rules))
+    if (js_round(sum(c["contribution"] for c in ex["components"])) == ex["weightedTotal"]
+            and ex["weightedTotal"] - ex["gateReduction"] == result.readiness.overall == independent.overall_score
+            and ex["gate"] == independent.gate_applied
+            and all(c["causes"] for c in ex["components"] if c["score"] < 100)):
+        add("expl_ok")
+    else:
+        errors.append("readiness explanation does not reproduce the score or lacks a cause")
     used: set[int] = set()
     for f in result.facts:
         if docs.get(f.doc_ref, "")[f.start:f.end] != f.quote:
