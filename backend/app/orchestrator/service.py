@@ -238,10 +238,6 @@ def run_analysis(conn: Connection, *, case_id: str, org_id: str, actor: Actor, a
             {"o": org_id, "c": case_id, "f": current.value, "t": target.value, "a": actor.id,
              "n": f"analysis {run_id}"})
 
-    from app.cdi.service import sync_queries  # local import: cdi.service imports this module
-
-    queries = sync_queries(conn, org_id=org_id, case_id=case_id, run_id=str(run_id), res=res, actor=actor,
-                           actor_label=actor_label)
     summary = {k: v.status for k, v in res.evidence.items()} | {r.code: r.outcome for r in res.rules}
     conn.execute(_j(
         "UPDATE analysis_runs SET status = 'COMPLETED', mode = :m, policy_version = :pv, fallback_reason = :fb, "
@@ -264,6 +260,11 @@ def run_analysis(conn: Connection, *, case_id: str, org_id: str, actor: Actor, a
                           "message_ar": f"تحليل ({res.mode}): الجاهزية {rd.overall}/100، {current.value} ← {target.value}",
                           "actor_label": actor_label},
                  occurred_at=datetime.now(UTC))
+    # Queries are a consequence of the analysis, so they follow it in the audit chain.
+    from app.cdi.service import sync_queries  # local import: cdi.service imports this module
+
+    queries = sync_queries(conn, org_id=org_id, case_id=case_id, run_id=str(run_id), res=res, actor=actor,
+                           actor_label=actor_label)
     return {"analysis_run_id": str(run_id), "mode": res.mode, "requested_mode": requested, "fallback_reason": fallback,
             "policy_version": res.policy_version, "status": target.value, "readiness": rd.overall,
             "outcomes": summary, "facts": len(res.facts), "rejected_quotes": len(res.rejected_quotes),

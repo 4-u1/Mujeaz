@@ -1,6 +1,6 @@
-# Mujeaz — Architecture (M2)
+# Mujeaz — Architecture (M3)
 
-> Status: milestone **M2 Intelligence**. A1, A2 and A3 are real for MRI Lumbar Spine (ADR 0005, 0006); A4 and A6 follow in M4–M5. Roadmap: `docs/PRD.md §17`, `docs/M2_PLAN.md`.
+> Status: milestone **M3 Readiness**. A1, A2, A3 and A5 are real for MRI Lumbar Spine with two demo payers (ADR 0005–0007): the score is explained, fixes can be simulated, and physician documentation queries close the loop before submission. A4 and A6 follow in M4–M5. Plans: `docs/M2_PLAN.md`, `docs/M3_PLAN.md`.
 
 ## 1. Components
 
@@ -28,10 +28,12 @@
 | `backend/app/llm/`, `app/prompts/` | Provider interface (Gemini, Replay), versioned prompt files |
 | `backend/app/nlp/` | Arabic/English normalisation with offset maps, sentence chunker |
 | `backend/app/orchestrator/` | Pure pipeline (`core.py`, shared with evals) and persistence service + route |
+| `backend/app/cdi/` | Documentation queries, structured answers, addendum renderer (shared with what-if), answer/decline/what-if routes |
+| `backend/app/cases/workspace.py` | Work queue (stated priority formula) and document viewer API (code-point and UTF-16 offsets) |
 | `evals/run.py` | Eval runner: metrics per split/scenario/language, gates, JSON + Markdown report |
 | `backend/app/ai/` | LLM calls with delimited untrusted text and deterministic scoring |
 | `backend/app/seed/` | Demo organisations, users, payers, policy, legacy and synthetic cases |
-| `backend/migrations/` | Alembic; `0001` schema, roles, RLS, triggers; `0002` chunks, analysis runs, provenance |
+| `backend/migrations/` | Alembic; `0001` schema, roles, RLS, triggers; `0002` chunks, analysis runs, provenance; `0003` documentation queries, addenda |
 | `evals/generator/` | Deterministic synthetic FHIR dataset with ground truth |
 | `shared/` | TypeScript scoring reference + `scoring_vectors.json` |
 | `frontend/` | React app; `src/api/client.ts` is the only network layer |
@@ -82,7 +84,20 @@ load case + all patient documents (FOR UPDATE) ─► index chunks
   ─► transition (RISK_DETECTED | DECISION_READY) ─► audit entries        — one transaction
 ```
 
-## 6. What is real and what is simulated
+## 6. Closing the loop (M3)
+
+```
+analysis ─► PARTIAL/MISSING ─► documentation_query (OPEN, assigned to physician)
+officer: what-if (pure pipeline + rendered addendum, rolled back, labelled simulation)
+physician: structured answer ─► validate (no future dates, therapy ended ≤ request date)
+          ─► render addendum ─► store as document ─► re-analyse ─► query ANSWERED ─► audit   — one transaction
+officer: DECISION_READY ─► human SUBMISSION gate
+```
+
+Policies set `decision.ready_min` and `addenda.accepts_post_request`; the queue orders work by
+`amount × min(1 + 0.1 × days since request, 3)`, where amount is revenue at risk (or the full value before analysis).
+
+## 7. What is real and what is simulated
 
 | Capability | State |
 |---|---|

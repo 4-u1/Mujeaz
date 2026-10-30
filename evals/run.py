@@ -32,6 +32,8 @@ GATES = {"a1_precision": 0.90, "a1_recall": 0.85, "unverified_facts": 0, "a2_acc
          "a2_recall_at_5": 0.90, "a3_agreement": 0.95, "injection_unchanged": 1.0, "llm_fallbacks": 0,
          "explanation_consistent": 1.0, "cdi_loop_correct": 1.0}
 MAX_GATES = {"unverified_facts", "llm_fallbacks"}
+# Ground truth from each payer's policy *text* (not from the YAML flag under test), so a wrong flag fails the gate.
+ADDENDA_ACCEPTED = {"DPA": True, "DPB": False}
 SPLITS = {"mri_lumbar": "dev", "mri_lumbar_heldout": "held-out", "mri_lumbar_dpb": "second policy (DPB)"}
 CONTAMINATION_NOTE = (
     "The held-out templates and the deterministic baseline were written by the same author in the same "
@@ -173,7 +175,7 @@ def evaluate_case(bundle: dict[str, Any], ann: dict[str, Any], mode: str, tallie
             after = analyze(replace(record, documents=(*record.documents, doc)), mode=mode,  # type: ignore[arg-type]
                             provider=provider)
             status = after.evidence[rid].status
-            if not policy.accepts_post_request_addenda:
+            if not ADDENDA_ACCEPTED[record.payer_code]:
                 expected = exp["evidence"]  # addenda are not evidence for this payer: nothing may change
             else:
                 expected = ("MISSING" if ann["expected"].get("contradiction") else
@@ -225,7 +227,7 @@ def run(splits: list[str], mode: str, provider: Provider | None = None) -> dict[
             "by_language": {k: v.metrics() for k, v in sorted(by_l.items())},
             "failures": failures,
         }
-        if SPLITS.get(split) == "held-out":
+        if SPLITS.get(split) != "dev":
             report["splits"][split]["note"] = CONTAMINATION_NOTE
     report["passed"] = all(s["passed"] for s in report["splits"].values())
     return report

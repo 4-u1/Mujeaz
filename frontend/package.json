@@ -1,7 +1,7 @@
 {
   "name": "mujeaz-frontend",
   "private": true,
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Mujeaz — AI revenue assurance & prior-authorization command center for Saudi healthcare",
   "author": "Yazeed Hamad Alharthi",
   "license": "Apache-2.0",
