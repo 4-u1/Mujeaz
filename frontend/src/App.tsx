@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { LogOut, RefreshCw, AlertTriangle } from 'lucide-react';
 import { ClaimDigitalTwin, CommandCenterMetrics, Language } from './types';
-import { INITIAL_METRICS, MOCK_CASES } from './data/mockCases';
+import { api, onUnauthorized, ROLE_LABELS, session, SessionUser } from './api/client';
 import { Navbar } from './components/Navbar';
 import { ExecutiveDashboard } from './components/ExecutiveDashboard';
 import { LiveWalkthrough } from './components/LiveWalkthrough';
@@ -14,170 +15,178 @@ import { AISandbox } from './components/AISandbox';
 import { RecoveryQueue } from './components/RecoveryQueue';
 import { PolicyKnowledgeBase } from './components/PolicyKnowledgeBase';
 import { Footer } from './components/Footer';
+import { LoginScreen } from './components/LoginScreen';
+
+type Tab = 'dashboard' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy';
+
+const EMPTY_METRICS: CommandCenterMetrics = {
+  revenueProtectedTodaySAR: 0,
+  revenueAtRiskSAR: 0,
+  revenueRecoveredSAR: 0,
+  preventedDenialsCount: 0,
+  activeAuthorizationsCount: 0,
+  recoveryQueueCount: 0,
+  cleanPassRate: 0,
+  averageReadinessScore: 0,
+};
 
 export default function App() {
   const [lang, setLang] = useState<Language>('ar');
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'walkthrough' | 'digitalTwin' | 'sandbox' | 'recovery' | 'policy'>('dashboard');
-  const [cases, setCases] = useState<ClaimDigitalTwin[]>(MOCK_CASES);
-  const [selectedCaseId, setSelectedCaseId] = useState<string>('case-4922');
-  const [metrics, setMetrics] = useState<CommandCenterMetrics>(INITIAL_METRICS);
+  const [user, setUser] = useState<SessionUser | null>(() => (session.token() ? session.user() : null));
+  const [activeTab, setActiveTab] = useState<Tab>('dashboard');
+  const [cases, setCases] = useState<ClaimDigitalTwin[]>([]);
+  const [selectedCaseId, setSelectedCaseId] = useState<string | null>(null);
+  const [metrics, setMetrics] = useState<CommandCenterMetrics>(EMPTY_METRICS);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const isAr = lang === 'ar';
 
-  const selectedCase = cases.find((c) => c.id === selectedCaseId) || cases[0];
+  useEffect(() => onUnauthorized(() => setUser(null)), []);
+
+  const load = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const [twins, m] = await Promise.all([
+        api.twins(),
+        // Metrics need metrics:read; other roles see the dashboard without totals.
+        api.metrics().catch(() => EMPTY_METRICS),
+      ]);
+      setCases(twins.items);
+      setMetrics(m);
+      setSelectedCaseId((cur) => cur ?? twins.items.find((c) => c.legacyId === 'case-4922')?.id ?? twins.items[0]?.id ?? null);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) void load();
+  }, [user, load]);
+
+  const refreshCase = useCallback(async (caseId: string) => {
+    const [twin, m] = await Promise.all([api.twin(caseId), api.metrics().catch(() => null)]);
+    setCases((prev) => prev.map((c) => (c.id === caseId ? twin : c)));
+    if (m) setMetrics(m);
+  }, []);
 
   const handleSelectCase = (caseId: string) => {
     setSelectedCaseId(caseId);
     setActiveTab('digitalTwin');
   };
 
-  // Run AI Evidence Hunter (A2) for a case.
-  // Applies only the evidence that actually exists in that case's record (demo data).
-  // If nothing new is found, the case is left unchanged and the miss is logged.
-  const handleRunEvidenceHunter = (caseId: string) => {
-    const target = cases.find((c) => c.id === caseId);
-    if (!target) return;
-    const found = target.discoverableEvidence;
-    const now = new Date().toISOString().replace('T', ' ').substring(0, 19);
-
-    if (!found || found.evidenceItems.length === 0) {
-      setCases((prev) =>
-        prev.map((c) =>
-          c.id === caseId
-            ? {
-                ...c,
-                auditTrail: [
-                  ...c.auditTrail,
-                  {
-                    timestamp: now,
-                    action: 'Evidence Hunter: deep record search found no additional evidence. Case unchanged.',
-                    actionAr: 'وكيل صيد الأدلة: لم يُعثر على أدلة إضافية في السجل. لم تتغير الحالة.',
-                    actor: 'Mujeaz Evidence Hunter Agent',
-                  },
-                ],
-              }
-            : c
-        )
-      );
-      return;
+  // Evidence Hunter (A2). In M1 this applies only evidence that the demo record contains;
+  // the server writes the audit entry and recomputes the state.
+  const handleRunEvidenceHunter = async (caseId: string) => {
+    try {
+      await api.evidenceHunterDemo(caseId);
+      await refreshCase(caseId);
+    } catch (e) {
+      setError((e as Error).message);
     }
-
-    const previousAtRisk = target.revenueRisk.revenueAtRisk;
-    const value = target.revenueRisk.financialValue;
-    const newAtRisk = Math.round(value * (found.denialRiskAfter / 100));
-    const newOverall = found.readinessAfter.overallScore ?? target.readinessScore.overallScore;
-
-    setCases((prev) =>
-      prev.map((c) => {
-        if (c.id !== caseId) return c;
-        return {
-          ...c,
-          status: newOverall >= 90 ? 'DECISION_READY' : c.status,
-          readinessScore: {
-            ...c.readinessScore,
-            ...found.readinessAfter,
-            warningNotice: undefined,
-            warningNoticeAr: undefined,
-          },
-          revenueRisk: {
-            ...c.revenueRisk,
-            denialRiskPercentage: found.denialRiskAfter,
-            revenueAtRisk: newAtRisk,
-            priority: found.denialRiskAfter >= 60 ? 'HIGH' : found.denialRiskAfter >= 30 ? 'MEDIUM' : 'LOW',
-          },
-          evidenceItems: found.evidenceItems,
-          policyRules: c.policyRules.map((r) =>
-            found.satisfiesRuleIds.includes(r.id)
-              ? { ...r, status: 'PASSED', evidenceSource: found.evidenceSource }
-              : r
-          ),
-          agentRuns: c.agentRuns.map((a) =>
-            a.agentId === 'A2'
-              ? { ...a, status: 'COMPLETED', outputSummary: found.summary, outputSummaryAr: found.summaryAr }
-              : a
-          ),
-          // Evidence is consumed once attached.
-          discoverableEvidence: undefined,
-          auditTrail: [
-            ...c.auditTrail,
-            {
-              timestamp: now,
-              action: `Evidence Hunter: ${found.summary} Readiness ${c.readinessScore.overallScore} → ${newOverall}/100.`,
-              actionAr: `وكيل صيد الأدلة: ${found.summaryAr} مؤشر الجاهزية ${c.readinessScore.overallScore} ← ${newOverall}/100.`,
-              actor: 'Mujeaz Evidence Hunter Agent',
-            },
-          ],
-        };
-      })
-    );
-
-    const protectedAmount = Math.max(0, previousAtRisk - newAtRisk);
-    setMetrics((prev) => ({
-      ...prev,
-      revenueProtectedTodaySAR: prev.revenueProtectedTodaySAR + protectedAmount,
-      revenueAtRiskSAR: Math.max(0, prev.revenueAtRiskSAR - protectedAmount),
-      preventedDenialsCount: prev.preventedDenialsCount + 1,
-    }));
   };
 
+  const logout = () => {
+    session.clear();
+    setUser(null);
+    setCases([]);
+    setSelectedCaseId(null);
+  };
+
+  if (!user) {
+    return <LoginScreen lang={lang} setLang={setLang} onLoggedIn={setUser} />;
+  }
+
+  const selectedCase = cases.find((c) => c.id === selectedCaseId) || cases[0];
+  const case4922 = cases.find((c) => c.legacyId === 'case-4922');
+  const case8103 = cases.find((c) => c.legacyId === 'case-8103');
+  const role = ROLE_LABELS[user.roles[0]] ?? { en: user.roles[0], ar: user.roles[0] };
+
   return (
-    <div className={`min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col ${lang === 'ar' ? 'rtl' : 'ltr'}`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-      
-      {/* Header Navigation Bar */}
+    <div className={`min-h-screen bg-slate-950 text-slate-100 font-sans antialiased flex flex-col ${isAr ? 'rtl' : 'ltr'}`} dir={isAr ? 'rtl' : 'ltr'}>
       <Navbar
         lang={lang}
         setLang={setLang}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
-        selectedCaseId={selectedCaseId}
+        selectedCaseId={selectedCaseId ?? ''}
       />
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        {activeTab === 'dashboard' && (
-          <ExecutiveDashboard
-            metrics={metrics}
-            cases={cases}
-            lang={lang}
-            onSelectCase={handleSelectCase}
-            onNavigateTab={setActiveTab}
-            onRunEvidenceHunter={handleRunEvidenceHunter}
-          />
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-3 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div className="flex items-center gap-2 text-slate-400">
+          <span className="px-2 py-0.5 rounded-md bg-slate-900 border border-slate-800 text-slate-200 font-semibold">{user.name}</span>
+          <span>{isAr ? role.ar : role.en}</span>
+          <span className="text-slate-600">·</span>
+          <span>{isAr ? `${cases.length} حالة من قاعدة البيانات` : `${cases.length} cases from the database`}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={() => void load()} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 hover:bg-slate-800">
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
+            {isAr ? 'تحديث' : 'Refresh'}
+          </button>
+          <button onClick={logout} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 hover:bg-slate-800">
+            <LogOut className="w-3.5 h-3.5" />
+            {isAr ? 'خروج' : 'Sign out'}
+          </button>
+        </div>
+      </div>
+
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        {error && (
+          <div className="mb-4 flex items-start gap-2 text-xs text-red-200 bg-red-950/50 border border-red-800/60 rounded-xl p-3">
+            <AlertTriangle className="w-4 h-4 shrink-0 text-red-400" />
+            <span>{error}</span>
+          </div>
         )}
 
-        {activeTab === 'walkthrough' && (
-          <LiveWalkthrough
-            lang={lang}
-            case4922={cases.find((c) => c.id === 'case-4922') || cases[0]}
-            case8103={cases.find((c) => c.id === 'case-8103') || cases[1]}
-            onRunEvidenceHunter={handleRunEvidenceHunter}
-            onSelectCase={handleSelectCase}
-          />
+        {loading && cases.length === 0 && (
+          <div className="text-sm text-slate-400 py-16 text-center">{isAr ? 'جارٍ تحميل الحالات…' : 'Loading cases…'}</div>
         )}
 
-        {activeTab === 'digitalTwin' && (
-          <DigitalTwinInspector
-            claim={selectedCase}
-            lang={lang}
-            onBack={() => setActiveTab('dashboard')}
-            onRunEvidenceHunter={handleRunEvidenceHunter}
-          />
+        {cases.length > 0 && selectedCase && (
+          <>
+            {activeTab === 'dashboard' && (
+              <ExecutiveDashboard
+                metrics={metrics}
+                cases={cases}
+                lang={lang}
+                onSelectCase={handleSelectCase}
+                onNavigateTab={setActiveTab}
+                onRunEvidenceHunter={handleRunEvidenceHunter}
+              />
+            )}
+
+            {activeTab === 'walkthrough' && case4922 && case8103 && (
+              <LiveWalkthrough
+                lang={lang}
+                case4922={case4922}
+                case8103={case8103}
+                onRunEvidenceHunter={handleRunEvidenceHunter}
+                onSelectCase={handleSelectCase}
+              />
+            )}
+
+            {activeTab === 'digitalTwin' && (
+              <DigitalTwinInspector
+                claim={selectedCase}
+                lang={lang}
+                onBack={() => setActiveTab('dashboard')}
+                onRunEvidenceHunter={handleRunEvidenceHunter}
+              />
+            )}
+
+            {activeTab === 'sandbox' && <AISandbox lang={lang} />}
+
+            {activeTab === 'recovery' && <RecoveryQueue cases={cases} lang={lang} onSelectCase={handleSelectCase} />}
+
+            {activeTab === 'policy' && <PolicyKnowledgeBase lang={lang} />}
+          </>
         )}
-
-        {activeTab === 'sandbox' && <AISandbox lang={lang} />}
-
-        {activeTab === 'recovery' && (
-          <RecoveryQueue
-            cases={cases}
-            lang={lang}
-            onSelectCase={handleSelectCase}
-          />
-        )}
-
-        {activeTab === 'policy' && <PolicyKnowledgeBase lang={lang} />}
       </main>
 
-      {/* Footer */}
       <Footer lang={lang} />
-
     </div>
   );
 }

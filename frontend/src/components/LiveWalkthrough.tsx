@@ -54,7 +54,7 @@ export const LiveWalkthrough: React.FC<LiveWalkthroughProps> = ({
   const handleRunHunterInWalkthrough = () => {
     setIsProcessing(true);
     setTimeout(() => {
-      onRunEvidenceHunter('case-4922');
+      onRunEvidenceHunter(case4922.id);
       setIsProcessing(false);
       setCurrentStage(4);
     }, 1200);

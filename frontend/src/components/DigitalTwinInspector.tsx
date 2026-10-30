@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ClaimDigitalTwin, Language } from '../types';
+import { api, AuditEntry, AuditVerification } from '../api/client';
 import { 
   ShieldCheck, 
   Layers, 
@@ -70,256 +71,111 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Generate automated, cryptographically traceable audit logs for all AI agents and decisions
-  const allAuditLogs = React.useMemo(() => {
-    const logs: Array<{
-      id: string;
-      timestamp: string;
-      actorId: string;
-      actorName: string;
-      actorNameAr: string;
-      action: string;
-      actionAr: string;
-      category: 'AI_DECISION' | 'EVIDENCE' | 'POLICY' | 'SCORE' | 'FHIR' | 'APPEAL' | 'SYSTEM';
-      severity: 'SUCCESS' | 'WARNING' | 'INFO' | 'DECISION';
-      complianceStandard: string;
-      hash: string;
-      confidence?: number;
-      rationaleEn: string;
-      rationaleAr: string;
-      ruleCode?: string;
-      sourceRef?: string;
-    }> = [];
+  // Audit trail comes from the server: an append-only, SHA-256 hash-chained log written
+  // whenever the case changes (ADR 0004). The browser only displays and asks the server to verify.
+  type AuditLog = {
+    id: string;
+    seq: number;
+    timestamp: string;
+    actorId: string;
+    actorName: string;
+    actorNameAr: string;
+    action: string;
+    actionAr: string;
+    category: 'AI_DECISION' | 'EVIDENCE' | 'POLICY' | 'SCORE' | 'FHIR' | 'APPEAL' | 'SYSTEM';
+    severity: 'SUCCESS' | 'WARNING' | 'INFO' | 'DECISION';
+    complianceStandard: string;
+    hash: string;
+    prevHash: string;
+    confidence?: number;
+    rationaleEn: string;
+    rationaleAr: string;
+    sourceRef?: string;
+  };
 
-    // 1. Ingestion Event
-    logs.push({
-      id: `log-ingest-${claim.id}`,
-      timestamp: `${claim.createdDate} 10:14:00.012`,
-      actorId: 'HIS',
-      actorName: 'HIS / EMR Gateway',
-      actorNameAr: 'بوابة السجل الطبي للمستشفى',
-      action: `Clinical Order Ingested (#${claim.claimNumber})`,
-      actionAr: `تم سحب الطلب السريري رقم (${claim.claimNumber})`,
-      category: 'SYSTEM',
-      severity: 'INFO',
-      complianceStandard: 'HL7-FHIR-R4-HIS',
-      hash: '',
-      rationaleEn: `Successfully received order note for ${claim.requestedService} from ${claim.facilityName}. Patient ID: ${claim.patientId}.`,
-      rationaleAr: `تم استلام ملاحظة الطلب للخدمة ${claim.requestedServiceAr} من ${claim.facilityName}. رقم المريض: ${claim.patientId}.`,
-      sourceRef: `EMR Encounter Note #${claim.patientId}`,
-    });
-
-    // 2. A1 Clinical Extractor Agent Event
-    const a1Run = claim.agentRuns.find(a => a.agentId === 'A1');
-    logs.push({
-      id: `log-a1-${claim.id}`,
-      timestamp: a1Run?.timestamp ? `${a1Run.timestamp}.140` : `${claim.createdDate} 10:14:02.140`,
-      actorId: 'A1',
-      actorName: 'A1: Clinical Order Extractor',
-      actorNameAr: 'A1: وكيل استخراج الطلبات السريرية',
-      action: `Extracted Clinical Facts & Medical Codes (ICD-10: ${claim.icd10Code}, CPT: ${claim.cptCode})`,
-      actionAr: `استخراج الحقائق والترميز الطبي (ICD-10: ${claim.icd10Code}, CPT: ${claim.cptCode})`,
-      category: 'AI_DECISION',
-      severity: 'DECISION',
-      complianceStandard: 'ICD-10 / reference procedure code (demo) — production: ICD-10-AM + SBS',
-      hash: '',
-      confidence: 98,
-      rationaleEn: `NLP Extractor parsed text with 98% confidence. Extracted ${claim.clinicalFacts.length} core clinical facts from physician encounter notes.`,
-      rationaleAr: `حلل وكيل الذكاء الاصطناعي النص بدقة 98%. تم استخراج ${claim.clinicalFacts.length} حقائق سريرية من ملاحظات الطبيب.`,
-      sourceRef: `Demo case data`,
-    });
-
-    // 3. A2 Policy Reasoning Agent Event
-    const warningRule = claim.policyRules.find(r => r.status === 'WARNING' || r.status === 'FAILED');
-    logs.push({
-      id: `log-policy-${claim.id}`,
-      timestamp: `${claim.createdDate} 10:14:03.080`,
-      actorId: 'A3',
-      actorName: 'A3: Policy Reasoning Agent',
-      actorNameAr: 'A3: وكيل مطابقة السياسات',
-      action: warningRule 
-        ? `Policy Guideline Flagged: ${warningRule.code} (${isAr ? warningRule.titleAr : warningRule.title})`
-        : `All Policy Rules Verified Passed for ${claim.payerName}`,
-      actionAr: warningRule
-        ? `تنبيه مطابقة السياسة: ${warningRule.code} (${warningRule.titleAr})`
-        : `تمت التحقق بنجاح من كافة قواعد السياسة لشركة ${claim.payerName}`,
-      category: 'POLICY',
-      severity: warningRule ? 'WARNING' : 'SUCCESS',
-      complianceStandard: `${claim.payerCode}-NPHIES-RuleSet`,
-      hash: '',
-      ruleCode: warningRule?.code || 'POL-CHECK-00',
-      rationaleEn: warningRule 
-        ? `Matched payer rule ${warningRule.code}: ${warningRule.requirement}`
-        : `100% Policy Match against ${claim.payerName} medical necessity ruleset.`,
-      rationaleAr: warningRule
-        ? `تمت مطابقة القاعدة ${warningRule.code}: ${warningRule.requirementAr}`
-        : `مطابقة كاملة 100% مع قواعد الضرورة الطبية لشركة ${claim.payerName}.`,
-    });
-
-    // 4. A3 Evidence Hunter Agent Event
-    const evidenceFoundCount = claim.evidenceItems.filter(e => e.status === 'FOUND').length;
-    const evidenceMissingCount = claim.evidenceItems.filter(e => e.status === 'MISSING').length;
-    logs.push({
-      id: `log-hunter-${claim.id}`,
-      timestamp: `${claim.createdDate} 10:14:03.520`,
-      actorId: 'A2',
-      actorName: 'A2: Evidence Hunter Agent',
-      actorNameAr: 'A2: وكيل صيد الأدلة السريرية',
-      action: claim.status === 'APPROVED' || evidenceMissingCount === 0
-        ? `EMR Deep Search Complete: Discovered All Required Clinical Prerequisites`
-        : `EMR Deep Search Triggered: Identified ${evidenceMissingCount} Missing Prerequisite(s)`,
-      actionAr: claim.status === 'APPROVED' || evidenceMissingCount === 0
-        ? `اكتمل المسح العميق للسجل الطبي: تم توثيق جميع المتطلبات السابقة`
-        : `تم تشغيل صيد الأدلة: اكتشاف ${evidenceMissingCount} متطلب ينقص التوثيق الصريح`,
-      category: 'EVIDENCE',
-      severity: claim.status === 'APPROVED' || evidenceMissingCount === 0 ? 'SUCCESS' : 'WARNING',
-      complianceStandard: 'Mujeaz: No Evidence, No Claim',
-      hash: '',
-      confidence: 96,
-      rationaleEn: `Mined EMR longitudinal patient records. Found ${evidenceFoundCount} valid evidence items, ${evidenceMissingCount} pending validation.`,
-      rationaleAr: `مسح السجل الطبي الممتد للمريض. تم العثور على ${evidenceFoundCount} دلالات سريرية، و ${evidenceMissingCount} بانتظار التأكيد.`,
-      sourceRef: `EMR Historical Database Query #8821`,
-    });
-
-    // 5. A4 Risk & Readiness Scorer Event
-    logs.push({
-      id: `log-score-${claim.id}`,
-      timestamp: `${claim.createdDate} 10:14:04.190`,
-      actorId: 'A5',
-      actorName: 'A5: Revenue Risk & Readiness Scorer',
-      actorNameAr: 'A5: وكيل تقييم المخاطر والجاهزية',
-      action: `Mujeaz Readiness Score Evaluated: ${claim.readinessScore.overallScore}/100 (Risk: ${claim.revenueRisk.denialRiskPercentage}%)`,
-      actionAr: `احتساب مؤشر الجاهزية Mujeaz Score: ${claim.readinessScore.overallScore}/100 (المخاطر: ${claim.revenueRisk.denialRiskPercentage}%)`,
-      category: 'SCORE',
-      severity: claim.readinessScore.overallScore >= 90 ? 'SUCCESS' : claim.readinessScore.overallScore >= 70 ? 'DECISION' : 'WARNING',
-      complianceStandard: 'Mujeaz Readiness Score (PRD §8)',
-      hash: '',
-      rationaleEn: `Overall Score ${claim.readinessScore.overallScore}/100. Revenue at risk evaluated at ${formatSAR(claim.revenueRisk.revenueAtRisk)}. Priority: ${claim.revenueRisk.priority}.`,
-      rationaleAr: `درجة الجاهزية الكلية ${claim.readinessScore.overallScore}/100. الإيراد المعرض للخطر ${formatSAR(claim.revenueRisk.revenueAtRisk)}. الأولوية: ${claim.revenueRisk.priority}.`,
-    });
-
-    // 6. A5 NPHIES FHIR Conformance Event
-    logs.push({
-      id: `log-fhir-${claim.id}`,
-      timestamp: `${claim.createdDate} 10:14:04.810`,
-      actorId: 'A4',
-      actorName: 'A4: NPHIES / FHIR Conformance Agent',
-      actorNameAr: 'A4: وكيل معايير نفيس وهيكلة FHIR',
-      action: `Built sample FHIR payload (${claim.fhirPayload.resourceType} - ID: ${claim.fhirPayload.id})`,
-      actionAr: `تم بناء نموذج حمولة FHIR (${claim.fhirPayload.resourceType})`,
-      category: 'FHIR',
-      severity: 'INFO',
-      complianceStandard: 'HL7 FHIR R4 — not validated against NPHIES profiles',
-      hash: '',
-      rationaleEn: `Sample payload with ${claim.fhirPayload.attachmentsCount} attachment(s). Validation against NPHIES Implementation Guide profiles is not implemented yet (PRD FR-A4-03).`,
-      rationaleAr: `نموذج حمولة مع ${claim.fhirPayload.attachmentsCount} مرفق. التحقق بملفات تعريف دليل تنفيذ نفيس غير مفعّل بعد (FR-A4-03).`,
-    });
-
-    // 7. A6 Recovery Specialist Event (If Denial / Appeal exists)
-    if (claim.appealPackage || claim.status === 'DENIED') {
-      logs.push({
-        id: `log-recovery-${claim.id}`,
-        timestamp: `${claim.createdDate} 14:20:04.110`,
-        actorId: 'A6',
-        actorName: 'A6: Revenue Recovery Specialist',
-        actorNameAr: 'A6: وكيل استرداد الإيرادات والاستئناف',
-        action: `Generated Formal Reconsideration Package (Appeal Strength: ${claim.appealPackage?.appealStrength || 95}%)`,
-        actionAr: `إنشاء حزمة الاستئناف الموثقة (نسبة القبول المتوقعة: ${claim.appealPackage?.appealStrength || 95}%)`,
-        category: 'APPEAL',
-        severity: 'SUCCESS',
-        complianceStandard: 'Payer reconsideration process (demo)',
-        hash: '',
-        confidence: claim.appealPackage?.appealStrength || 95,
-        rationaleEn: `Root cause identified: ${claim.appealPackage?.denialReason || 'Step Therapy Exception'}. Auto-drafted bilingual reconsideration letter with clinical evidence references.`,
-        rationaleAr: `تحديد السبب الجذر: ${claim.appealPackage?.denialReasonAr || 'استثناء العلاج المتدرج'}. إعداد خطاب استئناف مزدوج اللغة مدعوم بالأدلة.`,
-      });
-    }
-
-    // 8. Original manual audit trail entries
-    claim.auditTrail.forEach((item, index) => {
-      logs.push({
-        id: `log-orig-${claim.id}-${index}`,
-        timestamp: item.timestamp,
-        actorId: item.actor.includes('HIS') ? 'HIS' : item.actor.includes('Payer') || item.actor.includes('NPHIES') ? 'NPHIES' : 'SYSTEM',
-        actorName: item.actor,
-        actorNameAr: item.actor,
-        action: item.action,
-        actionAr: item.actionAr,
-        category: 'SYSTEM',
-        severity: 'INFO',
-        complianceStandard: 'Audit-Trail-Record',
-        hash: '',
-        rationaleEn: `Recorded operational action by ${item.actor}.`,
-        rationaleAr: `تم تسجيل الإجراء التشغيلي بواسطة ${item.actor}.`,
-      });
-    });
-
-    return logs.sort((a, b) => a.timestamp.localeCompare(b.timestamp));
-  }, [claim, isAr]);
-
-  // SHA-256 hash chain: each entry's hash covers its content plus the previous hash,
-  // so altering any earlier entry changes every hash after it.
-  // NOTE: computed in the browser for demonstration; production computes and stores
-  // the chain server-side when each event is written (PRD FR-AU-01).
-  const computeHashChain = React.useCallback(async (entries: typeof allAuditLogs) => {
-    const enc = new TextEncoder();
-    const out: Record<string, string> = {};
-    let prev = 'GENESIS';
-    for (const entry of entries) {
-      const { hash: _omit, ...content } = entry;
-      const digest = await crypto.subtle.digest('SHA-256', enc.encode(prev + JSON.stringify(content)));
-      const hex = Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
-      out[entry.id] = hex;
-      prev = hex;
-    }
-    return { hashes: out, head: prev };
-  }, []);
-
-  const [chain, setChain] = useState<{ hashes: Record<string, string>; head: string } | null>(null);
+  const [entries, setEntries] = useState<AuditEntry[]>([]);
+  const [auditError, setAuditError] = useState<string | null>(null);
+  const [verifyResult, setVerifyResult] = useState<AuditVerification | null>(null);
 
   React.useEffect(() => {
     let cancelled = false;
-    setChain(null);
+    setEntries([]);
+    setVerifyResult(null);
     setIntegrityVerified(null);
-    computeHashChain(allAuditLogs).then((c) => {
-      if (!cancelled) setChain(c);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [allAuditLogs, computeHashChain]);
+    setAuditError(null);
+    api.audit(claim.id)
+      .then((r) => { if (!cancelled) setEntries(r.entries); })
+      .catch((e: Error) => { if (!cancelled) setAuditError(e.message); });
+    return () => { cancelled = true; };
+  }, [claim.id, claim.auditTrail.length, claim.status]);
 
-  const hashOf = (id: string) => chain?.hashes[id] ?? '…';
-  const shortHead = chain ? `${chain.head.slice(0, 10)}…${chain.head.slice(-4)}` : '…';
+  const actorIdOf = (e: AuditEntry): string => {
+    const label = String(e.details?.actor_label ?? '');
+    if (/Evidence Hunter/i.test(label) || e.action.startsWith('evidence_hunter')) return 'A2';
+    if (/HIS/i.test(label)) return 'HIS';
+    if (/Payer|NPHIES/i.test(label)) return 'NPHIES';
+    return e.actor_id.startsWith('user:') ? 'USER' : 'SYSTEM';
+  };
+
+  const allAuditLogs: AuditLog[] = React.useMemo(() => entries.map((e) => {
+    const message = String(e.details?.message ?? e.action);
+    const messageAr = String(e.details?.message_ar ?? message);
+    const label = String(e.details?.actor_label ?? e.actor_id);
+    const transition = e.action === 'case.transition';
+    return {
+      id: String(e.seq),
+      seq: e.seq,
+      timestamp: e.occurred_at.replace('T', ' ').slice(0, 23),
+      actorId: actorIdOf(e),
+      actorName: label,
+      actorNameAr: label,
+      action: message,
+      actionAr: messageAr,
+      category: e.action.startsWith('evidence_hunter') ? 'EVIDENCE' : transition ? 'POLICY' : 'SYSTEM',
+      severity: e.details?.human_gate ? 'DECISION' : e.action.endsWith('.miss') ? 'WARNING'
+        : e.action.endsWith('.found') ? 'SUCCESS' : 'INFO',
+      complianceStandard: `#${e.seq} · ${e.actor_role}`,
+      hash: e.hash,
+      prevHash: e.prev_hash,
+      rationaleEn: `Actor ${e.actor_id} (${e.actor_role}). Event type: ${e.action}.` +
+        (e.details?.simulated ? ' Simulated payer/NPHIES event.' : ''),
+      rationaleAr: `الفاعل ${e.actor_id} (${e.actor_role}). نوع الحدث: ${e.action}.` +
+        (e.details?.simulated ? ' حدث جهة دافعة/نفيس محاكى.' : ''),
+      sourceRef: `prev ${e.prev_hash.slice(0, 12)}…`,
+    };
+  }), [entries]);
+
+  const hashOf = (id: string) => allAuditLogs.find((l) => l.id === id)?.hash ?? '…';
+  const head = entries.length ? entries[entries.length - 1].hash : null;
+  const shortHead = head ? `${head.slice(0, 10)}…${head.slice(-4)}` : '…';
 
   // Filtered logs
   const filteredLogs = React.useMemo(() => {
     return allAuditLogs.filter(log => {
-      // Actor filter
       if (actorFilter !== 'ALL' && log.actorId !== actorFilter) {
         return false;
       }
-      // Category filter
       if (categoryFilter !== 'ALL' && log.category !== categoryFilter) {
         return false;
       }
-      // Search filter
       if (auditSearch.trim()) {
         const q = auditSearch.toLowerCase();
-        const text = `${log.action} ${log.actionAr} ${log.actorName} ${log.actorNameAr} ${log.rationaleEn} ${log.rationaleAr} ${hashOf(log.id)} ${log.complianceStandard}`.toLowerCase();
+        const text = `${log.action} ${log.actionAr} ${log.actorName} ${log.rationaleEn} ${log.rationaleAr} ${log.hash} ${log.complianceStandard}`.toLowerCase();
         return text.includes(q);
       }
       return true;
     });
   }, [allAuditLogs, actorFilter, categoryFilter, auditSearch]);
 
-  // Recompute the chain from the current entries and compare with the stored head.
+  // The server recomputes the whole chain from stored rows.
   const handleVerifyIntegrity = async () => {
-    if (!chain) return;
     setIsVerifyingIntegrity(true);
     try {
-      const recomputed = await computeHashChain(allAuditLogs);
-      setIntegrityVerified(recomputed.head === chain.head);
+      const v = await api.auditVerify(claim.id);
+      setVerifyResult(v);
+      setIntegrityVerified(v.valid);
+    } catch (e) {
+      setAuditError((e as Error).message);
     } finally {
       setIsVerifyingIntegrity(false);
     }
@@ -329,13 +185,11 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
     const jsonStr = JSON.stringify({
       claimId: claim.id,
       claimNumber: claim.claimNumber,
-      hashAlgorithm: 'SHA-256 chain (prev_hash + entry JSON), genesis = "GENESIS"',
-      chainHead: chain?.head ?? null,
-      auditEventsCount: allAuditLogs.length,
-      note: 'Demo: chain computed in the browser from demo case data.',
-      auditLogs: allAuditLogs.map((l) => ({ ...l, hash: hashOf(l.id) }))
+      algorithm: 'SHA-256(prev_hash || canonical_json(entry)); genesis = 64 zeros (server-side, ADR 0004)',
+      chainHead: head,
+      verification: verifyResult,
+      entries,
     }, null, 2);
-    
     navigator.clipboard.writeText(jsonStr);
     setAuditCopied(true);
     setTimeout(() => setAuditCopied(false), 2000);
@@ -689,8 +543,8 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
                   </div>
                   <p className="text-xs text-slate-400">
                     {isAr 
-                      ? 'سجل تدقيق مربوط بسلسلة تجزئة SHA-256: أي تعديل في حدث سابق يغيّر كل التجزئات بعده. (عرض تجريبي محسوب في المتصفح)'
-                      : 'Audit log linked by a SHA-256 hash chain: altering any earlier event changes every hash after it. (Demo — computed in the browser.)'}
+                      ? 'سجل تدقيق محفوظ في الخادم وغير قابل للتعديل، مربوط بسلسلة تجزئة SHA-256. زر التحقق يطلب من الخادم إعادة حساب السلسلة كاملة.'
+                      : 'Append-only audit log stored on the server and linked by a SHA-256 hash chain. Verify asks the server to recompute the whole chain.'}
                   </p>
                 </div>
 
@@ -725,13 +579,21 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
                   <span>{isAr ? 'رأس السلسلة:' : 'Chain head:'} <strong className="text-cyan-300">{shortHead}</strong></span>
                 </div>
 
+                {auditError && (
+                  <div className="px-2.5 py-1 rounded-md text-[11px] border bg-red-950/60 border-red-800/60 text-red-300">
+                    {auditError}
+                  </div>
+                )}
+
                 {integrityVerified !== null && (
                   <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] border ${integrityVerified ? 'bg-emerald-950/60 border-emerald-800/60 text-emerald-300' : 'bg-red-950/60 border-red-800/60 text-red-300'}`}>
                     {integrityVerified ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> : <XCircle className="w-3.5 h-3.5 text-red-400" />}
                     <span>
                       {integrityVerified
                         ? (isAr ? 'السلسلة سليمة: أُعيد حسابها وطابقت' : 'Chain intact: recomputed and matched')
-                        : (isAr ? 'السلسلة لا تطابق: تم تعديل السجل' : 'Chain mismatch: log was altered')}
+                        : (isAr
+                            ? `السلسلة لا تطابق: أول قيد معدَّل #${verifyResult?.first_broken_seq ?? '?'}`
+                            : `Chain mismatch at entry #${verifyResult?.first_broken_seq ?? '?'}: ${verifyResult?.reason ?? ''}`)}
                     </span>
                   </div>
                 )}
@@ -790,6 +652,8 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
                     <option value="A6">A6: Recovery Specialist</option>
                     <option value="HIS">HIS / EMR System</option>
                     <option value="NPHIES">NPHIES Gateway</option>
+                    <option value="USER">{isAr ? 'مستخدم' : 'User'}</option>
+                    <option value="SYSTEM">{isAr ? 'النظام' : 'System'}</option>
                   </select>
                 </div>
 

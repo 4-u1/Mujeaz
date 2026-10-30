@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ClaimDigitalTwin, Language } from '../types';
+import { api } from '../api/client';
 import { 
   RotateCcw, 
   Sparkles, 
@@ -40,11 +41,7 @@ export const RecoveryQueue: React.FC<RecoveryQueueProps> = ({ cases, lang, onSel
     setIsGenerating(true);
 
     try {
-      const response = await fetch('/api/ai/generate-appeal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        // Send only what the Recovery Agent needs (data minimisation): no patient name or ID.
-        body: JSON.stringify({
+      setAppealResult(await api.generateAppeal({
           claimNumber: selectedCase.claimNumber,
           payerName: selectedCase.payerName,
           requestedService: selectedCase.requestedService,
@@ -52,13 +49,7 @@ export const RecoveryQueue: React.FC<RecoveryQueueProps> = ({ cases, lang, onSel
           denialReason: selectedCase.appealPackage?.denialReason,
           evidence: selectedCase.appealPackage?.foundEvidence?.map((e) => ({ fact: e.fact, source: e.source, date: e.date })),
           appealPackage: selectedCase.appealPackage,
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setAppealResult(data);
-      }
+        }));
     } catch (err) {
       console.error('Error generating appeal:', err);
     } finally {

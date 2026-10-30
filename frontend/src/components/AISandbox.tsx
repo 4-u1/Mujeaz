@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Language } from '../types';
+import { api } from '../api/client';
 import { 
   Sparkles, 
   FileText, 
@@ -49,20 +50,7 @@ export const AISandbox: React.FC<AISandboxProps> = ({ lang }) => {
     setError(null);
 
     try {
-      const response = await fetch('/api/ai/analyze-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          clinicalNoteText: inputText,
-          payerName,
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Server returned status ${response.status}`);
-      }
-
-      const data = await response.json();
+      const data = await api.analyzeOrder({ clinicalNoteText: inputText, payerName });
       setResult(data);
     } catch (err: any) {
       console.error('API Error:', err);

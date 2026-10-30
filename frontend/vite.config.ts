@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -22,6 +23,10 @@ export default defineConfig(() => {
         '/api': { target: API_TARGET, changeOrigin: true },
         '/.well-known': { target: API_TARGET, changeOrigin: true },
       },
+    },
+    test: {
+      environment: 'node',
+      include: ['src/**/*.test.ts'],
     },
   };
 });

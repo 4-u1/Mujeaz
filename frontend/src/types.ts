@@ -35,7 +35,7 @@ export interface PolicyRule {
   titleAr: string;
   requirement: string;
   requirementAr: string;
-  status: 'PASSED' | 'WARNING' | 'FAILED';
+  status: 'PASSED' | 'WARNING' | 'FAILED' | 'PENDING';
   evidenceSource?: string;
 }
 
@@ -127,11 +127,15 @@ export interface AppealEvidenceMap {
 }
 
 export interface ClaimDigitalTwin {
-  id: string;
+  id: string; // server UUID
+  legacyId?: string | null; // e.g. 'case-4922' for the original demo cases
+  dataSource?: 'legacy-demo' | 'synthetic';
+  analyzed?: boolean;
+  allowedTransitions?: CaseStatus[];
   claimNumber: string;
   patientName: string;
   patientId: string;
-  age: number;
+  age: number | null;
   gender: string;
   doctorName: string;
   specialty: string;
@@ -190,4 +194,7 @@ export interface CommandCenterMetrics {
   recoveryQueueCount: number;
   cleanPassRate: number; // %
   averageReadinessScore: number;
+  totalCases?: number;
+  analyzedCases?: number;
+  basis?: string;
 }
