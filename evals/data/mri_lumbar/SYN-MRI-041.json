@@ -1,0 +1,154 @@
+{
+ "resourceType": "Bundle",
+ "id": "SYN-MRI-041",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-SYN-P-1041",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "SYN-P-1041",
+    "identifier": [
+     {
+      "system": "urn:mujeaz:synthetic:patient",
+      "value": "SYN-P-1041"
+     }
+    ],
+    "name": [
+     {
+      "text": "Hatem Al-Sample (synthetic)",
+      "given": [
+       "Hatem"
+      ],
+      "family": "Al-Sample"
+     },
+     {
+      "text": "حاتم النموذجي (اصطناعي)"
+     }
+    ],
+    "gender": "male",
+    "birthDate": "1960-01-01"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-041-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-041-E1",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "orthopedic"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1041"
+    },
+    "period": {
+     "start": "2026-08-15",
+     "end": "2026-08-15"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-041-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-041-D1",
+    "status": "current",
+    "type": {
+     "text": "orthopedic-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1041"
+    },
+    "date": "2026-08-15T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-041-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2YXZhNin2K3YuNipINi52YrYp9iv2Kkg2KfZhNi52LjYp9mFLiDZhdix2YrYtiDYudmF2LEgNjYg2LPZhtipLiDYo9mE2YUg2KPYs9mB2YQg2KfZhNi42YfYsSDZhdmF2KrYryDYpdmE2Ykg2KfZhNiz2KfZgiDYp9mE2YrYs9ix2Ykg2YXZhtiwIDEwINij2LPYp9io2YrYudiMINi02K/YqSDYp9mE2KPZhNmFIDcvMTAuINin2K7Yqtio2KfYsSDYsdmB2Lkg2KfZhNiz2KfZgiDYp9mE2YXYs9iq2YLZitmF2Kkg2KXZitis2KfYqNmKINmB2Yog2KfZhNis2YfYqSDYp9mE2YrYs9ix2Ykg2LnZhtivIDQ1INiv2LHYrNipLiDYrtiv2LEg2LPYsdis2Yog2KzYr9mK2K8g2YjYp9it2KrYqNin2LMg2KjZiNmE2Yog2YXZhtiwINin2YTYo9mF2LMg2YXYuSDYtti52YEg2YXYqtiy2KfZitivINmB2Yog2LHZgdi5INin2YTZgtiv2YUg2KfZhNmK2LPYsdmJLiDYp9mE2K7Yt9ipOiDYsdmG2YrZhiDZhdi62YbYp9i32YrYs9mKINmE2YTZgdmC2LHYp9iqINin2YTZgti32YbZitipINio2K/ZiNmGINi12KjYutipINmE2KrZgtmK2YrZhSDYp9mG2LLZhNin2YIg2LrYttix2YjZgdmKINmB2YogTDQtTDUu",
+       "hash": "3Th6nM7iZBkoEnCHo6TzfmtOSkc="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-SYN-MRI-041-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "SYN-MRI-041-C1",
+    "clinicalStatus": {
+     "text": "active"
+    },
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M54.16",
+       "display": "Radiculopathy, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1041"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-041-E1"
+    },
+    "onsetDateTime": "2026-06-06"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-SYN-MRI-041-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "SYN-MRI-041-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148",
+       "display": "MRI lumbar spine without contrast (reference code — map to SBS)"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1041"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-041-E1"
+    },
+    "authoredOn": "2026-08-15",
+    "reasonReference": [
+     {
+      "reference": "Condition/SYN-MRI-041-C1"
+     }
+    ]
+   }
+  }
+ ]
+}

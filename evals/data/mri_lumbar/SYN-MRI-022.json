@@ -1,0 +1,154 @@
+{
+ "resourceType": "Bundle",
+ "id": "SYN-MRI-022",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-SYN-P-1022",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "SYN-P-1022",
+    "identifier": [
+     {
+      "system": "urn:mujeaz:synthetic:patient",
+      "value": "SYN-P-1022"
+     }
+    ],
+    "name": [
+     {
+      "text": "Majed Al-Synth (synthetic)",
+      "given": [
+       "Majed"
+      ],
+      "family": "Al-Synth"
+     },
+     {
+      "text": "ماجد الاصطناعي (اصطناعي)"
+     }
+    ],
+    "gender": "male",
+    "birthDate": "1959-01-01"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-022-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-022-E1",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "orthopedic"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1022"
+    },
+    "period": {
+     "start": "2026-08-24",
+     "end": "2026-08-24"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-022-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-022-D1",
+    "status": "current",
+    "type": {
+     "text": "orthopedic-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1022"
+    },
+    "date": "2026-08-24T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-022-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2YXZhNin2K3YuNipINi52YrYp9iv2Kkg2KfZhNi52LjYp9mFLiDZhdix2YrYtiDYudmF2LEgNjcg2LPZhtipLiDYo9mE2YUg2KPYs9mB2YQg2KfZhNi42YfYsSDZhdmF2KrYryDYpdmE2Ykg2KfZhNiz2KfZgiDYp9mE2YrYs9ix2Ykg2YXZhtiwIDEwINij2LPYp9io2YrYudiMINi02K/YqSDYp9mE2KPZhNmFIDgvMTAuINin2K7Yqtio2KfYsSDYsdmB2Lkg2KfZhNiz2KfZgiDYp9mE2YXYs9iq2YLZitmF2Kkg2KXZitis2KfYqNmKINmB2Yog2KfZhNis2YfYqSDYp9mE2YrYs9ix2Ykg2LnZhtivIDMwINiv2LHYrNipLiDYp9mE2K7Yt9ipOiDYsdmG2YrZhiDZhdi62YbYp9i32YrYs9mKINmE2YTZgdmC2LHYp9iqINin2YTZgti32YbZitipINio2K/ZiNmGINi12KjYutipINmE2KrZgtmK2YrZhSDYp9mG2LLZhNin2YIg2LrYttix2YjZgdmKINmB2YogTDUtUzEu",
+       "hash": "gRxeaE6ixZbYAZw3aNbZkgA/wZM="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-SYN-MRI-022-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "SYN-MRI-022-C1",
+    "clinicalStatus": {
+     "text": "active"
+    },
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M51.26",
+       "display": "Other intervertebral disc displacement, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1022"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-022-E1"
+    },
+    "onsetDateTime": "2026-06-15"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-SYN-MRI-022-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "SYN-MRI-022-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148",
+       "display": "MRI lumbar spine without contrast (reference code — map to SBS)"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1022"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-022-E1"
+    },
+    "authoredOn": "2026-08-24",
+    "reasonReference": [
+     {
+      "reference": "Condition/SYN-MRI-022-C1"
+     }
+    ]
+   }
+  }
+ ]
+}

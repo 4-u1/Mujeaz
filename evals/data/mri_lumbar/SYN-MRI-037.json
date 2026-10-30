@@ -1,0 +1,339 @@
+{
+ "resourceType": "Bundle",
+ "id": "SYN-MRI-037",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-SYN-P-1037",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "SYN-P-1037",
+    "identifier": [
+     {
+      "system": "urn:mujeaz:synthetic:patient",
+      "value": "SYN-P-1037"
+     }
+    ],
+    "name": [
+     {
+      "text": "Dana Al-Synth (synthetic)",
+      "given": [
+       "Dana"
+      ],
+      "family": "Al-Synth"
+     },
+     {
+      "text": "دانة الاصطناعي (اصطناعي)"
+     }
+    ],
+    "gender": "female",
+    "birthDate": "1983-01-01"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-037-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-037-E1",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "orthopedic"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "period": {
+     "start": "2026-08-13",
+     "end": "2026-08-13"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-037-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-037-D1",
+    "status": "current",
+    "type": {
+     "text": "orthopedic-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "date": "2026-08-13T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-037-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "T3J0aG9wZWRpYyBjbGluaWMgbm90ZS4gNDMteWVhci1vbGQgZmVtYWxlIHBhdGllbnQuIExvdyBiYWNrIHBhaW4gcmFkaWF0aW5nIHRvIHRoZSBsZWZ0IGxlZyBmb3IgMTQgd2Vla3MsIHBhaW4gc2NvcmUgNy8xMC4gUG9zaXRpdmUgc3RyYWlnaHQgbGVnIHJhaXNlIG9uIHRoZSBsZWZ0IGF0IDM1IGRlZ3JlZXMuIFBsYW46IE1SSSBsdW1iYXIgc3BpbmUgd2l0aG91dCBjb250cmFzdCB0byBhc3Nlc3MgTDQtTDUgZGlzYyBoZXJuaWF0aW9uLg==",
+       "hash": "ncnKAEkiH3pa61lauX4D0iSKZCA="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-037-E2",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-037-E2",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "physiotherapy"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "period": {
+     "start": "2026-08-06",
+     "end": "2026-08-06"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-037-D2",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-037-D2",
+    "status": "current",
+    "type": {
+     "text": "physiotherapy-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "date": "2026-08-06T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-037-E2"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2YXZhNiu2LUg2KXZhtmH2KfYoSDYp9mE2LnZhNin2Kwg2KfZhNi32KjZiti52Yo6IDMg2KzZhNiz2KfYqiDYudmE2Ykg2YXYr9mJIDIg2KPYs9in2KjZiti52Iwg2KrZhdin2LHZitmGINiq2KvYqNmK2Kog2KfZhNis2LDYuSDZiNiq2YXYp9ix2YrZhiDZhdin2YPZhtiy2YouINin2YTYo9i52LHYp9i2INmF2LPYqtmF2LHYqSDYsdi62YUg2KfZhNi52YTYp9isLg==",
+       "hash": "4qyQjNl+JdXzVIx52qKygGguk4A="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-037-E3",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-037-E3",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "primary-care"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "period": {
+     "start": "2026-05-17",
+     "end": "2026-05-17"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-037-D3",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-037-D3",
+    "status": "current",
+    "type": {
+     "text": "primary-care-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "date": "2026-05-17T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-037-E3"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "UHJpbWFyeSBjYXJlIHZpc2l0IGZvciBiYWNrIHBhaW4uIFByZXNjcmliZWQgaWJ1cHJvZmVuIDQwMCBtZyB0aHJlZSB0aW1lcyBkYWlseSBmb3IgMyB3ZWVrcy4=",
+       "hash": "Tx4qbAz4l5T6vCZrnYChePArMMU="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-SYN-MRI-037-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "SYN-MRI-037-C1",
+    "clinicalStatus": {
+     "text": "active"
+    },
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M51.26",
+       "display": "Other intervertebral disc displacement, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-037-E1"
+    },
+    "onsetDateTime": "2026-05-07"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-SYN-MRI-037-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "SYN-MRI-037-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148",
+       "display": "MRI lumbar spine without contrast (reference code — map to SBS)"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-037-E1"
+    },
+    "authoredOn": "2026-08-13",
+    "reasonReference": [
+     {
+      "reference": "Condition/SYN-MRI-037-C1"
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Procedure-SYN-MRI-037-PT1",
+   "resource": {
+    "resourceType": "Procedure",
+    "id": "SYN-MRI-037-PT1",
+    "status": "completed",
+    "code": {
+     "text": "Physiotherapy session"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-037-E2"
+    },
+    "performedDateTime": "2026-07-23"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Procedure-SYN-MRI-037-PT2",
+   "resource": {
+    "resourceType": "Procedure",
+    "id": "SYN-MRI-037-PT2",
+    "status": "completed",
+    "code": {
+     "text": "Physiotherapy session"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-037-E2"
+    },
+    "performedDateTime": "2026-07-27"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Procedure-SYN-MRI-037-PT3",
+   "resource": {
+    "resourceType": "Procedure",
+    "id": "SYN-MRI-037-PT3",
+    "status": "completed",
+    "code": {
+     "text": "Physiotherapy session"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-037-E2"
+    },
+    "performedDateTime": "2026-08-01"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:MedicationRequest-SYN-MRI-037-MR1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "SYN-MRI-037-MR1",
+    "status": "completed",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "NSAID"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1037"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-037-E3"
+    },
+    "authoredOn": "2026-05-17"
+   }
+  }
+ ]
+}

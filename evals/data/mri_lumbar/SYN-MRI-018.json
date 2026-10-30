@@ -1,0 +1,154 @@
+{
+ "resourceType": "Bundle",
+ "id": "SYN-MRI-018",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-SYN-P-1018",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "SYN-P-1018",
+    "identifier": [
+     {
+      "system": "urn:mujeaz:synthetic:patient",
+      "value": "SYN-P-1018"
+     }
+    ],
+    "name": [
+     {
+      "text": "Nawaf Al-Model (synthetic)",
+      "given": [
+       "Nawaf"
+      ],
+      "family": "Al-Model"
+     },
+     {
+      "text": "نواف المثالي (اصطناعي)"
+     }
+    ],
+    "gender": "male",
+    "birthDate": "2001-01-01"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-018-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-018-E1",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "orthopedic"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1018"
+    },
+    "period": {
+     "start": "2026-09-17",
+     "end": "2026-09-17"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-018-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-018-D1",
+    "status": "current",
+    "type": {
+     "text": "orthopedic-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1018"
+    },
+    "date": "2026-09-17T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-018-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "T3J0aG9wZWRpYyBjbGluaWMgbm90ZS4gMjUteWVhci1vbGQgbWFsZSBwYXRpZW50LiBMb3cgYmFjayBwYWluIHJhZGlhdGluZyB0byB0aGUgbGVmdCBsZWcgZm9yIDggd2Vla3MsIHBhaW4gc2NvcmUgOS8xMC4gUG9zaXRpdmUgc3RyYWlnaHQgbGVnIHJhaXNlIG9uIHRoZSBsZWZ0IGF0IDUwIGRlZ3JlZXMuIFBsYW46IE1SSSBsdW1iYXIgc3BpbmUgd2l0aG91dCBjb250cmFzdCB0byBhc3Nlc3MgTDQtTDUgZGlzYyBoZXJuaWF0aW9uLg==",
+       "hash": "mRqDKv50MFPxteE4i24FpUCIkc0="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-SYN-MRI-018-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "SYN-MRI-018-C1",
+    "clinicalStatus": {
+     "text": "active"
+    },
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M51.26",
+       "display": "Other intervertebral disc displacement, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1018"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-018-E1"
+    },
+    "onsetDateTime": "2026-07-23"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-SYN-MRI-018-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "SYN-MRI-018-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148",
+       "display": "MRI lumbar spine without contrast (reference code — map to SBS)"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1018"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-018-E1"
+    },
+    "authoredOn": "2026-09-17",
+    "reasonReference": [
+     {
+      "reference": "Condition/SYN-MRI-018-C1"
+     }
+    ]
+   }
+  }
+ ]
+}

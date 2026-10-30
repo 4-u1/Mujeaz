@@ -1,0 +1,210 @@
+{
+ "resourceType": "Bundle",
+ "id": "SYN-MRI-044",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-SYN-P-1044",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "SYN-P-1044",
+    "identifier": [
+     {
+      "system": "urn:mujeaz:synthetic:patient",
+      "value": "SYN-P-1044"
+     }
+    ],
+    "name": [
+     {
+      "text": "Turki Al-Demo (synthetic)",
+      "given": [
+       "Turki"
+      ],
+      "family": "Al-Demo"
+     },
+     {
+      "text": "تركي التجريبي (اصطناعي)"
+     }
+    ],
+    "gender": "male",
+    "birthDate": "1959-01-01"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-044-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-044-E1",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "orthopedic"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1044"
+    },
+    "period": {
+     "start": "2026-08-25",
+     "end": "2026-08-25"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-044-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-044-D1",
+    "status": "current",
+    "type": {
+     "text": "orthopedic-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1044"
+    },
+    "date": "2026-08-25T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-044-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "T3J0aG9wZWRpYyBjbGluaWMgbm90ZS4gNjcteWVhci1vbGQgbWFsZSBwYXRpZW50LiBMb3cgYmFjayBwYWluIHJhZGlhdGluZyB0byB0aGUgbGVmdCBsZWcgZm9yIDEyIHdlZWtzLCBwYWluIHNjb3JlIDcvMTAuIFBvc2l0aXZlIHN0cmFpZ2h0IGxlZyByYWlzZSBvbiB0aGUgbGVmdCBhdCA0MCBkZWdyZWVzLiBQYXRpZW50IHJlcG9ydHMgaGF2aW5nIGNvbXBsZXRlZCBwaHlzaW90aGVyYXB5LiBQbGFuOiBNUkkgbHVtYmFyIHNwaW5lIHdpdGhvdXQgY29udHJhc3QgdG8gYXNzZXNzIEw0LUw1IGRpc2MgaGVybmlhdGlvbi4=",
+       "hash": "dVomdk2w1l6q0Y5qY9vH/Qv9A9Y="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-SYN-MRI-044-E2",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "SYN-MRI-044-E2",
+    "status": "finished",
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "physiotherapy"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/SYN-P-1044"
+    },
+    "period": {
+     "start": "2026-08-18",
+     "end": "2026-08-18"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-SYN-MRI-044-D2",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "SYN-MRI-044-D2",
+    "status": "current",
+    "type": {
+     "text": "physiotherapy-note"
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1044"
+    },
+    "date": "2026-08-18T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/SYN-MRI-044-E2"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "UGh5c2lvdGhlcmFweSByZWZlcnJhbDogcGF0aWVudCBkaWQgbm90IGF0dGVuZCBhbnkgb2YgdGhlIDYgYm9va2VkIHNlc3Npb25zLiA=",
+       "hash": "6beQx7IVXZ64PcpFEtR7fdEqSpk="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-SYN-MRI-044-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "SYN-MRI-044-C1",
+    "clinicalStatus": {
+     "text": "active"
+    },
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M54.16",
+       "display": "Radiculopathy, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1044"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-044-E1"
+    },
+    "onsetDateTime": "2026-06-02"
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-SYN-MRI-044-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "SYN-MRI-044-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148",
+       "display": "MRI lumbar spine without contrast (reference code — map to SBS)"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/SYN-P-1044"
+    },
+    "encounter": {
+     "reference": "Encounter/SYN-MRI-044-E1"
+    },
+    "authoredOn": "2026-08-25",
+    "reasonReference": [
+     {
+      "reference": "Condition/SYN-MRI-044-C1"
+     }
+    ]
+   }
+  }
+ ]
+}
