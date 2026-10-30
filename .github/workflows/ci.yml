@@ -72,7 +72,7 @@ jobs:
       - name: Explain failure
         if: failure()
         working-directory: .
-        run: python .github/scripts/annotate.py /tmp/install.log /tmp/ruff.log /tmp/mypy.log /tmp/dataset.log /tmp/pytest.log /tmp/coverage.log
+        run: python .github/scripts/annotate.py /tmp/ruff.log /tmp/mypy.log /tmp/dataset.log /tmp/pytest.log /tmp/coverage.log
 
   frontend:
     name: frontend (types · tests · build)

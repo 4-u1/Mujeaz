@@ -97,9 +97,9 @@ def _client() -> Any | None:
 def _score(m: ModelAnalysis, value_source: str) -> dict[str, Any]:
     rules = [r.status for r in m.policyRules]
     ev = [e.status for e in m.evidenceHunterFoundItems]
-    comps = {
-        "clinicalEvidence": evidence_score(ev) if ev else 0,
-        "policyMatch": rule_score(rules) if rules else 0,
+    comps: dict[str, float] = {
+        "clinicalEvidence": evidence_score(ev) or 0,
+        "policyMatch": rule_score(rules) or 0,
         "documentation": m.scores.documentation,
         "codingIntegrity": m.scores.codingIntegrity,
         "requiredAttachments": m.scores.requiredAttachments,

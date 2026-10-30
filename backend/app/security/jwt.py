@@ -50,7 +50,7 @@ def issue_token(*, user_id: str, username: str, name: str, org_id: str, roles: l
         "exp": now + s.jwt_ttl_minutes * 60,
         "jti": uuid.uuid4().hex,
     }
-    return jwt.encode(claims, _private_key(), algorithm="RS256", headers={"kid": KEY_ID})
+    return str(jwt.encode(claims, _private_key(), algorithm="RS256", headers={"kid": KEY_ID}))
 
 
 @lru_cache

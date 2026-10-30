@@ -12,7 +12,7 @@ from sqlalchemy import Connection, text
 from app.audit.service import list_chain
 from app.cases.state_machine import allowed_targets
 
-NOT_ANALYZED = {
+NOT_ANALYZED: dict[str, Any] = {
     "clinicalEvidence": 0,
     "policyMatch": 0,
     "documentation": 0,
@@ -81,7 +81,8 @@ LEFT JOIN LATERAL (
 def list_cases(
     conn: Connection, *, status: str | None = None, q: str | None = None, limit: int = 100, offset: int = 0
 ) -> list[dict[str, Any]]:
-    where, params = ["true"], {"limit": limit, "offset": offset}
+    where: list[str] = ["true"]
+    params: dict[str, Any] = {"limit": limit, "offset": offset}
     if status:
         where.append("ar.status = :status")
         params["status"] = status
@@ -146,7 +147,7 @@ def build_twin(conn: Connection, case_id: str) -> dict[str, Any] | None:
 
     birth_year, req_on = r["birth_year"], r["requested_on"]
     analyzed = r["overall_score"] is not None
-    readiness = NOT_ANALYZED.copy() if not analyzed else {
+    readiness: dict[str, Any] = NOT_ANALYZED.copy() if not analyzed else {
         "clinicalEvidence": r["clinical_evidence"],
         "policyMatch": r["policy_match"],
         "documentation": r["documentation"],
