@@ -17,6 +17,7 @@ from app.cases.router import router as cases_router
 from app.config import get_settings
 from app.db import get_engine
 from app.observability import RequestContextMiddleware, configure_logging, request_id_var
+from app.orchestrator.router import router as analysis_router
 
 log = logging.getLogger("mujeaz")
 
@@ -80,6 +81,7 @@ def create_app() -> FastAPI:
     app.include_router(auth_router)
     app.include_router(cases_router)
     app.include_router(ai_router)
+    app.include_router(analysis_router)
     return app
 
 

@@ -18,6 +18,9 @@ from sqlalchemy.sql import bindparam
 
 from app.audit import service as audit
 from app.audit.service import Actor
+from app.llm.provider import PROMPT_DIR, load_prompt
+from app.nlp.chunker import chunk
+from app.rules import engine
 from app.security.rbac import ROLE_DESCRIPTIONS
 from app.seed.constants import (
     DEMO_ORG_ID,
@@ -37,27 +40,15 @@ REPO_ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_SYNTHETIC_DIR = REPO_ROOT / "evals" / "data" / "mri_lumbar"
 SEED_ACTOR = Actor(id="system:seed", role="system")
 
-POLICY_TEXT = """Demo Payer A — Lumbar Spine MRI Prior Authorization Policy (DEMO, fictional)
-1. Conservative therapy: at least six (6) weeks of documented conservative management
-   (physiotherapy and/or NSAIDs) before lumbar MRI.
-2. Exemption: red-flag findings (e.g. cauda equina signs, progressive neurological deficit)
-   waive requirement 1.
-3. Coding: the diagnosis must be clinically compatible with lumbar spine imaging."""
-
+_POLICY = engine.policy_for("DPA", MRI_LUMBAR_CODE)
+assert _POLICY is not None, "Demo Payer A lumbar MRI policy YAML is missing"
+POLICY_TEXT: str = _POLICY.raw["source_text"]
+POLICY_VERSION: str = _POLICY.version
 RULES = [
-    {"code": "DPA-LUMBAR-POL-04", "title": "6-Week Conservative Therapy Requirement",
-     "title_ar": "شرط العلاج التحفظي لمدة 6 أسابيع على الأقل",
-     "requirement": "Proof of at least 6 weeks of non-surgical management (Physiotherapy/NSAIDs) prior to Lumbar MRI "
-                    "unless red flags exist.",
-     "requirement_ar": "إثبات 6 أسابيع على الأقل من العلاج التحفظي (علاج طبيعي / مسكنات) قبل طلب الرنين المغناطيسي "
-                       "ما لم توجد مؤشرات خطيرة.",
-     "spec": {"id": "R1_conservative_therapy_6w", "min_weeks": 6, "exempt_if": ["red_flag"]}},
-    {"code": "DPA-CODING-01", "title": "Diagnosis–Procedure Compatibility",
-     "title_ar": "توافق التشخيص مع الإجراء",
-     "requirement": "The diagnosis must be compatible with lumbar spine MRI.",
-     "requirement_ar": "يجب أن يكون التشخيص متوافقًا مع الرنين المغناطيسي للفقرات القطنية.",
-     "spec": {"id": "R2_diagnosis_procedure_compatibility",
-              "compatible_prefixes": ["M51", "M54", "M48", "M47", "M43", "G83.4"]}},
+    {"code": r["code"], "title": r["title"], "title_ar": r.get("title_ar"),
+     "requirement": " ".join(r["requirement"].split()), "requirement_ar": " ".join(r.get("requirement_ar", "").split()),
+     "spec": {k: v for k, v in r.items() if k not in ("code", "title", "title_ar", "requirement", "requirement_ar")}}
+    for r in _POLICY.rules
 ]
 
 
@@ -99,7 +90,8 @@ def seed(conn: Connection, synthetic_dir: Path | None = None, reset: bool = Fals
     for role, desc in ROLE_DESCRIPTIONS.items():
         conn.execute(text("INSERT INTO roles (name, description) VALUES (:n, :d) ON CONFLICT (name) DO NOTHING"),
                      {"n": role.value, "d": desc})
-    counts = {"organizations": 0, "users": 0, "legacy_cases": 0, "synthetic_cases": 0}
+    counts = {"organizations": 0, "users": 0, "legacy_cases": 0, "synthetic_cases": 0, "prompts": 0}
+    counts["prompts"] = register_prompts(conn)
     for org_id, name in ((DEMO_ORG_ID, DEMO_ORG_NAME), (OTHER_ORG_ID, OTHER_ORG_NAME)):
         conn.execute(text("INSERT INTO organizations (id, name) VALUES (:id, :n)"), {"id": org_id, "n": name})
         counts["organizations"] += 1
@@ -137,6 +129,18 @@ def seed(conn: Connection, synthetic_dir: Path | None = None, reset: bool = Fals
     return counts
 
 
+def register_prompts(conn: Connection) -> int:
+    """Registers every versioned prompt file (name, version, SHA-256, body). Idempotent."""
+    n = 0
+    for path in sorted(PROMPT_DIR.glob("*.md")):
+        p = load_prompt(path.stem)
+        n += conn.execute(text(
+            "INSERT INTO prompts (name, version, body_sha256, body) VALUES (:n, :v, :h, :b) "
+            "ON CONFLICT (name, version) DO NOTHING"),
+            {"n": p.name, "v": p.version, "h": p.sha256, "b": f"{p.system}\n---\n{p.template}"}).rowcount
+    return n
+
+
 def _reference_data(conn: Connection, org: str) -> dict[str, Any]:
     _bind(conn, org)
     payers = {}
@@ -154,8 +158,8 @@ def _reference_data(conn: Connection, org: str) -> dict[str, Any]:
         {"o": org, "p": payers["DPA"]}).scalar_one()
     version = conn.execute(text(
         "INSERT INTO policy_versions (organization_id, policy_id, version, effective_from, source_text, "
-        "source_sha256) VALUES (:o, :p, '2026.1', '2026-01-01', :t, :h) RETURNING id"),
-        {"o": org, "p": policy, "t": POLICY_TEXT, "h": hashlib.sha256(POLICY_TEXT.encode()).hexdigest()}
+        "source_sha256) VALUES (:o, :p, :ver, '2026-01-01', :t, :h) RETURNING id"),
+        {"o": org, "p": policy, "ver": POLICY_VERSION, "t": POLICY_TEXT, "h": hashlib.sha256(POLICY_TEXT.encode()).hexdigest()}
     ).scalar_one()
     rules = {}
     for r in RULES:
@@ -341,12 +345,17 @@ def _load_bundle(conn: Connection, ctx: dict[str, Any], bundle: dict[str, Any]) 
         att = doc["content"][0]["attachment"]
         content = base64.b64decode(att["data"]).decode("utf-8")
         enc_ref = doc["context"]["encounter"][0]["reference"].split("/", 1)[1]
-        conn.execute(text(
+        doc_id = conn.execute(text(
             """INSERT INTO clinical_documents (organization_id, patient_id, encounter_id, doc_ref, doc_type, language,
-               authored_on, content, content_sha256) VALUES (:o, :p, :e, :r, :t, :l, :d, :c, :h)"""),
+               authored_on, content, content_sha256) VALUES (:o, :p, :e, :r, :t, :l, :d, :c, :h) RETURNING id"""),
             {"o": org, "p": pid, "e": enc_ids.get(enc_ref), "r": doc["id"], "t": doc["type"]["text"],
              "l": att.get("language", "en"), "d": date.fromisoformat(doc["date"][:10]), "c": content,
-             "h": hashlib.sha256(content.encode()).hexdigest()})
+             "h": hashlib.sha256(content.encode()).hexdigest()}).scalar_one()
+        for c in chunk(content):
+            conn.execute(text(
+                "INSERT INTO document_chunks (organization_id, document_id, ord, char_start, char_end, content) "
+                "VALUES (:o, :d, :i, :s, :e, :c)"),
+                {"o": org, "d": doc_id, "i": c.ord, "s": c.start, "e": c.end, "c": c.text})
         if enc_ref == index_enc:
             index_note = content
     cond = by_type["Condition"][0]["code"]["coding"][0]

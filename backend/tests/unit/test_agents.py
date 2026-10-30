@@ -232,7 +232,19 @@ def test_baseline_dev_split_regression_lock() -> None:
     assert {k: m[k] for k in m if k != "cases"} == {
         "a1_precision": 1.0, "a1_recall": 1.0, "unverified_facts": 0, "a2_accuracy": 1.0,
         "a2_recall_at_5": 1.0, "a3_agreement": 1.0, "injection_unchanged": 1.0,
-        "injection_detected": 1.0}
+        "injection_detected": 1.0, "llm_fallbacks": 0, "rejected_quotes": 0}
+
+
+def test_eval_runner_counts_llm_fallbacks_and_rejections(tmp_path: Path) -> None:
+    """A missing fixture must surface as a fallback, never as a silent baseline score in LLM mode."""
+    sys.path.insert(0, str(ROOT / "evals"))
+    import run as eval_run  # type: ignore[import-not-found]
+
+    report = eval_run.run(["mri_lumbar_heldout"], "llm", ReplayProvider(tmp_path))
+    split = report["splits"]["mri_lumbar_heldout"]
+    assert split["metrics"]["llm_fallbacks"] == 30
+    assert split["gates_passed"]["llm_fallbacks"] is False
+    assert report["passed"] is False
 
 
 def test_fhir_loader() -> None:

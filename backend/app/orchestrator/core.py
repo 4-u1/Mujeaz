@@ -116,6 +116,7 @@ def analyze(record: PatientRecord, *, mode: Mode = "baseline", provider: Provide
                             {r.code: r.outcome for r in rules}, "rules-engine", f"{policy.code}@{policy.version}"))
     emit("step", {"agent": "A3", "status": "COMPLETED", "rules": {r.code: r.outcome for r in rules}})
 
+    emit("step", {"agent": "A5", "status": "RUNNING"})
     exempt = any(r.outcome == "PASSED" and r.reason.startswith("Exempt") for r in rules)
     readiness = a5_readiness.assess(record, facts, evidence, rules, price_sar, exempt)
     steps.append(StepRecord("A5", "Revenue Risk Agent", "وكيل مخاطر الإيرادات", "COMPLETED",

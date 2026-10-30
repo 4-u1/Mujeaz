@@ -53,7 +53,23 @@ jobs:
         run: set -o pipefail; mypy app 2>&1 | tee /tmp/mypy.log
       - name: Synthetic dataset is reproducible
         working-directory: .
-        run: set -o pipefail; python -m evals.generator.generate --check 2>&1 | tee /tmp/dataset.log
+        run: |
+          set -o pipefail
+          { python -m evals.generator.generate --check && python -m evals.generator.heldout --check; } 2>&1 | tee /tmp/dataset.log
+      - name: Eval gates (A1 · A2 · A3 · injection — dev and held-out)
+        working-directory: .
+        run: |
+          set -o pipefail
+          python evals/run.py --gate --out /tmp/evals > /tmp/evals.log 2>&1 || { cat /tmp/evals.log; exit 1; }
+          cat /tmp/evals/eval_report.md >> "$GITHUB_STEP_SUMMARY"
+          echo "::notice title=evals::$(head -n 1 /tmp/evals/eval_report.md)"
+          if ls evals/fixtures/*.json > /dev/null 2>&1; then
+            python evals/run.py --mode llm --fixtures evals/fixtures --gate --out /tmp/evals-llm >> /tmp/evals.log 2>&1 \
+              || { tail -n 60 /tmp/evals.log; exit 1; }
+            cat /tmp/evals-llm/eval_report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::notice title=evals (llm)::No recorded LLM fixtures yet; run the live-evals workflow after adding GEMINI_API_KEY"
+          fi
       - name: Tests (unit + integration against PostgreSQL)
         run: |
           set -o pipefail
@@ -67,13 +83,20 @@ jobs:
         run: |
           echo "::notice title=pytest::$(tail -n 1 /tmp/pytest.log 2>/dev/null || echo 'did not run')"
           echo "::notice title=coverage (core)::$(tail -n 1 /tmp/coverage.log 2>/dev/null || echo 'did not run')"
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: /tmp/evals/
+          if-no-files-found: ignore
       - name: Dependency audit (report only)
         continue-on-error: true
         run: pip-audit --skip-editable 2>&1 | tail -n 20
       - name: Explain failure
         if: failure()
         working-directory: .
-        run: python .github/scripts/annotate.py /tmp/ruff.log /tmp/mypy.log /tmp/dataset.log /tmp/pytest.log /tmp/coverage.log
+        run: python .github/scripts/annotate.py /tmp/ruff.log /tmp/mypy.log /tmp/dataset.log /tmp/evals.log /tmp/pytest.log /tmp/coverage.log
 
   frontend:
     name: frontend (types · tests · build)
