@@ -31,6 +31,44 @@ class Policy:
     def requirements(self) -> dict[str, dict[str, Any]]:
         return dict(self.raw.get("requirements", {}))
 
+    @property
+    def decision_ready_min(self) -> int:
+        return int(self.raw.get("decision", {}).get("ready_min", 90))
+
+    @property
+    def accepts_post_request_addenda(self) -> bool:
+        return bool(self.raw.get("addenda", {}).get("accepts_post_request", False))
+
+
+# --------------------------------------------------------------------------------- criteria
+# A requirement's `satisfied_if` is a small tree: {min_weeks: n} | {min_sessions: n} |
+# {any_of: [...]} | {all_of: [...]}. A fact satisfies it from its parsed `value` only.
+
+def satisfies(criteria: dict[str, Any], value: dict[str, Any]) -> bool:
+    if "any_of" in criteria:
+        return any(satisfies(c, value) for c in criteria["any_of"])
+    if "all_of" in criteria:
+        return all(satisfies(c, value) for c in criteria["all_of"])
+    if "min_weeks" in criteria:
+        return float(value.get("weeks") or 0) >= float(criteria["min_weeks"])
+    if "min_sessions" in criteria:
+        return float(value.get("sessions") or 0) >= float(criteria["min_sessions"])
+    raise ValueError(f"unknown criterion {criteria!r}")
+
+
+def describe(criteria: dict[str, Any], ar: bool = False) -> str:
+    if "any_of" in criteria:
+        return (" أو " if ar else " or ").join(describe(c, ar) for c in criteria["any_of"])
+    if "all_of" in criteria:
+        return (" و" if ar else " and ").join(describe(c, ar) for c in criteria["all_of"])
+    if "min_weeks" in criteria:
+        n = f"{float(criteria['min_weeks']):g}"
+        return f"{n} أسابيع على الأقل" if ar else f"at least {n} weeks"
+    if "min_sessions" in criteria:
+        n = f"{float(criteria['min_sessions']):g}"
+        return f"{n} جلسات مكتملة على الأقل" if ar else f"at least {n} completed sessions"
+    raise ValueError(f"unknown criterion {criteria!r}")
+
 
 @lru_cache
 def load_policies() -> tuple[Policy, ...]:
@@ -59,12 +97,14 @@ def evaluate(
     results: list[RuleResult] = []
     for rule in policy.rules:
         outcome: RuleOutcome
+        is_exempt = False
         pred = rule["predicate"]
         if pred == "evidence_status":
             exempt = [lab for lab in rule.get("exempt_if_any_fact", []) if lab in labels]
             ev = evidence.get(rule["requirement_id"])
             status = ev.status if ev else "MISSING"
             if exempt:
+                is_exempt = True
                 outcome = "PASSED"
                 reason = f"Exempt: documented {', '.join(exempt)}."
                 reason_ar = "مُستثنى: توجد مؤشرات خطيرة موثقة."
@@ -81,5 +121,5 @@ def evaluate(
         else:
             raise ValueError(f"unknown predicate {pred!r} in {policy.code}")
         results.append(RuleResult(rule["code"], rule["id"], outcome, bool(rule.get("mandatory", True)),
-                                  reason, reason_ar, policy.version))
+                                  reason, reason_ar, policy.version, is_exempt))
     return results

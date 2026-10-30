@@ -55,7 +55,7 @@ jobs:
         working-directory: .
         run: |
           set -o pipefail
-          { python -m evals.generator.generate --check && python -m evals.generator.heldout --check; } 2>&1 | tee /tmp/dataset.log
+          { python -m evals.generator.generate --check && python -m evals.generator.heldout --check && python -m evals.generator.dpb --check; } 2>&1 | tee /tmp/dataset.log
       - name: Eval gates (A1 · A2 · A3 · injection — dev and held-out)
         working-directory: .
         run: |
@@ -150,7 +150,7 @@ jobs:
               -H 'Content-Type: application/json' -d '{"username":"sara.auth"}' | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])')
             TOTAL=$(curl -fsS http://localhost:8080/api/cases -H "Authorization: Bearer $TOKEN" | python3 -c 'import sys,json;print(json.load(sys.stdin)["total"])')
             echo "cases from database: $TOTAL"
-            test "$TOTAL" = "53"
+            test "$TOTAL" = "73"
           } 2>&1 | tee /tmp/smoke.log
           echo "::notice title=stack::compose up OK; $(tail -n 1 /tmp/smoke.log)"
       - uses: actions/setup-node@v5

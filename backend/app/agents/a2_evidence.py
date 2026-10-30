@@ -37,39 +37,64 @@ def bm25_rank(documents: tuple[Document, ...], query: str, k: int = 5) -> list[t
     return [x for x in scored[:k] if x[3] > 0]
 
 
-def evaluate_requirement(req_id: str, spec: dict[str, Any], facts: list[Fact], documents: tuple[Document, ...]) -> EvidenceResult:
-    retrieved = tuple(bm25_rank(documents, f"{spec['query']['en']} {spec['query']['ar']}"))
-    contradiction = [f for f in facts if f.label in spec.get("contradicted_by", [])]
-    candidates = [f for f in facts if f.label == spec["fact_label"]]
-    min_weeks = float(spec["min_weeks"])
-    supporting = tuple(f for f in facts if f.label in spec.get("supporting_labels", []))
+def _documented(f: Fact, ar: bool = False) -> str:
+    parts = []
+    if f.value.get("weeks") is not None:
+        w = f"{float(f.value['weeks']):g}"
+        parts.append(f"{w} أسابيع" if ar else f"{w} weeks")
+    if f.value.get("sessions") is not None:
+        n = f"{float(f.value['sessions']):g}"
+        parts.append(f"{n} جلسات" if ar else f"{n} sessions")
+    return (" و" if ar else ", ").join(parts) or ("دون مدة أو عدد جلسات" if ar else "no duration or session count")
 
-    full = [f for f in candidates if f.value.get("weeks", 0) >= min_weeks]
+
+def _strength(f: Fact) -> tuple[float, float]:
+    return float(f.value.get("weeks") or 0), float(f.value.get("sessions") or 0)
+
+
+def evaluate_requirement(req_id: str, spec: dict[str, Any], facts: list[Fact], documents: tuple[Document, ...],
+                         excluded_refs: frozenset[str] = frozenset()) -> EvidenceResult:
+    """Classifies one requirement from verified facts.
+
+    `excluded_refs` are documents the payer does not accept as evidence (post-request addenda when the
+    policy says so). Their facts are still shown to reviewers, but cannot satisfy the requirement.
+    """
+    from app.rules.engine import describe, satisfies  # local import: engine imports agent types
+
+    criteria = spec["satisfied_if"]
+    need_en, need_ar = describe(criteria), describe(criteria, ar=True)
+    retrieved = tuple(bm25_rank(documents, f"{spec['query']['en']} {spec['query']['ar']}"))
+    usable = [f for f in facts if f.doc_ref not in excluded_refs]
+    ignored = [f for f in facts if f.doc_ref in excluded_refs and f.label == spec["fact_label"]]
+    contradiction = [f for f in usable if f.label in spec.get("contradicted_by", [])]
+    candidates = [f for f in usable if f.label == spec["fact_label"]]
+    supporting = tuple(f for f in usable if f.label in spec.get("supporting_labels", []))
+    note_en = note_ar = ""
+    if ignored and any(satisfies(criteria, f.value) for f in ignored):
+        note_en = " A post-request addendum documents it, but this payer does not accept addenda."
+        note_ar = " يوجد ملحق بعد الطلب يوثّقه، لكن هذه الجهة لا تقبل الملاحق."
+
+    full = [f for f in candidates if satisfies(criteria, f.value)]
     short = [f for f in candidates if f not in full]
     if full and not contradiction:
-        best = max(full, key=lambda f: f.value.get("weeks", 0))
-        return EvidenceResult(req_id, "FOUND",
-                              f"{best.value.get('weeks'):g} weeks documented in {best.doc_ref}.",
-                              f"موثق {best.value.get('weeks'):g} أسابيع في {best.doc_ref}.",
+        best = max(full, key=_strength)
+        return EvidenceResult(req_id, "FOUND", f"Documented {_documented(best)} in {best.doc_ref} (requires {need_en}).",
+                              f"موثق {_documented(best, True)} في {best.doc_ref} (المطلوب {need_ar}).",
                               (best, *supporting), retrieved)
+    q_en, q_ar = spec["cdi"]["en"], spec["cdi"]["ar"]
     if short and not contradiction:
-        best = max(short, key=lambda f: f.value.get("weeks", 0))
-        wk = best.value.get("weeks")
-        reason = (f"Only {wk:g} weeks documented (minimum {min_weeks:g})." if wk is not None
-                  else "Therapy documented without a duration.")
-        reason_ar = (f"موثق {wk:g} أسابيع فقط (الحد الأدنى {min_weeks:g})." if wk is not None
-                     else "العلاج موثق دون مدة.")
-        q_en = spec["cdi"]["en"]
-        q_ar = spec["cdi"]["ar"]
-        return EvidenceResult(req_id, "PARTIAL", reason, reason_ar, (best, *supporting), retrieved, q_en, q_ar)
+        best = max(short, key=_strength)
+        return EvidenceResult(req_id, "PARTIAL",
+                              f"Only {_documented(best)} documented (requires {need_en})." + note_en,
+                              f"موثق {_documented(best, True)} فقط (المطلوب {need_ar})." + note_ar,
+                              (best, *supporting), retrieved, q_en, q_ar)
     if contradiction:
-        reason = "Therapy is claimed but the record shows it was not attended."
-        reason_ar = "العلاج مذكور لكن السجل يُظهر عدم الحضور."
-        facts_used = tuple(contradiction) + tuple(f for f in facts if f.label == "claimed_therapy")
-        return EvidenceResult(req_id, "MISSING", reason, reason_ar, facts_used, retrieved,
-                              spec["cdi"]["en"], spec["cdi"]["ar"])
-    negated = tuple(f for f in facts if f.label == "therapy_negated")
-    reason = "The record states no prior conservative therapy." if negated else \
-        "No documented conservative therapy found in the record."
-    reason_ar = "السجل يذكر عدم وجود علاج تحفظي سابق." if negated else "لم يُعثر على علاج تحفظي موثق في السجل."
-    return EvidenceResult(req_id, "MISSING", reason, reason_ar, negated, retrieved, spec["cdi"]["en"], spec["cdi"]["ar"])
+        facts_used = tuple(contradiction) + tuple(f for f in usable if f.label == "claimed_therapy")
+        return EvidenceResult(req_id, "MISSING", "Therapy is claimed but the record shows it was not attended." + note_en,
+                              "العلاج مذكور لكن السجل يُظهر عدم الحضور." + note_ar, facts_used, retrieved, q_en, q_ar)
+    negated = tuple(f for f in usable if f.label == "therapy_negated")
+    reason = ("The record states no prior conservative therapy." if negated
+              else "No documented conservative therapy found in the record.") + note_en
+    reason_ar = ("السجل يذكر عدم وجود علاج تحفظي سابق." if negated
+                 else "لم يُعثر على علاج تحفظي موثق في السجل.") + note_ar
+    return EvidenceResult(req_id, "MISSING", reason, reason_ar, negated, retrieved, q_en, q_ar)

@@ -54,11 +54,13 @@ def _language(t: str) -> str:
     return "mixed" if ar and re.search(r"[A-Za-z]{3,}", t) else "ar" if ar else "en"
 
 
-def load_record(conn: Connection, case_id: str, org_id: str) -> tuple[Any, PatientRecord, dict[str, str]]:
+def load_record(conn: Connection, case_id: str, org_id: str, *, lock: bool = True
+                ) -> tuple[Any, PatientRecord, dict[str, str]]:
     row = conn.execute(text(
         "SELECT ar.id, ar.case_number, ar.status, ar.patient_id, ar.service_code, ar.diagnosis_code, "
         "ar.financial_value_sar, ar.clinical_note, ar.requested_on, p.code AS payer_code "
-        "FROM authorization_requests ar JOIN payers p ON p.id = ar.payer_id WHERE ar.id = :id FOR UPDATE OF ar"),
+        "FROM authorization_requests ar JOIN payers p ON p.id = ar.payer_id WHERE ar.id = :id"
+        + (" FOR UPDATE OF ar" if lock else "")),
         {"id": case_id}).mappings().first()
     if row is None:
         raise CaseNotFound(case_id)
@@ -66,8 +68,10 @@ def load_record(conn: Connection, case_id: str, org_id: str) -> tuple[Any, Patie
         raise NotAnalyzable(f"Cases in status {row['status']} cannot be re-analysed")
     docs = conn.execute(text(
         "SELECT id, doc_ref, doc_type, language, authored_on, content FROM clinical_documents "
-        "WHERE patient_id = :p AND authored_on <= :d ORDER BY authored_on DESC, doc_ref"),
-        {"p": row["patient_id"], "d": row["requested_on"]}).mappings().all()
+        "WHERE patient_id = :p AND ((authorization_request_id IS NULL AND authored_on <= :d) "
+        "OR authorization_request_id = :c) "
+        "ORDER BY (doc_type = 'addendum'), authored_on DESC, doc_ref"),
+        {"p": row["patient_id"], "d": row["requested_on"], "c": case_id}).mappings().all()
     if not docs:
         # Legacy cases carry only the clinical note: store it as the case's index document so
         # every fact can still point at a verified span in a stored document.
@@ -78,7 +82,7 @@ def load_record(conn: Connection, case_id: str, org_id: str) -> tuple[Any, Patie
             "ON CONFLICT (organization_id, doc_ref) DO NOTHING"),
             {"o": org_id, "p": row["patient_id"], "r": f"{row['case_number']}-NOTE", "l": _language(note),
              "d": row["requested_on"], "c": note, "h": hashlib.sha256(note.encode()).hexdigest()})
-        return load_record(conn, case_id, org_id)
+        return load_record(conn, case_id, org_id, lock=lock)
     documents = tuple(Document(d["doc_ref"], d["doc_type"], d["language"], d["authored_on"], d["content"])
                       for d in docs)
     index = next((d.doc_ref for d in documents if d.text == row["clinical_note"]), documents[0].doc_ref)
@@ -109,7 +113,10 @@ def _result_json(res: AnalysisResult) -> dict[str, Any]:
                          "retrieved": [list(x) for x in v.retrieved]} for k, v in res.evidence.items()},
         "rules": [asdict(r) for r in res.rules],
         "readiness": {"components": res.readiness.components, "overall": res.readiness.overall,
-                      "gate": res.readiness.gate, "denial_risk": res.readiness.denial_risk},
+                      "gate": res.readiness.gate, "denial_risk": res.readiness.denial_risk,
+                      "explanation": res.readiness.explanation,
+                      "decision_ready_min": res.decision_ready_min},
+        "excluded_addenda": list(res.excluded_addenda),
     }
 
 
@@ -131,8 +138,14 @@ def run_analysis(conn: Connection, *, case_id: str, org_id: str, actor: Actor, a
                   emit=emit or (lambda _k, _d: None))
     fallback = res.fallback_reason or fallback_note
 
+    old_spans = [r[0] for r in conn.execute(text(
+        "SELECT evidence_span_id FROM clinical_facts WHERE authorization_request_id = :c "
+        "AND evidence_span_id IS NOT NULL"), {"c": case_id})]
     for table in ("clinical_facts", "authorization_evidence", "authorization_requirements"):
         conn.execute(text(f"DELETE FROM {table} WHERE authorization_request_id = :c"), {"c": case_id})  # noqa: S608
+    if old_spans:  # spans belonged only to the replaced facts; the full previous result stays in analysis_runs
+        conn.execute(text("DELETE FROM evidence_spans WHERE id = ANY(CAST(:ids AS uuid[]))"),
+                     {"ids": [str(x) for x in old_spans]})
 
     span_of: dict[int, str] = {}
     for i, f in enumerate(res.facts):
@@ -247,10 +260,15 @@ def run_analysis(conn: Connection, *, case_id: str, org_id: str, actor: Actor, a
                           "message_ar": f"تحليل ({res.mode}): الجاهزية {rd.overall}/100، {current.value} ← {target.value}",
                           "actor_label": actor_label},
                  occurred_at=datetime.now(UTC))
+    # Queries are a consequence of the analysis, so they follow it in the audit chain.
+    from app.cdi.service import sync_queries  # local import: cdi.service imports this module
+
+    queries = sync_queries(conn, org_id=org_id, case_id=case_id, run_id=str(run_id), res=res, actor=actor,
+                           actor_label=actor_label)
     return {"analysis_run_id": str(run_id), "mode": res.mode, "requested_mode": requested, "fallback_reason": fallback,
             "policy_version": res.policy_version, "status": target.value, "readiness": rd.overall,
             "outcomes": summary, "facts": len(res.facts), "rejected_quotes": len(res.rejected_quotes),
-            "injection_flags": len(res.injection_flags)}
+            "injection_flags": len(res.injection_flags), "documentation_queries": queries}
 
 
 __all__ = ["CaseNotFound", "NoPolicy", "NotAnalyzable", "run_analysis"]

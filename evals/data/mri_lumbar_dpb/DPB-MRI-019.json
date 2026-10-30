@@ -1,0 +1,196 @@
+{
+ "resourceType": "Bundle",
+ "id": "DPB-MRI-019",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic-dpb"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-DPB-P-3019",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "DPB-P-3019",
+    "gender": "female",
+    "birthDate": "1983-01-01",
+    "name": [
+     {
+      "text": "DPB Patient 019 (synthetic)"
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Coverage-DPB-MRI-019-COV",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "DPB-MRI-019-COV",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/DPB-P-3019"
+    },
+    "payor": [
+     {
+      "identifier": {
+       "system": "urn:mujeaz:demo:payer",
+       "value": "DPB"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-DPB-MRI-019-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "DPB-MRI-019-E1",
+    "status": "finished",
+    "type": [
+     {
+      "text": "orthopedic-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/DPB-P-3019"
+    },
+    "period": {
+     "start": "2026-10-11",
+     "end": "2026-10-11"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-DPB-MRI-019-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "DPB-MRI-019-D1",
+    "status": "current",
+    "type": {
+     "text": "orthopedic-note"
+    },
+    "subject": {
+     "reference": "Patient/DPB-P-3019"
+    },
+    "date": "2026-10-11T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/DPB-MRI-019-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2KfYs9iq2LTYp9ix2Kkg2LnYuNin2YUuINij2YTZhSDZgti32YbZiiDZhdmF2KrYryDYpdmE2Ykg2KfZhNiz2KfZgiDZhdmG2LAgMTIg2KPYs9in2KjZiti5LiDYp9iu2KrYqNin2LEg2LHZgdi5INin2YTYs9in2YIg2KfZhNmF2LPYqtmC2YrZhdipINil2YrYrNin2KjZiiDZgdmKINin2YTYrNmH2Kkg2KfZhNmF2LXYp9io2KkuINin2YTYrti32Kk6INix2YbZitmGINmF2LrZhtin2LfZitiz2Yog2YTZhNmB2YLYsdin2Kog2KfZhNmC2LfZhtmK2Kkg2KjYr9mI2YYg2LXYqNi62Kku"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-DPB-MRI-019-E2",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "DPB-MRI-019-E2",
+    "status": "finished",
+    "type": [
+     {
+      "text": "physiotherapy-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/DPB-P-3019"
+    },
+    "period": {
+     "start": "2026-10-04",
+     "end": "2026-10-04"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-DPB-MRI-019-D2",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "DPB-MRI-019-D2",
+    "status": "current",
+    "type": {
+     "text": "physiotherapy-note"
+    },
+    "subject": {
+     "reference": "Patient/DPB-P-3019"
+    },
+    "date": "2026-10-04T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/DPB-MRI-019-E2"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2LPYrNmEINin2YTYudmE2KfYrCDYp9mE2LfYqNmK2LnZijog2KPZg9mF2YQgNyDYrNmE2LPYp9iqINiu2YTYp9mEIDYg2KPYs9in2KjZiti5LiDYp9mE2KPYudix2KfYtiDZhdiz2KrZhdix2Kkg2LHYutmFINin2YTYudmE2KfYrC4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-DPB-MRI-019-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "DPB-MRI-019-C1",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M54.16",
+       "display": "Radiculopathy, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/DPB-P-3019"
+    },
+    "encounter": {
+     "reference": "Encounter/DPB-MRI-019-E1"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-DPB-MRI-019-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "DPB-MRI-019-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/DPB-P-3019"
+    },
+    "encounter": {
+     "reference": "Encounter/DPB-MRI-019-E1"
+    },
+    "authoredOn": "2026-10-11"
+   }
+  }
+ ]
+}

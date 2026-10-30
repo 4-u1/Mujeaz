@@ -279,7 +279,7 @@ Errors use one envelope: `{"error": {"code", "message", "request_id"}}`.
 | **M0** | Credibility | Honest labels, deterministic scoring, real audit chain, demo data | ✅ |
 | **M1** | Foundation | FastAPI · PostgreSQL + pgvector · auth & roles · persistent audit | ✅ |
 | **M2** | Intelligence | A1 + A2 + A3 on MRI Lumbar Spine · span verifier · eval gates in CI | ✅ |
-| **M3** | Readiness | Rules engine · physician documentation query (CDI) | ⏳ |
+| **M3** | Readiness | Score explanation · what-if · physician query loop · second payer as config | ✅ |
 | **M4** | Interoperability | NPHIES-profile `Claim` · real validation · labelled sandbox responses | ⏳ |
 | **M5** | Recovery | Appeal Evidence Map · deadlines · retro denial audit | ⏳ |
 | **M6** | Pilot | First facility · measured baseline · NPHIES test environment | ⏳ |

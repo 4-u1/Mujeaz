@@ -19,8 +19,17 @@ def documents_from_bundle(bundle: dict[str, Any]) -> tuple[Document, ...]:
     return tuple(docs)
 
 
-def record_from_bundle(bundle: dict[str, Any], *, payer_code: str = "DPA") -> PatientRecord:
+def payer_from_bundle(bundle: dict[str, Any], default: str = "DPA") -> str:
+    for e in bundle["entry"]:
+        r = e["resource"]
+        if r["resourceType"] == "Coverage" and r.get("payor"):
+            return str(r["payor"][0]["identifier"]["value"])
+    return default
+
+
+def record_from_bundle(bundle: dict[str, Any], *, payer_code: str | None = None) -> PatientRecord:
     res = [e["resource"] for e in bundle["entry"]]
+    payer_code = payer_code or payer_from_bundle(bundle)
     dx = next(r for r in res if r["resourceType"] == "Condition")["code"]["coding"][0]["code"]
     sr = next(r for r in res if r["resourceType"] == "ServiceRequest")
     docs = documents_from_bundle(bundle)

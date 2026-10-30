@@ -1,0 +1,66 @@
+# Demo Payer B — Lumbar Spine MRI prior-authorization policy (DEMO, fictional).
+# Added in M3 to prove that a new payer is configuration, not code.
+policy: DPB-LUMBAR-POL
+version: "2026.1"
+payer: DPB
+service_codes: ["72148"]
+title: Lumbar Spine MRI Prior Authorization — Demo Payer B (demo)
+title_ar: سياسة الموافقة المسبقة للرنين المغناطيسي القطني — الجهة الدافعة التجريبية ب (تجريبية)
+decision:
+  ready_min: 90
+addenda:
+  accepts_post_request: false   # documentation must exist before the request is submitted
+source_text: |
+  Demo Payer B — Lumbar Spine MRI Prior Authorization Policy (DEMO, fictional)
+  1. Conservative therapy: at least eight (8) weeks of documented conservative management,
+     or at least six (6) completed physiotherapy sessions, before lumbar MRI.
+  2. Documentation written after the request is submitted is not accepted as evidence.
+  3. Exemption: red-flag findings waive requirement 1.
+  4. Coding: the diagnosis must be a lumbar radicular or disc condition.
+
+requirements:
+  R1_conservative_therapy_dpb:
+    title: Proof of 8 weeks of conservative therapy or 6 completed sessions
+    title_ar: إثبات 8 أسابيع من العلاج التحفظي أو 6 جلسات مكتملة
+    fact_label: conservative_therapy
+    satisfied_if:
+      any_of: [{min_weeks: 8}, {min_sessions: 6}]
+    contradicted_by: [therapy_not_attended]
+    supporting_labels: [medication, persistent_symptoms]
+    query:
+      en: physiotherapy physical therapy physio sessions visits weeks completed attended NSAID
+      ar: علاج طبيعي فيزيائي جلسات أسابيع حضر أكمل مسكنات مضاد التهاب
+    cdi:
+      en: >-
+        Before this request, did the patient complete at least 8 weeks of conservative therapy or at least
+        6 physiotherapy sessions? Demo Payer B does not accept addenda written after submission, so please
+        attach the original therapy records.
+      ar: >-
+        قبل هذا الطلب، هل أكمل المريض 8 أسابيع على الأقل من العلاج التحفظي أو 6 جلسات علاج طبيعي على الأقل؟
+        الجهة الدافعة ب لا تقبل الملاحق المكتوبة بعد تقديم الطلب، لذا يرجى إرفاق سجلات العلاج الأصلية.
+
+rules:
+  - code: DPB-LUMBAR-07
+    id: R1_conservative_therapy_dpb
+    title: 8-Week or 6-Session Conservative Therapy Requirement
+    title_ar: شرط العلاج التحفظي 8 أسابيع أو 6 جلسات
+    requirement: >-
+      Proof of at least 8 weeks of conservative management or at least 6 completed physiotherapy sessions
+      before lumbar MRI, unless red flags exist.
+    requirement_ar: >-
+      إثبات 8 أسابيع على الأقل من العلاج التحفظي أو 6 جلسات علاج طبيعي مكتملة قبل الرنين المغناطيسي
+      ما لم توجد مؤشرات خطيرة.
+    mandatory: true
+    predicate: evidence_status
+    requirement_id: R1_conservative_therapy_dpb
+    exempt_if_any_fact: [red_flag]
+    outcomes: {FOUND: PASSED, PARTIAL: WARNING, MISSING: FAILED}
+  - code: DPB-CODING-01
+    id: R2_diagnosis_procedure_compatibility
+    title: Diagnosis–Procedure Compatibility
+    title_ar: توافق التشخيص مع الإجراء
+    requirement: The diagnosis must be a lumbar radicular or disc condition.
+    requirement_ar: يجب أن يكون التشخيص حالة جذرية أو غضروفية قطنية.
+    mandatory: true
+    predicate: diagnosis_prefix_in
+    prefixes: [M51, M54, M47, M48]

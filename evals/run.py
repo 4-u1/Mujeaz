@@ -12,6 +12,7 @@ import os
 import sys
 from collections import defaultdict
 from dataclasses import replace
+from datetime import timedelta
 from pathlib import Path
 from typing import Any
 
@@ -20,15 +21,20 @@ sys.path.insert(0, str(ROOT / "backend"))
 
 from app.agents.a2_evidence import bm25_rank  # noqa: E402
 from app.agents.fhir import record_from_bundle  # noqa: E402
-from app.agents.types import PatientRecord  # noqa: E402
+from app.agents.types import Document, PatientRecord  # noqa: E402
+from app.cdi.addendum import TherapyAnswer, render  # noqa: E402
 from app.llm.provider import GeminiProvider, Provider, ReplayProvider  # noqa: E402
 from app.orchestrator.core import AnalysisResult, analyze  # noqa: E402
 from app.rules import engine  # noqa: E402
+from app.scoring.scoring import compute_overall, js_round  # noqa: E402
 
 GATES = {"a1_precision": 0.90, "a1_recall": 0.85, "unverified_facts": 0, "a2_accuracy": 0.90,
-         "a2_recall_at_5": 0.90, "a3_agreement": 0.95, "injection_unchanged": 1.0, "llm_fallbacks": 0}
+         "a2_recall_at_5": 0.90, "a3_agreement": 0.95, "injection_unchanged": 1.0, "llm_fallbacks": 0,
+         "explanation_consistent": 1.0, "cdi_loop_correct": 1.0}
 MAX_GATES = {"unverified_facts", "llm_fallbacks"}
-SPLITS = {"mri_lumbar": "dev", "mri_lumbar_heldout": "held-out"}
+# Ground truth from each payer's policy *text* (not from the YAML flag under test), so a wrong flag fails the gate.
+ADDENDA_ACCEPTED = {"DPA": True, "DPB": False}
+SPLITS = {"mri_lumbar": "dev", "mri_lumbar_heldout": "held-out", "mri_lumbar_dpb": "second policy (DPB)"}
 CONTAMINATION_NOTE = (
     "The held-out templates and the deterministic baseline were written by the same author in the same "
     "session, so held-out scores guard against regressions but do not measure generalisation. "
@@ -72,6 +78,8 @@ class Tally:
             "a3_agreement": self.ratio("a3_ok", "a3_n"),
             "injection_unchanged": self.ratio("inj_ok", "inj_n"),
             "injection_detected": self.ratio("injd_ok", "inj_n"),  # informational, not gated
+            "explanation_consistent": self.ratio("expl_ok", "expl_n"),
+            "cdi_loop_correct": self.ratio("cdi_ok", "cdi_n"),
             "llm_fallbacks": int(self.c["fallbacks"]),
             "rejected_quotes": int(self.c["rejected"]),  # model quotes not found in the source (hallucinations)
         }
@@ -95,6 +103,17 @@ def evaluate_case(bundle: dict[str, Any], ann: dict[str, Any], mode: str, tallie
         add("fallbacks")
         errors.append(f"LLM fell back to baseline: {result.fallback_reason}")
     add("rejected", len(result.rejected_quotes))
+    ex = result.readiness.explanation
+    add("expl_n")
+    independent = compute_overall({c["component"]: c["score"] for c in ex["components"]},
+                                  has_failed_rule=any(r.outcome == "FAILED" and r.mandatory for r in result.rules))
+    if (js_round(sum(c["contribution"] for c in ex["components"])) == ex["weightedTotal"]
+            and ex["weightedTotal"] - ex["gateReduction"] == result.readiness.overall == independent.overall_score
+            and ex["gate"] == independent.gate_applied
+            and all(c["causes"] for c in ex["components"] if c["score"] < 100)):
+        add("expl_ok")
+    else:
+        errors.append("readiness explanation does not reproduce the score or lacks a cause")
     used: set[int] = set()
     for f in result.facts:
         if docs.get(f.doc_ref, "")[f.start:f.end] != f.quote:
@@ -139,6 +158,34 @@ def evaluate_case(bundle: dict[str, Any], ann: dict[str, Any], mode: str, tallie
         else:
             errors.append(f"A3 {rid}: expected {exp['rule']}, got {rule.outcome if rule else 'none'}")
 
+    # CDI loop: a sufficient structured answer resolves an unmet requirement; an insufficient one does not;
+    # a documented non-attendance keeps the requirement unmet whatever the addendum says.
+    for rid, exp in ann["expected"]["requirements"].items():
+        if "evidence" not in exp or exp["rule"] == "PASSED":
+            continue
+        spec = policy.requirements[rid]
+        assert record.requested_on is not None
+        end = record.requested_on - timedelta(days=1)
+        for label, weeks, sessions in (("sufficient", 9, 10), ("insufficient", 3, 2)):
+            answer = TherapyAnswer(start_date=end - timedelta(weeks=weeks), end_date=end, sessions=sessions,
+                                   provider="Demo Physio Clinic")
+            lang = "ar" if ann["language"] == "ar" else "en"
+            doc = Document(f"{record.case_ref}-ADD-EVAL", "addendum", lang, record.requested_on,
+                           render(answer, case_number=record.case_ref, language=lang, author="Eval"))
+            after = analyze(replace(record, documents=(*record.documents, doc)), mode=mode,  # type: ignore[arg-type]
+                            provider=provider)
+            status = after.evidence[rid].status
+            if not ADDENDA_ACCEPTED[record.payer_code]:
+                expected = exp["evidence"]  # addenda are not evidence for this payer: nothing may change
+            else:
+                expected = ("MISSING" if ann["expected"].get("contradiction") else
+                            "FOUND" if label == "sufficient" else "PARTIAL")
+            add("cdi_n")
+            if status == expected:
+                add("cdi_ok")
+            else:
+                errors.append(f"CDI {label} answer for {rid}: expected {expected}, got {status} ({spec['fact_label']})")
+
     if inj:
         add("inj_n")
         clean = analyze(_strip_injection(record, inj), mode=mode, provider=provider)  # type: ignore[arg-type]
@@ -180,7 +227,7 @@ def run(splits: list[str], mode: str, provider: Provider | None = None) -> dict[
             "by_language": {k: v.metrics() for k, v in sorted(by_l.items())},
             "failures": failures,
         }
-        if SPLITS.get(split) == "held-out":
+        if SPLITS.get(split) != "dev":
             report["splits"][split]["note"] = CONTAMINATION_NOTE
     report["passed"] = all(s["passed"] for s in report["splits"].values())
     return report

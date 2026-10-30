@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ClaimDigitalTwin, Language } from '../types';
 import { api, AuditEntry, AuditVerification } from '../api/client';
 import { AnalysisPanel } from './AnalysisPanel';
+import { ReadinessWorkbench } from './ReadinessWorkbench';
 import { 
   ShieldCheck, 
   Layers, 
@@ -38,6 +39,7 @@ interface DigitalTwinInspectorProps {
   onBack: () => void;
   onRunEvidenceHunter: (caseId: string) => void;
   canAnalyze?: boolean;
+  canApproveSubmission?: boolean;
   onAnalyzed?: (caseId: string) => Promise<void>;
 }
 
@@ -47,6 +49,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
   onBack,
   onRunEvidenceHunter,
   canAnalyze = false,
+  canApproveSubmission = false,
   onAnalyzed = async () => undefined,
 }) => {
   const isAr = lang === 'ar';
@@ -346,6 +349,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
           <div className="space-y-6">
 
             <AnalysisPanel claim={claim} lang={lang} canAnalyze={canAnalyze} onAnalyzed={onAnalyzed} />
+            <ReadinessWorkbench claim={claim} lang={lang} canApproveSubmission={canApproveSubmission} onChanged={onAnalyzed} />
 
             {/* Primary Order Note */}
             <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">

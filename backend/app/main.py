@@ -14,6 +14,7 @@ from app import __version__
 from app.ai.router import router as ai_router
 from app.auth_router import router as auth_router
 from app.cases.router import router as cases_router
+from app.cdi.router import router as cdi_router
 from app.config import get_settings
 from app.db import get_engine
 from app.observability import RequestContextMiddleware, configure_logging, request_id_var
@@ -82,6 +83,7 @@ def create_app() -> FastAPI:
     app.include_router(cases_router)
     app.include_router(ai_router)
     app.include_router(analysis_router)
+    app.include_router(cdi_router)
     return app
 
 
