@@ -132,6 +132,7 @@ class _Related:
     runs: dict[str, list[Any]] = field(default_factory=dict)
     fhir: dict[str, Any] = field(default_factory=dict)
     appeals: dict[str, dict[str, Any]] = field(default_factory=dict)
+    analysis: dict[str, Any] = field(default_factory=dict)
     audit: dict[str, list[dict[str, Any]]] = field(default_factory=dict)
 
 
@@ -146,16 +147,19 @@ def _load_related(conn: Connection, ids: list[str]) -> _Related:
     p = {"ids": ids}
     rel = _Related()
     rel.facts = _group(conn.execute(text(
-        "SELECT authorization_request_id AS case_id, id, fact, fact_ar, category, source_label, fact_date, "
-        "confidence FROM clinical_facts WHERE authorization_request_id = ANY(CAST(:ids AS uuid[])) "
-        "ORDER BY authorization_request_id, ord, created_at"), p).mappings())
+        "SELECT f.authorization_request_id AS case_id, f.id, f.fact, f.fact_ar, f.category, f.source_label, "
+        "f.fact_date, f.confidence, f.label, f.quote, f.value, f.char_start, f.char_end, d.doc_ref "
+        "FROM clinical_facts f LEFT JOIN clinical_documents d ON d.id = f.document_id "
+        "WHERE f.authorization_request_id = ANY(CAST(:ids AS uuid[])) "
+        "ORDER BY f.authorization_request_id, f.ord, f.created_at"), p).mappings())
     rel.reqs = _group(conn.execute(text(
         "SELECT authorization_request_id AS case_id, id, code, title, title_ar, requirement, requirement_ar, "
-        "status, evidence_source FROM authorization_requirements WHERE authorization_request_id = ANY(CAST(:ids AS uuid[])) "
+        "status, evidence_source, reason, reason_ar FROM authorization_requirements WHERE authorization_request_id = ANY(CAST(:ids AS uuid[])) "
         "ORDER BY authorization_request_id, ord"), p).mappings())
     rel.evidence = _group(conn.execute(text(
         "SELECT authorization_request_id AS case_id, id, requirement, requirement_ar, status, matched_fact, "
-        "source_label, evidence_date, confidence FROM authorization_evidence "
+        "source_label, evidence_date, confidence, requirement_id, cdi_question, cdi_question_ar "
+        "FROM authorization_evidence "
         "WHERE authorization_request_id = ANY(CAST(:ids AS uuid[])) ORDER BY authorization_request_id, ord"), p).mappings())
     rel.runs = _group(conn.execute(text(
         "SELECT DISTINCT ON (authorization_request_id, agent_id) authorization_request_id AS case_id, agent_id, "
@@ -166,6 +170,13 @@ def _load_related(conn: Connection, ids: list[str]) -> _Related:
         "SELECT DISTINCT ON (authorization_request_id) authorization_request_id AS case_id, payload "
         "FROM nphies_transactions WHERE authorization_request_id = ANY(CAST(:ids AS uuid[])) "
         "ORDER BY authorization_request_id, created_at DESC"), p).mappings()}
+    rel.analysis = {str(r["case_id"]): r for r in conn.execute(text(
+        "SELECT DISTINCT ON (authorization_request_id) authorization_request_id AS case_id, id, mode, requested_mode, "
+        "policy_version, fallback_reason, finished_at, jsonb_array_length(COALESCE(result->'injection_flags', "
+        "'[]'::jsonb)) AS injection_flags, jsonb_array_length(COALESCE(result->'rejected_quotes', '[]'::jsonb)) "
+        "AS rejected_quotes FROM analysis_runs WHERE status = 'COMPLETED' AND "
+        "authorization_request_id = ANY(CAST(:ids AS uuid[])) ORDER BY authorization_request_id, started_at DESC"),
+        p).mappings()}
     rel.appeals = _appeal_packages(conn, ids)
     for entry in list_chains(conn, ids):
         rel.audit.setdefault(entry["chain_key"], []).append(entry)
@@ -242,19 +253,24 @@ def _assemble(r: Any, rel: _Related) -> dict[str, Any]:
         "readinessScore": readiness,
         "clinicalFacts": [
             {"id": str(f["id"]), "fact": f["fact"], "factAr": f["fact_ar"] or f["fact"], "category": f["category"],
-             "source": f["source_label"], "date": _iso(f["fact_date"]) or "", "confidence": f["confidence"]}
+             "source": f["source_label"], "date": _iso(f["fact_date"]) or "", "confidence": f["confidence"],
+             **({"label": f["label"], "quote": f["quote"], "docRef": f["doc_ref"], "charStart": f["char_start"],
+                 "charEnd": f["char_end"], "value": f["value"]} if f["label"] else {})}
             for f in rel.facts.get(cid, [])
         ],
         "policyRules": [
             {"id": str(q["id"]), "code": q["code"], "title": q["title"], "titleAr": q["title_ar"] or q["title"],
              "requirement": q["requirement"], "requirementAr": q["requirement_ar"] or q["requirement"],
-             "status": q["status"], **({"evidenceSource": q["evidence_source"]} if q["evidence_source"] else {})}
+             "status": q["status"], **({"evidenceSource": q["evidence_source"]} if q["evidence_source"] else {}),
+             **({"reason": q["reason"], "reasonAr": q["reason_ar"] or q["reason"]} if q["reason"] else {})}
             for q in rel.reqs.get(cid, [])
         ],
         "evidenceItems": [
             {"id": str(e["id"]), "requirement": e["requirement"], "requirementAr": e["requirement_ar"] or e["requirement"],
              "status": e["status"], "matchedFact": e["matched_fact"], "sourceEncounter": e["source_label"],
-             "date": _iso(e["evidence_date"]), "confidence": e["confidence"]}
+             "date": _iso(e["evidence_date"]), "confidence": e["confidence"],
+             **({"cdiQuestion": e["cdi_question"], "cdiQuestionAr": e["cdi_question_ar"] or e["cdi_question"]}
+                if e["cdi_question"] else {})}
             for e in rel.evidence.get(cid, [])
         ],
         "agentRuns": [
@@ -273,6 +289,12 @@ def _assemble(r: Any, rel: _Related) -> dict[str, Any]:
             for e in rel.audit.get(cid, [])
         ],
     }
+    if cid in rel.analysis:
+        a = rel.analysis[cid]
+        twin["analysis"] = {"id": str(a["id"]), "mode": a["mode"], "requestedMode": a["requested_mode"],
+                            "policyVersion": a["policy_version"], "fallbackReason": a["fallback_reason"],
+                            "completedAt": a["finished_at"].isoformat() if a["finished_at"] else None,
+                            "injectionFlags": a["injection_flags"], "rejectedQuotes": a["rejected_quotes"]}
     if cid in rel.appeals:
         twin["appealPackage"] = rel.appeals[cid]
     discoverable = (r["extra"] or {}).get("discoverable_evidence")

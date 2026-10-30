@@ -1,0 +1,62 @@
+name: Live evals (LLM)
+
+# Runs the A1 LLM extractor against Gemini on both splits and records replay fixtures.
+# Requires the repository secret GEMINI_API_KEY. Manual or weekly; never on pull requests.
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: Gemini model
+        default: gemini-3.6-flash
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_MODEL: ${{ inputs.model || 'gemini-3.6-flash' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Install
+        run: pip install -e "backend[dev]"
+      - name: Check secret
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error title=live-evals::Add the GEMINI_API_KEY repository secret to run the LLM evaluation."
+            exit 1
+          fi
+      - name: LLM evals (records fixtures)
+        run: |
+          set -o pipefail
+          python evals/run.py --mode llm --record evals/fixtures --out /tmp/evals-llm 2>&1 | tail -n 40
+          cat /tmp/evals-llm/eval_report.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Baseline for comparison
+        run: |
+          python evals/run.py --mode baseline --out /tmp/evals-baseline > /dev/null
+          python - <<'PY'
+          import json, os
+          b = json.load(open("/tmp/evals-baseline/eval_report.json"))
+          l = json.load(open("/tmp/evals-llm/eval_report.json"))
+          rows = ["| split | metric | baseline | llm |", "|---|---|---:|---:|"]
+          for split in l["splits"]:
+              for k, v in l["splits"][split]["metrics"].items():
+                  rows.append(f"| {split} | {k} | {b['splits'][split]['metrics'][k]} | {v} |")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write("\n## Baseline vs LLM\n\n" + "\n".join(rows) + "\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-evals
+          path: |
+            /tmp/evals-llm/
+            /tmp/evals-baseline/
+            evals/fixtures/

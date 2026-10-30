@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ClaimDigitalTwin, Language } from '../types';
 import { api, AuditEntry, AuditVerification } from '../api/client';
+import { AnalysisPanel } from './AnalysisPanel';
 import { 
   ShieldCheck, 
   Layers, 
@@ -36,6 +37,8 @@ interface DigitalTwinInspectorProps {
   lang: Language;
   onBack: () => void;
   onRunEvidenceHunter: (caseId: string) => void;
+  canAnalyze?: boolean;
+  onAnalyzed?: (caseId: string) => Promise<void>;
 }
 
 export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
@@ -43,6 +46,8 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
   lang,
   onBack,
   onRunEvidenceHunter,
+  canAnalyze = false,
+  onAnalyzed = async () => undefined,
 }) => {
   const isAr = lang === 'ar';
   const [activeTab, setActiveTab] = useState<'OVERVIEW' | 'AGENTS' | 'FACTS' | 'SCORE' | 'FHIR' | 'AUDIT'>('OVERVIEW');
@@ -339,7 +344,9 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
         {/* TAB 1: OVERVIEW */}
         {activeTab === 'OVERVIEW' && (
           <div className="space-y-6">
-            
+
+            <AnalysisPanel claim={claim} lang={lang} canAnalyze={canAnalyze} onAnalyzed={onAnalyzed} />
+
             {/* Primary Order Note */}
             <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
               <div className="text-xs font-bold text-slate-300">
@@ -362,7 +369,7 @@ export const DigitalTwinInspector: React.FC<DigitalTwinInspectorProps> = ({
                     {isAr ? claim.readinessScore.warningNoticeAr : claim.readinessScore.warningNotice}
                   </p>
                   
-                  {claim.status === 'RISK_DETECTED' && (
+                  {claim.status === 'RISK_DETECTED' && !claim.analysis && claim.discoverableEvidence && (
                     <button
                       onClick={() => onRunEvidenceHunter(claim.id)}
                       className="mt-2 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md cursor-pointer"

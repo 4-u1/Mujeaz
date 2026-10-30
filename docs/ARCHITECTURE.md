@@ -1,6 +1,6 @@
-# Mujeaz — Architecture (M1)
+# Mujeaz — Architecture (M2)
 
-> Status: milestone **M1 Foundation**. Agents A1–A6 are not yet real retrieval/reasoning services; see the roadmap in `docs/PRD.md §17` and `docs/IMPLEMENTATION_PLAN.md`.
+> Status: milestone **M2 Intelligence**. A1, A2 and A3 are real for MRI Lumbar Spine (ADR 0005, 0006); A4 and A6 follow in M4–M5. Roadmap: `docs/PRD.md §17`, `docs/M2_PLAN.md`.
 
 ## 1. Components
 
@@ -10,6 +10,7 @@
               └─ /api, /.well-known, /healthz ──► FastAPI (backend :8000)
                                                    ├─ auth_router     dev IdP, JWKS, /me
                                                    ├─ cases.router    cases, twins, transitions, metrics, audit
+                                                   ├─ orchestrator    POST /api/cases/{id}/analyze (JSON or SSE)
                                                    ├─ ai.router       analyze-order, generate-appeal (Gemini)
                                                    └─ PostgreSQL 16 + pgvector (db :5432)
 ```
@@ -22,9 +23,15 @@
 | `backend/app/audit/` | Canonical JSON, hash chain, append/list/verify |
 | `backend/app/scoring/` | Python port of `shared/scoring.ts` (parity-tested) |
 | `backend/app/cases/` | State machine, repository (twin view, metrics), HTTP routes |
+| `backend/app/agents/` | A1 baseline + LLM extractors, span verifier, number parser, A2 evidence hunter, A5 readiness, injection detector |
+| `backend/app/rules/` | YAML policy rules engine; `policies/*.yaml` are versioned with their source text |
+| `backend/app/llm/`, `app/prompts/` | Provider interface (Gemini, Replay), versioned prompt files |
+| `backend/app/nlp/` | Arabic/English normalisation with offset maps, sentence chunker |
+| `backend/app/orchestrator/` | Pure pipeline (`core.py`, shared with evals) and persistence service + route |
+| `evals/run.py` | Eval runner: metrics per split/scenario/language, gates, JSON + Markdown report |
 | `backend/app/ai/` | LLM calls with delimited untrusted text and deterministic scoring |
 | `backend/app/seed/` | Demo organisations, users, payers, policy, legacy and synthetic cases |
-| `backend/migrations/` | Alembic; `0001` creates schema, roles, RLS, triggers |
+| `backend/migrations/` | Alembic; `0001` schema, roles, RLS, triggers; `0002` chunks, analysis runs, provenance |
 | `evals/generator/` | Deterministic synthetic FHIR dataset with ground truth |
 | `shared/` | TypeScript scoring reference + `scoring_vectors.json` |
 | `frontend/` | React app; `src/api/client.ts` is the only network layer |
@@ -63,15 +70,27 @@ DENIED ─► RECOVERY_IN_PROGRESS ⇄ APPEAL_READY ══(human: APPEAL)══�
 
 Each edge declares the permission it needs (`backend/app/cases/state_machine.py`). Anything not in the table returns **409**.
 
-## 5. What is real and what is simulated in M1
+## 5. Analysis pipeline (M2)
 
-| Capability | M1 state |
+```
+load case + all patient documents (FOR UPDATE) ─► index chunks
+  ─► A1 extract (baseline | LLM) ─► verifier: quote → offsets, reject if absent
+  ─► injection flags (recorded, never decisive)
+  ─► A2 BM25 retrieval + FOUND/PARTIAL/MISSING + CDI question
+  ─► A3 YAML rules ─► A5 readiness + revenue risk
+  ─► replace current facts/requirements/evidence, keep full result in analysis_runs
+  ─► transition (RISK_DETECTED | DECISION_READY) ─► audit entries        — one transaction
+```
+
+## 6. What is real and what is simulated
+
+| Capability | State |
 |---|---|
 | Persistence, auth, RBAC, RLS, audit chain | **Real** |
 | Readiness and revenue formulas | **Real** (deterministic) |
 | Synthetic dataset and ground truth | **Real** (synthetic data) |
-| Evidence Hunter | Demo: applies only evidence stored with the legacy demo case; real retrieval in M2 |
-| Policy reasoning | Seeded demo policy and requirements; rules engine in M2 |
+| A1 / A2 / A3 | **Real** for MRI Lumbar Spine with Demo Payer A policy v2026.1; quality measured on synthetic data only |
+| Legacy "Evidence Hunter" demo button | Kept for the two legacy demo cases without an agent analysis |
 | FHIR | Sample payloads, not validated; builder and validator in M4 |
 | Payer / NPHIES | **Simulated** and labelled everywhere |
 | LLM analysis | Gemini if `GEMINI_API_KEY` is set, otherwise labelled fallback |

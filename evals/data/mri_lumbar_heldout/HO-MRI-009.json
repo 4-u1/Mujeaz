@@ -1,0 +1,228 @@
+{
+ "resourceType": "Bundle",
+ "id": "HO-MRI-009",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic-heldout"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-HO-P-2009",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "HO-P-2009",
+    "gender": "female",
+    "birthDate": "1973-01-01",
+    "name": [
+     {
+      "text": "Held-out Patient 009 (synthetic)"
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-009-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-009-E1",
+    "status": "finished",
+    "type": [
+     {
+      "text": "spine-clinic-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2009"
+    },
+    "period": {
+     "start": "2026-11-03",
+     "end": "2026-11-03"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-009-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-009-D1",
+    "status": "current",
+    "type": {
+     "text": "spine-clinic-note"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2009"
+    },
+    "date": "2026-11-03T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-009-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2YXYsdin2KzYudipINi52YrYp9iv2Kkg2KfZhNi52YXZiNivINin2YTZgdmC2LHZiiAo2KfZhNi52YXYsSDZpdmjKS4g2YrYudin2YbZiiDZhdmGINij2YTZhSDYo9iz2YHZhCDYp9mE2LjZh9ixINmF2Lkg2LnYsdmCINin2YTZhtiz2Kcg2YHZiiDYp9mE2LPYp9mCINin2YTZitiz2LHZiSDZhdmG2LAg2akg2KPYs9in2KjZiti5LiDYudmE2KfZhdipINmE2KfYs9mK2Log2KXZitis2KfYqNmK2Kkg2LnZhtivINmm2aAg2K/Ysdis2KkuINin2YTZhdi32YTZiNioOiDYsdmG2YrZhiDZhdi62YbYp9i32YrYs9mKINmE2YTYudmF2YjYryDYp9mE2YLYt9mG2Yog2KjYr9mI2YYg2LXYqNi62Kku"
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-009-E2",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-009-E2",
+    "status": "finished",
+    "type": [
+     {
+      "text": "physio-summary"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2009"
+    },
+    "period": {
+     "start": "2026-10-20",
+     "end": "2026-10-20"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-009-D2",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-009-D2",
+    "status": "current",
+    "type": {
+     "text": "physio-summary"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2009"
+    },
+    "date": "2026-10-20T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-009-E2"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "QXR0ZW5kZWQgZm91ciBwaHlzaW8gdmlzaXRzIGJldHdlZW4gMjAyNi0xMC0wNiBhbmQgMjAyNi0xMC0yMCAodHdvIHdlZWtzKS4gTm8gbWVhbmluZ2Z1bCBpbXByb3ZlbWVudC4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-009-E3",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-009-E3",
+    "status": "finished",
+    "type": [
+     {
+      "text": "gp-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2009"
+    },
+    "period": {
+     "start": "2026-09-08",
+     "end": "2026-09-08"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-009-D3",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-009-D3",
+    "status": "current",
+    "type": {
+     "text": "gp-note"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2009"
+    },
+    "date": "2026-09-08T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-009-E3"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2KrYrNix2KjYqSDZhdi22KfYryDYp9mE2KrZh9in2Kg6INmF2YrZhNmI2YPYs9mK2YPYp9mFINmh2aUg2YXZhNi6INmK2YjZhdmK2YvYpy4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-HO-MRI-009-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "HO-MRI-009-C1",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "M54.16",
+       "display": "Radiculopathy, lumbar region"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2009"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-009-E1"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-HO-MRI-009-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "HO-MRI-009-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2009"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-009-E1"
+    },
+    "authoredOn": "2026-11-03"
+   }
+  }
+ ]
+}

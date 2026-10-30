@@ -57,4 +57,5 @@ def login(client: TestClient):  # type: ignore[no-untyped-def]
             cache[username] = {"Authorization": f"Bearer {r.json()['access_token']}"}
         return cache[username]
 
+    _login.cache = cache  # type: ignore[attr-defined]
     return _login

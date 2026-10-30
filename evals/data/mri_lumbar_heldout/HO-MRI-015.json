@@ -1,0 +1,228 @@
+{
+ "resourceType": "Bundle",
+ "id": "HO-MRI-015",
+ "type": "collection",
+ "meta": {
+  "tag": [
+   {
+    "system": "urn:mujeaz:data",
+    "code": "synthetic-heldout"
+   }
+  ]
+ },
+ "entry": [
+  {
+   "fullUrl": "urn:uuid:Patient-HO-P-2015",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "HO-P-2015",
+    "gender": "male",
+    "birthDate": "1994-01-01",
+    "name": [
+     {
+      "text": "Held-out Patient 015 (synthetic)"
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-015-E1",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-015-E1",
+    "status": "finished",
+    "type": [
+     {
+      "text": "spine-clinic-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2015"
+    },
+    "period": {
+     "start": "2026-10-26",
+     "end": "2026-10-26"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-015-D1",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-015-D1",
+    "status": "current",
+    "type": {
+     "text": "spine-clinic-note"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2015"
+    },
+    "date": "2026-10-26T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-015-E1"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "en",
+       "data": "U3BpbmUgY2xpbmljIHJldmlldyAoMzJNKS4gQmFjayBwYWluIGdvaW5nIGRvd24gdGhlIGxlZnQgbGVnIHNpbmNlIGVpZ2h0IHdlZWtzLiBTTFIgdGVzdCByZXByb2R1Y2VzIGxlZyBwYWluIGF0IDUwwrAuIFJlcXVlc3Q6IGx1bWJhciBzcGluZSBNUkksIG5vIGNvbnRyYXN0Lg=="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-015-E2",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-015-E2",
+    "status": "finished",
+    "type": [
+     {
+      "text": "physio-summary"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2015"
+    },
+    "period": {
+     "start": "2026-10-12",
+     "end": "2026-10-12"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-015-D2",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-015-D2",
+    "status": "current",
+    "type": {
+     "text": "physio-summary"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2015"
+    },
+    "date": "2026-10-12T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-015-E2"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2K3YttixINmh2aAg2KzZhNiz2KfYqiDYudmE2KfYrCDZgdmK2LLZitin2KbZiiDYrtmE2KfZhCDZodmgINij2LPYp9io2YrYuS4g2YTYpyDZitmI2KzYryDYqtit2LPZhiDZhdmE2K3ZiNi4Lg=="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Encounter-HO-MRI-015-E3",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "HO-MRI-015-E3",
+    "status": "finished",
+    "type": [
+     {
+      "text": "gp-note"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/HO-P-2015"
+    },
+    "period": {
+     "start": "2026-09-07",
+     "end": "2026-09-07"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:DocumentReference-HO-MRI-015-D3",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "HO-MRI-015-D3",
+    "status": "current",
+    "type": {
+     "text": "gp-note"
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2015"
+    },
+    "date": "2026-09-07T09:00:00Z",
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/HO-MRI-015-E3"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain; charset=utf-8",
+       "language": "ar",
+       "data": "2KrYrNix2KjYqSDZhdi22KfYryDYp9mE2KrZh9in2Kg6INmG2KfYqNix2YjZg9iz2YrZhiDZpdmg2aAg2YXZhNi6INmK2YjZhdmK2YvYpy4="
+      }
+     }
+    ]
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:Condition-HO-MRI-015-C1",
+   "resource": {
+    "resourceType": "Condition",
+    "id": "HO-MRI-015-C1",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:diagnosis-code",
+       "code": "J06.9",
+       "display": "Acute upper respiratory infection, unspecified"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2015"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-015-E1"
+    }
+   }
+  },
+  {
+   "fullUrl": "urn:uuid:ServiceRequest-HO-MRI-015-SR1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "HO-MRI-015-SR1",
+    "status": "active",
+    "intent": "order",
+    "code": {
+     "coding": [
+      {
+       "system": "urn:mujeaz:demo:procedure-code",
+       "code": "72148"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/HO-P-2015"
+    },
+    "encounter": {
+     "reference": "Encounter/HO-MRI-015-E1"
+    },
+    "authoredOn": "2026-10-26"
+   }
+  }
+ ]
+}

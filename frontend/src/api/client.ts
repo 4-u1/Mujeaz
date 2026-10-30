@@ -47,6 +47,50 @@ export interface AuditVerification {
   algorithm: string;
 }
 
+export interface AnalyzeResult {
+  analysis_run_id: string;
+  mode: 'baseline' | 'llm';
+  requested_mode: 'baseline' | 'llm';
+  fallback_reason: string | null;
+  policy_version: string;
+  status: string;
+  readiness: number;
+  outcomes: Record<string, string>;
+  facts: number;
+  rejected_quotes: number;
+  injection_flags: number;
+}
+
+export type AnalyzeEvent =
+  | { event: 'start'; data: { case_id: string } }
+  | { event: 'step'; data: { agent: string; status: string; [k: string]: unknown } }
+  | { event: 'done'; data: AnalyzeResult }
+  | { event: 'error'; data: { status: number; message: string } };
+
+/** Parses a Server-Sent Events byte stream into events (exported for tests). */
+export async function* readSse(body: ReadableStream<Uint8Array>): AsyncGenerator<AnalyzeEvent> {
+  const reader = body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (value) buffer += decoder.decode(value, { stream: true });
+    let idx: number;
+    while ((idx = buffer.indexOf('\n\n')) >= 0) {
+      const block = buffer.slice(0, idx);
+      buffer = buffer.slice(idx + 2);
+      let event = 'message';
+      const data: string[] = [];
+      for (const line of block.split('\n')) {
+        if (line.startsWith('event:')) event = line.slice(6).trim();
+        else if (line.startsWith('data:')) data.push(line.slice(5).trimStart());
+      }
+      if (data.length) yield { event, data: JSON.parse(data.join('\n')) } as AnalyzeEvent;
+    }
+    if (done) return;
+  }
+}
+
 export class ApiError extends Error {
   constructor(public status: number, message: string) {
     super(message);
@@ -138,6 +182,34 @@ export const api = {
     ),
   audit: (id: string) => request<{ chain_key: string; entries: AuditEntry[] }>(`/api/audit/${encodeURIComponent(id)}`),
   auditVerify: (id: string) => request<AuditVerification>(`/api/audit/${encodeURIComponent(id)}/verify`),
+  /** Runs A1 → A2 → A3 → A5 with streamed progress. The token stays in the Authorization header. */
+  async analyzeCase(id: string, onEvent: (e: AnalyzeEvent) => void, mode?: 'baseline' | 'llm'): Promise<AnalyzeResult> {
+    const headers = new Headers({ Accept: 'text/event-stream' });
+    const token = session.token();
+    if (token) headers.set('Authorization', `Bearer ${token}`);
+    const qs = new URLSearchParams({ stream: 'true', ...(mode ? { mode } : {}) });
+    const res = await fetch(`/api/cases/${encodeURIComponent(id)}/analyze?${qs}`, { method: 'POST', headers });
+    if (!res.ok || !res.body) {
+      let message = `Request failed (${res.status})`;
+      try {
+        const body = await res.json();
+        message = body?.error?.message ?? body?.detail ?? message;
+      } catch {
+        /* non-JSON error body */
+      }
+      if (res.status === 401 && token) {
+        session.clear();
+        unauthorizedListeners.forEach((fn) => fn());
+      }
+      throw new ApiError(res.status, message);
+    }
+    for await (const e of readSse(res.body)) {
+      onEvent(e);
+      if (e.event === 'done') return e.data;
+      if (e.event === 'error') throw new ApiError(e.data.status, e.data.message);
+    }
+    throw new ApiError(500, 'Analysis stream ended unexpectedly');
+  },
   analyzeOrder: (body: { clinicalNoteText: string; payerName?: string; requestedService?: string }) =>
     post<any>('/api/ai/analyze-order', body),
   generateAppeal: (body: Record<string, unknown>) => post<any>('/api/ai/generate-appeal', body),

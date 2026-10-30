@@ -19,18 +19,47 @@
 
 Languages: English, Arabic and mixed notes. All names are fictional and tagged synthetic; codes are demo reference codes.
 
+## Held-out split: `evals/data/mri_lumbar_heldout/`
+
+30 cases from `evals/generator/heldout.py` with separate phrasing templates and adversarial variants: number words (`six weeks`, `ستة أسابيع`), Arabic-Indic digits, explicit negations (`therapy_negated`), misspellings and dates written as text. CI checks that the committed files match the generator.
+
+> **Caveat — read before quoting a number.** The held-out templates and the deterministic baseline were written by the same author in the same work session. Held-out scores therefore guard against regressions but **do not measure generalisation**. Two things will: the live LLM workflow on both splits, and cases written or reviewed by a clinician or revenue-cycle specialist (M2 plan, decision D4). The eval report prints this caveat next to every held-out result.
+
+## Running the evals
+
+```bash
+python evals/run.py                     # baseline on both splits, Markdown report on stdout
+python evals/run.py --gate --out out/   # exit 1 if a gate fails; writes eval_report.json and .md
+python evals/run.py --mode llm --fixtures evals/fixtures          # replay recorded model responses (offline)
+GEMINI_API_KEY=… python evals/run.py --mode llm --record evals/fixtures   # call Gemini and record
+```
+
+Metrics are reported overall, per scenario and per language: A1 precision and recall (same label, same document, overlapping span), facts whose stored quote differs from the source, A2 evidence accuracy, A2 Recall@5 (a top-5 BM25 passage overlaps the gold span), A3 rule-outcome agreement, injection invariance (outcomes identical with the injected text removed), injection detection, LLM fallbacks and rejected model quotes.
+
+## Current results (deterministic baseline)
+
+| Split | Cases | A1 P / R | Unverified facts | A2 accuracy | Recall@5 | A3 agreement | Injection unchanged |
+|---|---:|---|---:|---:|---:|---:|---:|
+| dev | 50 | 1.000 / 1.000 | 0 | 1.000 | 1.000 | 1.000 | 1.000 |
+| held-out | 30 | 1.000 / 1.000 | 0 | 1.000 | 1.000 | 1.000 | 1.000 |
+
+These numbers say the pipeline is internally consistent on template-generated data. They are **not** evidence of clinical accuracy. Gates are thresholds, so a unit test additionally locks the baseline to exact scores on the dev split; a mutation check (changing the policy minimum from 6 to 3 weeks) showed that thresholds alone would have let a real regression through.
+
+LLM results appear here after the `live-evals` workflow runs with the `GEMINI_API_KEY` repository secret.
+
 ## Gates (from the engineering prompt §6)
 
 | Metric | Gate | Status |
 |---|---|---|
 | Scoring parity Python ↔ TypeScript | 100% | **Active in CI (M1)** — 250 vectors |
 | Dataset reproducible and spans exact | 100% | **Active in CI (M1)** |
-| A1 fact precision / recall | ≥ 0.90 / ≥ 0.85 | M2 |
-| Facts without a verbatim source span | 0 | M2 |
-| A2 evidence classification accuracy | ≥ 0.90 | M2 |
-| A2 retrieval Recall@5 | ≥ 0.90 | M2 |
-| A3 rule outcome agreement | ≥ 0.95 | M2 |
+| A1 fact precision / recall | ≥ 0.90 / ≥ 0.85 | **Active in CI (M2)** — dev and held-out |
+| Facts without a verbatim source span | 0 | **Active in CI (M2)** |
+| A2 evidence classification accuracy | ≥ 0.90 | **Active in CI (M2)** |
+| A2 retrieval Recall@5 | ≥ 0.90 | **Active in CI (M2)** |
+| A3 rule outcome agreement | ≥ 0.95 | **Active in CI (M2)** |
+| Prompt-injection cases with unchanged outcome | 100% | **Active in CI (M2)** |
+| LLM fallbacks in LLM mode | 0 | **Active** when replay fixtures exist |
 | A6 appeal sentences with cited support | 100% | M4 |
-| Prompt-injection cases resisted | 100% | M2 |
 
-M2 adds the eval runner (`evals/run.py`) with recorded LLM responses so CI stays deterministic and free; a separate workflow runs live evals when an API key is configured.
+CI runs the baseline on both splits on every push and writes the report to the job summary. When recorded fixtures exist in `evals/fixtures/`, CI also replays the LLM path offline and gates it. The `live-evals` workflow (manual or weekly) calls Gemini, records fixtures and compares baseline and LLM side by side. Recorded fixtures are uploaded as the `live-evals` artifact; to make CI gate the LLM path offline, download them into `evals/fixtures/` and commit them (a new prompt version needs a new recording).
